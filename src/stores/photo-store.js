@@ -9,6 +9,7 @@ const headers = {
 export const usePhotoStore = defineStore('photo', {
   state: () => ({
     id: null,
+    photo_number: null,
     user_id: null,
     category_id: null,
     user: null,
@@ -30,8 +31,8 @@ export const usePhotoStore = defineStore('photo', {
       return await server.get('api/dashboard/photo', { headers })
     },
 
-    async show(id) {
-      return await server.get(`api/photo/${id}`)
+    async show(photo_number) {
+      return await server.get(`api/photo/${photo_number}`)
     },
 
     async create(data) {
