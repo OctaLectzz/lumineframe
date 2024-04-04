@@ -11,9 +11,9 @@
         </q-toolbar-title>
 
         <!-- Search -->
-        <div class="q-mx-lg">
+        <div class="q-mr-lg">
           <input type="text" v-model="search" class="search-bar" placeholder="Search..." hint="Search" />
-          <q-icon name="search" size="2em" style="margin-left: -38px" />
+          <q-icon name="search" size="1.5em" style="margin-left: -38px" />
         </div>
 
         <!-- Authentication -->
@@ -223,6 +223,7 @@ const logout = async () => {
 .nav__link {
   color: #000;
   text-decoration: none;
+  font-size: 12px;
 }
 
 .active__tab {
@@ -239,8 +240,8 @@ const logout = async () => {
   font-size: 16px;
   border: none;
   border-radius: 20px;
-  width: 300px;
-  height: 40px;
+  width: 150px;
+  height: 30px;
   background-color: #c0c0c04d;
   transition: all 0.3s;
 }
@@ -249,15 +250,34 @@ const logout = async () => {
   transform: scale(1.02);
   border: 2px solid #00000080;
 }
-/* For medium devices */
-@media screen and (min-width: 731px) {
+
+/* For small devices */
+@media screen and (min-width: 691px) {
+  .nav__link {
+    font-size: 14px;
+  }
   .search-bar {
-    width: 300px;
+    width: 200px;
+    height: 30px;
+  }
+}
+
+/* For medium devices */
+@media screen and (min-width: 909px) {
+  .nav__link {
+    font-size: 16px;
+  }
+  .search-bar {
+    width: 400px;
     height: 40px;
   }
 }
+
 /* For large devices */
 @media screen and (min-width: 1150px) {
+  .nav__link {
+    font-size: 16px;
+  }
   .search-bar {
     width: 600px;
     height: 45px;
