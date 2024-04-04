@@ -12,19 +12,40 @@ import zh from 'src/lang/zh'
 import sa from 'src/lang/sa'
 import th from 'src/lang/th'
 
+// Switch Language
+const languages = {
+  left: ['en', 'id', 'jp', 'my', 'sa'],
+  right: ['fr', 'es', 'ru', 'zh', 'th']
+}
+
+const languageNames = {
+  en: 'English',
+  id: 'Indonesia',
+  jp: 'Japanese',
+  my: 'Malay',
+  sa: 'Arabic',
+  fr: 'French',
+  es: 'Spanish',
+  ru: 'Russian',
+  zh: 'Chinese',
+  th: 'Thai'
+}
+
+// Default Language
 const messages = {
   en,
   id,
   jp,
   my,
+  sa,
   fr,
   es,
   ru,
   zh,
-  sa,
   th
 }
 
+// Get Language in localstorage
 const lang = localStorage.getItem('lang') || 'en'
 
 const i18n = createI18n({
@@ -38,4 +59,4 @@ export default ({ app }) => {
   app.use(i18n)
 }
 
-export { lang }
+export { lang, messages, languages, languageNames }

@@ -31,56 +31,20 @@
           </q-dialog>
         </div>
 
-        <!-- Languages -->
+        <!-- Switch Languages -->
         <div v-else>
           <q-btn-dropdown class="q-mx-xs" dense flat>
             <template v-slot:label>
               <img :src="'src/assets/img/lang/' + lang + '.png'" width="20" />
             </template>
             <div class="row no-wrap q-pa-md">
-              <div class="column">
+              <div class="column items-center">
                 <q-list>
-                  <q-item @click="changeLanguage('en')" clickable v-close-popup>
+                  <q-item v-for="lang in languages.left" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
                     <q-item-section>
                       <q-item-label>
-                        <img src="src/assets/img/lang/en.png" width="20" />
-                        English
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="changeLanguage('id')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>
-                        <img src="src/assets/img/lang/id.png" width="20" />
-                        Indonesia
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="changeLanguage('jp')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>
-                        <img src="src/assets/img/lang/jp.png" width="20" />
-                        Japan
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="changeLanguage('my')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>
-                        <img src="src/assets/img/lang/my.png" width="20" />
-                        Malaysia
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="changeLanguage('fr')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>
-                        <img src="src/assets/img/lang/fr.png" width="20" />
-                        France
+                        <img :src="'src/assets/img/lang/' + lang + '.png'" width="20" />
+                        {{ languageNames[lang] }}
                       </q-item-label>
                     </q-item-section>
                   </q-item>
@@ -91,47 +55,11 @@
 
               <div class="column items-center">
                 <q-list>
-                  <q-item @click="changeLanguage('es')" clickable v-close-popup>
+                  <q-item v-for="lang in languages.right" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
                     <q-item-section>
                       <q-item-label>
-                        <img src="src/assets/img/lang/es.png" width="20" />
-                        Spain
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="changeLanguage('ru')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>
-                        <img src="src/assets/img/lang/ru.png" width="20" />
-                        Rusia
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="changeLanguage('zh')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>
-                        <img src="src/assets/img/lang/zh.png" width="20" />
-                        China
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="changeLanguage('sa')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>
-                        <img src="src/assets/img/lang/sa.png" width="20" />
-                        Arab Saudi
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="changeLanguage('th')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>
-                        <img src="src/assets/img/lang/th.png" width="20" />
-                        Thailand
+                        <img :src="'src/assets/img/lang/' + lang + '.png'" width="20" />
+                        {{ languageNames[lang] }}
                       </q-item-label>
                     </q-item-section>
                   </q-item>
@@ -205,7 +133,7 @@ import { ref, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { url } from 'src/boot/axios'
-import { lang } from 'src/boot/lang'
+import { lang, languages, languageNames } from 'src/boot/lang'
 import { useAuthStore } from 'src/stores/auth-store'
 import LoginDialog from 'src/components/auth/LoginDialog.vue'
 import RegisterDialog from 'src/components/auth/RegisterDialog.vue'
@@ -321,7 +249,6 @@ const logout = async () => {
   transform: scale(1.02);
   border: 2px solid #00000080;
 }
-
 /* For medium devices */
 @media screen and (min-width: 731px) {
   .search-bar {
@@ -329,7 +256,6 @@ const logout = async () => {
     height: 40px;
   }
 }
-
 /* For large devices */
 @media screen and (min-width: 1150px) {
   .search-bar {
