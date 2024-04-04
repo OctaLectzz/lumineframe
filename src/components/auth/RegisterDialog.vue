@@ -10,45 +10,45 @@
         <q-img src="src/assets/img/logo.png" style="width: 50px" />
       </div>
 
-      <div class="text-h5 text-bold text-center q-mb-lg q-mx-xl">Welcome to LuminaFrame</div>
+      <div class="text-h5 text-bold text-center q-mb-lg q-mx-xl">{{ $t('auth.welcomeMsg') }}</div>
 
       <q-form class="q-px-md">
         <div class="row justify-center">
           <!-- First Name -->
           <div class="col-5 q-mr-sm">
-            <label for="first_name">First Name</label>
-            <q-input type="text" v-model="first_name" name="first_name" label="First Name" :rules="first_nameRules" outlined dense />
+            <label for="first_name">{{ $t('auth.firstNameForm') }}</label>
+            <q-input type="text" v-model="first_name" name="first_name" :label="$t('auth.firstNameForm')" :rules="first_nameRules" outlined dense />
           </div>
 
           <!-- Last Name -->
           <div class="col-5 q-ml-sm">
-            <label for="last_name">Last Name</label>
-            <q-input type="text" v-model="last_name" name="last_name" label="Last Name" outlined dense />
+            <label for="last_name">{{ $t('auth.lastNameForm') }}</label>
+            <q-input type="text" v-model="last_name" name="last_name" :label="$t('auth.lastNameForm')" outlined dense />
           </div>
         </div>
 
         <!-- Username -->
         <div class="q-px-lg">
-          <label for="username">Username</label>
-          <q-input type="text" v-model="username" name="username" label="Username" :rules="usernameRules" outlined dense />
+          <label for="username">{{ $t('auth.usernameForm') }}</label>
+          <q-input type="text" v-model="username" name="username" :label="$t('auth.usernameForm')" :rules="usernameRules" outlined dense />
         </div>
 
         <!-- Email -->
         <div class="q-px-lg">
-          <label for="email">Email</label>
-          <q-input type="email" v-model="email" name="email" label="Email" :rules="emailRules" outlined dense />
+          <label for="email">{{ $t('auth.emailForm') }}</label>
+          <q-input type="email" v-model="email" name="email" :label="$t('auth.emailForm')" :rules="emailRules" outlined dense />
         </div>
 
         <!-- Password -->
         <div class="q-px-lg">
-          <label for="password">Password</label>
-          <q-input type="password" v-model="password" name="password" label="Password" :rules="passwordRules" outlined dense />
+          <label for="password">{{ $t('auth.passwordForm') }}</label>
+          <q-input type="password" v-model="password" name="password" :label="$t('auth.passwordForm')" :rules="passwordRules" outlined dense />
         </div>
 
         <!-- Password Confirmation -->
         <div class="q-px-lg">
-          <label for="passwordconfirmation">Password Confirmation</label>
-          <q-input type="password" v-model="passwordconfirmation" name="passwordconfirmation" label="Password Confirmation" :rules="passwordconfirmationRules" outlined dense />
+          <label for="passwordconfirmation">{{ $t('auth.passwordConfirmationForm') }}</label>
+          <q-input type="password" v-model="passwordconfirmation" name="passwordconfirmation" :label="$t('auth.passwordConfirmationForm')" :rules="passwordconfirmationRules" outlined dense />
         </div>
 
         <q-btn color="primary" label="Sign Up" class="full-width q-mt-sm" :loading="loading" @click="register" rounded>
@@ -60,10 +60,10 @@
       </q-form>
 
       <div class="q-mt-lg text-center text-grey-8" style="font-size: 11px">
-        <div>By continuing, you agree to LuminaFrame's</div>
+        <div>{{ $t('auth.permissionText1') }}</div>
         <div>
           <a href="#" target="_blank" rel="noopener noreferrer" class="text-primary permission__link">Terms of Service</a>
-          and acknowledge you've read our
+          {{ $t('auth.permissionText2') }}
         </div>
         <div>
           <a href="#" target="_blank" rel="noopener noreferrer" class="text-primary permission__link">Privacy Policy</a>
@@ -74,7 +74,7 @@
       </div>
 
       <div class="q-mt-lg text-center" style="font-size: 12px">
-        <div class="text-bold cursor-pointer" @click="openLoginDialog">Already a member? Log In</div>
+        <div class="text-bold cursor-pointer" @click="openLoginDialog">{{ $t('auth.loginRedirect') }}</div>
       </div>
     </q-card-section>
   </q-card>
@@ -83,11 +83,11 @@
 <script setup>
 import { ref, defineEmits } from 'vue'
 import { useQuasar } from 'quasar'
-import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'src/stores/auth-store'
 
 const $q = useQuasar()
-const router = useRouter()
+const { t } = useI18n()
 const authStore = useAuthStore()
 const emits = defineEmits(['login'])
 const loading = ref(false)
@@ -101,11 +101,11 @@ const password = ref('')
 const passwordconfirmation = ref('')
 
 // Validate
-const first_nameRules = [(v) => !!v || 'Nama harus diisi', (v) => v.length <= 50 || 'Username maksimal 50 karakter']
-const usernameRules = [(v) => !!v || 'Username harus diisi', (v) => v.length >= 3 || 'Username minimal 2 karakter', (v) => v.length <= 15 || 'Username maksimal 15 karakter']
-const emailRules = [(v) => !!v || 'Email harus diisi', (v) => /.+@.+/.test(v) || 'Email tidak valid']
-const passwordRules = ref([(v) => !!v || 'Password harus diisi', (v) => v.length >= 6 || 'Password minimal 6 karakter'])
-const passwordconfirmationRules = ref([(v) => !!v || 'Password harus diisi', (v) => v.length >= 6 || 'Password minimal 6 karakter', (v) => v === password.value || 'Password tidak cocok'])
+const first_nameRules = [(v) => !!v || t('auth.validate.firstNameRequired'), (v) => v.length <= 50 || t('auth.validate.firstNameMaxLength')]
+const usernameRules = [(v) => !!v || t('auth.validate.usernameRequired'), (v) => v.length >= 3 || t('auth.validate.usernameMinLength'), (v) => v.length <= 15 || t('auth.validate.usernameMaxLength')]
+const emailRules = [(v) => !!v || t('auth.validate.emailRequired'), (v) => /.+@.+/.test(v) || t('auth.validate.emailFormat')]
+const passwordRules = ref([(v) => !!v || t('auth.validate.passwordRequired'), (v) => v.length >= 6 || t('auth.validate.passwordMinLength')])
+const passwordconfirmationRules = ref([(v) => !!v || t('auth.validate.passwordConfirmationRequired'), (v) => v.length >= 6 || t('auth.validate.passwordConfirmationMinLength'), (v) => v === password.value || t('auth.validate.passwordConfirmationSame')])
 
 // Register
 const register = async () => {
@@ -116,12 +116,11 @@ const register = async () => {
     if (res.data.status === 'success') {
       localStorage.setItem('token', res.data.data.token)
       localStorage.setItem('role', res.data.data.role)
-      router.push({ name: 'home' })
 
       $q.notify({
         icon: 'check',
         color: 'positive',
-        message: 'Register Successfully'
+        message: t('auth.successRegisterMsg')
       })
       window.location.reload()
     } else {
@@ -135,7 +134,7 @@ const register = async () => {
     $q.notify({
       icon: 'warning',
       color: 'negative',
-      message: 'Format masih salah, silahkan coba lagi'
+      message: t('auth.failedRegisterMsg')
     })
     console.error(error)
   }
@@ -153,14 +152,14 @@ const openLoginDialog = () => {
   overflow: hidden;
 }
 .q-card::-webkit-scrollbar {
-  display: none; /* Menyembunyikan scrollbar di browser webkit (Chrome, Safari, dll.) */
+  display: none;
 }
 .q-card {
-  -ms-overflow-style: none; /* Menyembunyikan scrollbar di Internet Explorer dan Edge */
-  scrollbar-width: none; /* Menyembunyikan scrollbar di browser lain yang mendukung properti scrollbar-width */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .q-card {
-  overflow-y: scroll; /* Memungkinkan pengguliran vertikal */
+  overflow-y: scroll;
 }
 
 .permission__link {
