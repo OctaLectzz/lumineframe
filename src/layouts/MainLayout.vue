@@ -1,6 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header :class="$q.dark.isActive ? 'bg-secondary' : 'bg-white'">
+    <!-- Desktop -->
+    <q-header :class="$q.dark.isActive ? 'desktop bg-secondary ' : 'desktop bg-white'">
       <q-toolbar class="text-primary q-my-md">
         <!-- Tab -->
         <q-toolbar-title style="font-size: 16px">
@@ -25,7 +26,7 @@
           </q-dialog>
 
           <!-- Register -->
-          <q-btn color="secondary" text-color="dark" :label="$t('navbar.signupBtn')" class="q-mx-xs" @click="openRegisterDialog" rounded />
+          <q-btn color="secondary" text-color="white" :label="$t('navbar.signupBtn')" class="q-mx-xs" @click="openRegisterDialog" rounded />
           <q-dialog v-model="registerDialog">
             <RegisterDialog @login="openLogin" />
           </q-dialog>
@@ -122,9 +123,144 @@
       </q-toolbar>
     </q-header>
 
+    <!-- Mobile -->
+    <q-header :class="$q.dark.isActive ? 'mobile bg-secondary ' : 'mobile bg-white'">
+      <q-toolbar class="text-primary">
+        <q-toolbar-title>
+          <q-img src="src/assets/img/logo.png" class="q-pa-md q-mr-md" style="width: 30px" />
+        </q-toolbar-title>
+
+        <!-- Switch Languages -->
+        <q-btn-dropdown class="q-mx-xs" dense flat>
+          <template v-slot:label>
+            <img :src="'src/assets/img/lang/' + lang + '.png'" width="20" />
+          </template>
+          <div class="row no-wrap q-pa-md">
+            <div class="column items-center">
+              <q-list>
+                <q-item v-for="lang in languages.left" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
+                  <q-item-section>
+                    <q-item-label>
+                      <img :src="'src/assets/img/lang/' + lang + '.png'" width="20" />
+                      {{ languageNames[lang] }}
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </div>
+
+            <q-separator vertical inset class="q-mx-md" />
+
+            <div class="column items-center">
+              <q-list>
+                <q-item v-for="lang in languages.right" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
+                  <q-item-section>
+                    <q-item-label>
+                      <img :src="'src/assets/img/lang/' + lang + '.png'" width="20" />
+                      {{ languageNames[lang] }}
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </div>
+          </div>
+        </q-btn-dropdown>
+
+        <!-- Authentication -->
+        <div v-if="!token">
+          <!-- Login -->
+          <q-btn color="primary" text-color="white" size="sm" :label="$t('navbar.loginBtn')" class="q-mx-xs" @click="openLoginDialog" rounded />
+          <q-dialog v-model="loginDialog">
+            <LoginDialog @register="openRegister" />
+          </q-dialog>
+
+          <!-- Register -->
+          <q-btn color="secondary" text-color="white" size="sm" :label="$t('navbar.signupBtn')" class="q-mx-xs" @click="openRegisterDialog" rounded />
+          <q-dialog v-model="registerDialog">
+            <RegisterDialog @login="openLogin" />
+          </q-dialog>
+        </div>
+
+        <!-- Profile Menu -->
+        <div v-else>
+          <q-btn-dropdown class="q-mx-xs" rounded dense flat push glossy split>
+            <template v-slot:label>
+              <q-avatar size="26px">
+                <img :src="url + '/avatars/' + profile.avatar" />
+              </q-avatar>
+            </template>
+            <div class="row no-wrap q-pa-md">
+              <div class="column">
+                <q-list>
+                  <q-item v-if="role === 'Admin'" @click="navigateTo('home')" clickable v-close-popup>
+                    <q-item-section>
+                      <q-item-label>{{ $t('navbar.dashboardDrpdwn') }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item @click="navigateTo('home')" clickable v-close-popup>
+                    <q-item-section>
+                      <q-item-label>{{ $t('navbar.profileDrpdwn') }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item @click="navigateTo('home')" clickable v-close-popup>
+                    <q-item-section>
+                      <q-item-label>{{ $t('navbar.likesDrpdwn') }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item @click="navigateTo('home')" clickable v-close-popup>
+                    <q-item-section>
+                      <q-item-label>{{ $t('navbar.collectionsDrpdwn') }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+
+              <q-separator vertical inset class="q-mx-md" />
+
+              <div class="column items-center">
+                <q-avatar size="72px">
+                  <img :src="url + '/avatars/' + profile.avatar" />
+                </q-avatar>
+
+                <div class="text-subtitle1 text-bold q-mt-sm">{{ profile.name }}</div>
+                <div class="text-subtitle2 text-grey-8 q-mb-sm" style="margin-top: -7px">{{ profile.email }}</div>
+
+                <q-btn color="primary" :label="$t('navbar.logoutBtn')" push size="sm" v-close-popup @click="logout" />
+              </div>
+            </div>
+          </q-btn-dropdown>
+        </div>
+      </q-toolbar>
+    </q-header>
+
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <!-- Mobilr -->
+    <q-footer class="mobile" elevated>
+      <q-tabs class="bg-secondary text-light" align="justify" dense>
+        <q-route-tab name="home" icon="home" to="/" />
+        <q-route-tab name="search" icon="search" />
+        <q-route-tab name="make" class="larger-tab">
+          <div>
+            <q-icon name="add_circle" color="light" size="30px" />
+          </div>
+        </q-route-tab>
+        <q-route-tab name="category" icon="category" />
+        <q-route-tab v-if="!token" name="profile">
+          <q-avatar size="20px"><img :src="url + '/avatars/user-profile-default.jpg'" /></q-avatar>
+        </q-route-tab>
+        <q-route-tab v-else name="profile">
+          <q-avatar size="20px">
+            <img :src="url + '/avatars/' + profile.avatar" />
+          </q-avatar>
+        </q-route-tab>
+      </q-tabs>
+    </q-footer>
   </q-layout>
 </template>
 
@@ -220,6 +356,11 @@ const logout = async () => {
 </script>
 
 <style scoped>
+/* Responsive Navbar & Tab */
+.mobile {
+  display: none;
+}
+
 .nav__link {
   color: #000;
   text-decoration: none;
@@ -252,6 +393,14 @@ const logout = async () => {
 }
 
 /* For small devices */
+@media screen and (max-width: 691px) {
+  .mobile {
+    display: block;
+  }
+  .desktop {
+    display: none;
+  }
+}
 @media screen and (min-width: 691px) {
   .nav__link {
     font-size: 14px;

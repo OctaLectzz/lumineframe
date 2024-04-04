@@ -5,14 +5,14 @@
       <q-btn icon="close" flat round dense v-close-popup />
     </q-card-section>
 
-    <q-card-section class="q-px-xl q-pb-xl">
+    <q-card-section class="q-px-lg q-pb-xl">
       <div class="row justify-center">
         <q-img src="src/assets/img/logo.png" style="width: 50px" />
       </div>
 
       <div class="text-h5 text-bold text-center q-mb-lg">{{ $t('auth.welcomeMsg') }}</div>
 
-      <q-form class="q-px-md">
+      <q-form>
         <!-- Email -->
         <div class="q-px-lg">
           <label for="email">{{ $t('auth.emailForm') }}</label>

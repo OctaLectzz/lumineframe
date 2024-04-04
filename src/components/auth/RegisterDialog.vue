@@ -5,14 +5,14 @@
       <q-btn icon="close" flat round dense v-close-popup />
     </q-card-section>
 
-    <q-card-section class="q-px-xl q-pb-xl">
+    <q-card-section class="q-px-lg q-pb-xl">
       <div class="row justify-center">
         <q-img src="src/assets/img/logo.png" style="width: 50px" />
       </div>
 
-      <div class="text-h5 text-bold text-center q-mb-lg q-mx-xl">{{ $t('auth.welcomeMsg') }}</div>
+      <div class="text-h5 text-bold text-center q-mb-lg">{{ $t('auth.welcomeMsg') }}</div>
 
-      <q-form class="q-px-md">
+      <q-form>
         <div class="row justify-center">
           <!-- First Name -->
           <div class="col-5 q-mr-sm">
@@ -28,25 +28,25 @@
         </div>
 
         <!-- Username -->
-        <div class="q-px-lg">
+        <div class="q-px-md">
           <label for="username">{{ $t('auth.usernameForm') }}</label>
           <q-input type="text" v-model="username" name="username" :label="$t('auth.usernameForm')" :rules="usernameRules" outlined dense />
         </div>
 
         <!-- Email -->
-        <div class="q-px-lg">
+        <div class="q-px-md">
           <label for="email">{{ $t('auth.emailForm') }}</label>
           <q-input type="email" v-model="email" name="email" :label="$t('auth.emailForm')" :rules="emailRules" outlined dense />
         </div>
 
         <!-- Password -->
-        <div class="q-px-lg">
+        <div class="q-px-md">
           <label for="password">{{ $t('auth.passwordForm') }}</label>
           <q-input type="password" v-model="password" name="password" :label="$t('auth.passwordForm')" :rules="passwordRules" outlined dense />
         </div>
 
         <!-- Password Confirmation -->
-        <div class="q-px-lg">
+        <div class="q-px-md">
           <label for="passwordconfirmation">{{ $t('auth.passwordConfirmationForm') }}</label>
           <q-input type="password" v-model="passwordconfirmation" name="passwordconfirmation" :label="$t('auth.passwordConfirmationForm')" :rules="passwordconfirmationRules" outlined dense />
         </div>
@@ -105,7 +105,11 @@ const first_nameRules = [(v) => !!v || t('auth.validate.firstNameRequired'), (v)
 const usernameRules = [(v) => !!v || t('auth.validate.usernameRequired'), (v) => v.length >= 3 || t('auth.validate.usernameMinLength'), (v) => v.length <= 15 || t('auth.validate.usernameMaxLength')]
 const emailRules = [(v) => !!v || t('auth.validate.emailRequired'), (v) => /.+@.+/.test(v) || t('auth.validate.emailFormat')]
 const passwordRules = ref([(v) => !!v || t('auth.validate.passwordRequired'), (v) => v.length >= 6 || t('auth.validate.passwordMinLength')])
-const passwordconfirmationRules = ref([(v) => !!v || t('auth.validate.passwordConfirmationRequired'), (v) => v.length >= 6 || t('auth.validate.passwordConfirmationMinLength'), (v) => v === password.value || t('auth.validate.passwordConfirmationSame')])
+const passwordconfirmationRules = ref([
+  (v) => !!v || t('auth.validate.passwordConfirmationRequired'),
+  (v) => v.length >= 6 || t('auth.validate.passwordConfirmationMinLength'),
+  (v) => v === password.value || t('auth.validate.passwordConfirmationSame')
+])
 
 // Register
 const register = async () => {
