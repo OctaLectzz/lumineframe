@@ -10,12 +10,13 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     id: null,
     avatar: null,
+    username: null,
     first_name: null,
     last_name: null,
     name: null,
     email: null,
     password: null,
-    repassword: null,
+    passwordconfirmation: null,
     role: null,
     gender: null,
     phone: null,
@@ -37,15 +38,16 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    async register(avatar, first_name, last_name, email, password, repassword, birthday, gender, phone, url, address) {
+    async register(username, first_name, last_name, email, password, passwordconfirmation, avatar, birthday, gender, phone, url, address) {
       try {
         return await server.post('api/auth/register', {
-          avatar,
+          username,
           first_name,
           last_name,
           email,
           password,
-          repassword,
+          passwordconfirmation,
+          avatar,
           birthday,
           gender,
           phone,
