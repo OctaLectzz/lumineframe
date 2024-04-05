@@ -2,7 +2,7 @@ export default {
   navbar: {
     homeTab: 'Главная',
     exploreTab: 'Исследовать',
-    makeTab: 'Создать',
+    createTab: 'Создать',
     loginBtn: 'Войти',
     signupBtn: 'Регистрация',
     logoutBtn: 'Выйти',
@@ -12,14 +12,14 @@ export default {
     collectionsDrpdwn: 'Коллекции'
   },
   auth: {
-    welcomeMsg: 'Добро пожаловать в LuminaFrame',
+    welcomeMsg: 'Добро пожаловать в LumineFrame',
     firstNameForm: 'Имя',
     lastNameForm: 'Фамилия',
     usernameForm: 'Имя пользователя',
     emailForm: 'Электронная почта',
     passwordForm: 'Пароль',
     passwordConfirmationForm: 'Подтверждение пароля',
-    permissionText1: 'Продолжая, вы соглашаетесь с условиями LuminaFrame',
+    permissionText1: 'Продолжая, вы соглашаетесь с условиями LumineFrame',
     permissionText2: 'и признаете, что прочитали наши',
     loginRedirect: 'Уже есть аккаунт? Войти',
     registerRedirect: 'Еще не зарегистрированы? Зарегистрироваться',

@@ -1,8 +1,12 @@
 export default {
+  public: {
+    requiredText: '*',
+    optionalText: '(optional)'
+  },
   navbar: {
     homeTab: 'Home',
     exploreTab: 'Explore',
-    makeTab: 'Make',
+    createTab: 'Create',
     loginBtn: 'Log In',
     signupBtn: 'Sign Up',
     logoutBtn: 'Logout',
@@ -12,17 +16,17 @@ export default {
     collectionsDrpdwn: 'Collections'
   },
   auth: {
-    welcomeMsg: 'Welcome to LuminaFrame',
+    welcomeMsg: 'Welcome to LumineFrame',
     firstNameForm: 'First Name',
     lastNameForm: 'Last Name',
     usernameForm: 'Username',
     emailForm: 'Email',
     passwordForm: 'Password',
     passwordConfirmationForm: 'Password Confirmation',
-    permissionText1: "By continuing, you agree to LuminaFrame's",
+    permissionText1: "By continuing, you agree to LumineFrame's",
     permissionText2: "and acknowledge you've read our",
     loginRedirect: 'Already a member? Log In',
-    registerRedirect: 'Not on LuminaFrame yet? Sign up',
+    registerRedirect: 'Not on LumineFrame yet? Sign up',
     successRegisterMsg: 'Register Successfully',
     failedRegisterMsg: 'The format is still wrong, please try again',
     successLoginMsg: 'Login Successfully',
@@ -44,5 +48,15 @@ export default {
       passwordConfirmationMinLength: 'Minimum Password Confirmation is 6 characters',
       passwordConfirmationSame: 'Password Confirmation do not match'
     }
+  },
+  create: {
+    headerText: 'Create Lumine Photo',
+    handleButton: 'Publish',
+    chooseFile: 'Choose a file or drag and drop it here',
+    recomendedFile: 'We recomended using high quality .jpg files less than 20mb',
+    titleForm: 'Title',
+    descriptionForm: 'Description',
+    tagForm: 'Tag',
+    categoryForm: 'Category'
   }
 }

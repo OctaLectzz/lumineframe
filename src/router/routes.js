@@ -1,10 +1,10 @@
-
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', name: 'home', component: () => import('pages/IndexPage.vue') }
+      { path: '', name: 'home', component: () => import('pages/home/IndexPage.vue') },
+      { path: 'creation-tool', name: 'creationTool', component: () => import('pages/home/CreationToolPage.vue') }
     ]
   },
 

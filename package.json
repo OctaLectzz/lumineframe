@@ -1,8 +1,8 @@
 {
-  "name": "luminaframe",
+  "name": "lumineframe",
   "version": "0.0.1",
   "description": "Illuminate life through captivating frames",
-  "productName": "LuminaFrame",
+  "productName": "lumineframe",
   "author": "Octavyan Putra Ramadhan <octavyan4@gmail.com>",
   "private": true,
   "scripts": {

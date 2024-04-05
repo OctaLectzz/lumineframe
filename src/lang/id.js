@@ -2,7 +2,7 @@ export default {
   navbar: {
     homeTab: 'Beranda',
     exploreTab: 'Jelajahi',
-    makeTab: 'Buat',
+    createTab: 'Buat',
     loginBtn: 'Masuk',
     signupBtn: 'Daftar',
     logoutBtn: 'Keluar',
@@ -12,7 +12,7 @@ export default {
     collectionsDrpdwn: 'Koleksi'
   },
   auth: {
-    welcomeMsg: 'Selamat datang di LuminaFrame',
+    welcomeMsg: 'Selamat datang di LumineFrame',
     firstNameForm: 'Nama Depan',
     lastNameForm: 'Nama Belakang',
     usernameForm: 'Username',
@@ -22,7 +22,7 @@ export default {
     permissionText1: 'Dengan melanjutkan, Anda setuju dengan',
     permissionText2: 'dan mengakui bahwa Anda telah membaca',
     loginRedirect: 'Sudah menjadi anggota? Masuk',
-    registerRedirect: 'Belum bergabung dengan LuminaFrame? Daftar',
+    registerRedirect: 'Belum bergabung dengan LumineFrame? Daftar',
     successRegisterMsg: 'Pendaftaran Berhasil',
     failedRegisterMsg: 'Format masih salah, silakan coba lagi',
     successLoginMsg: 'Masuk Berhasil',

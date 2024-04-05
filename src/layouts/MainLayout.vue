@@ -6,9 +6,9 @@
         <!-- Tab -->
         <q-toolbar-title style="font-size: 16px">
           <q-img src="src/assets/img/logo.png" class="q-pa-md q-mr-md" style="width: 30px" />
-          <router-link to="/" class="nav__link q-mx-sm text-bold active__tab">{{ $t('navbar.homeTab') }}</router-link>
+          <router-link :to="{ name: 'home' }" class="nav__link q-mx-sm text-bold active__tab" :class="{ active__tab: $route.name === 'home' }">{{ $t('navbar.homeTab') }}</router-link>
           <router-link to="/" class="nav__link q-mx-sm text-bold">{{ $t('navbar.exploreTab') }}</router-link>
-          <router-link to="/" class="nav__link q-mx-sm text-bold">{{ $t('navbar.makeTab') }}</router-link>
+          <router-link :to="{ name: 'creationTool' }" class="nav__link q-mx-sm text-bold" :class="{ active__tab: $route.name === 'creationTool' }">{{ $t('navbar.createTab') }}</router-link>
         </q-toolbar-title>
 
         <!-- Search -->
@@ -240,12 +240,12 @@
       <router-view />
     </q-page-container>
 
-    <!-- Mobilr -->
+    <!-- Mobile -->
     <q-footer class="mobile" elevated>
       <q-tabs class="bg-secondary text-light" align="justify" dense>
-        <q-route-tab name="home" icon="home" to="/" />
+        <q-route-tab name="home" icon="home" :to="{ name: 'home' }" />
         <q-route-tab name="search" icon="search" />
-        <q-route-tab name="make" class="larger-tab">
+        <q-route-tab name="create" class="larger-tab" :to="{ name: 'creationTool' }">
           <div>
             <q-icon name="add_circle" color="light" size="30px" />
           </div>
