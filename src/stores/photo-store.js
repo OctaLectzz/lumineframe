@@ -3,7 +3,8 @@ import { server } from 'src/boot/axios'
 
 const token = localStorage.getItem('token')
 const headers = {
-  Authorization: `Bearer ${token}`
+  Authorization: `Bearer ${token}`,
+  'Content-Type': 'multipart/form-data'
 }
 
 export const usePhotoStore = defineStore('photo', {

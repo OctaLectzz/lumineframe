@@ -1,4 +1,8 @@
 export default {
+  public: {
+    requiredText: '*',
+    optionalText: '(可选)'
+  },
   navbar: {
     homeTab: '主页',
     exploreTab: '探索',
@@ -43,6 +47,24 @@ export default {
       passwordConfirmationRequired: '必须填写确认密码',
       passwordConfirmationMinLength: '最小密码确认为 6 个字符',
       passwordConfirmationSame: '密码确认不匹配'
+    }
+  },
+  create: {
+    headerText: '创建 Lumine 照片',
+    handleButton: '发布',
+    chooseFile: '选择文件或将其拖放到此处',
+    recomendedFile: '我们建议使用高质量的 .jpg 文件，大小不超过 20mb',
+    titleForm: '标题',
+    descriptionForm: '描述',
+    tagForm: '标签',
+    categoryForm: '类别',
+    imageType: '请上传有效的图像文件（JPEG、PNG、JPG）',
+    successMsg: '照片发布成功',
+    errorMsg: '照片发布失败',
+    validate: {
+      titleMaxLength: '标题不得超过 255 个字符',
+      descriptionMaxLength: '描述不得超过 255 个字符',
+      tagMaxLength: '标签不得超过 20 个字符'
     }
   }
 }

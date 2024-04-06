@@ -1,4 +1,8 @@
 export default {
+  public: {
+    requiredText: '*',
+    optionalText: '(オプション)'
+  },
   navbar: {
     homeTab: 'ホーム',
     exploreTab: '探検',
@@ -43,6 +47,24 @@ export default {
       passwordConfirmationRequired: 'パスワード確認は必須です',
       passwordConfirmationMinLength: 'パスワード確認は6文字以上である必要があります',
       passwordConfirmationSame: 'パスワード確認が一致しません'
+    }
+  },
+  create: {
+    headerText: 'Lumine写真を作成する',
+    handleButton: '公開',
+    chooseFile: 'ファイルを選択するか、ここにドラッグアンドドロップしてください',
+    recomendedFile: '20MB未満の高品質の.jpgファイルを使用することをお勧めします',
+    titleForm: 'タイトル',
+    descriptionForm: '説明',
+    tagForm: 'タグ',
+    categoryForm: 'カテゴリ',
+    imageType: '有効な画像ファイル（JPEG、PNG、JPG）をアップロードしてください',
+    successMsg: '写真が正常に公開されました',
+    errorMsg: '写真の公開に失敗しました',
+    validate: {
+      titleMaxLength: 'タイトルは255文字を超えることはできません',
+      descriptionMaxLength: '説明は255文字を超えることはできません',
+      tagMaxLength: 'タグは20文字を超えることはできません'
     }
   }
 }

@@ -1,4 +1,8 @@
 export default {
+  public: {
+    requiredText: '*',
+    optionalText: '(необязательно)'
+  },
   navbar: {
     homeTab: 'Главная',
     exploreTab: 'Исследовать',
@@ -43,6 +47,24 @@ export default {
       passwordConfirmationRequired: 'Подтверждение пароля должно быть заполнено',
       passwordConfirmationMinLength: 'Минимальная длина подтверждения пароля - 6 символов',
       passwordConfirmationSame: 'Пароли не совпадают'
+    }
+  },
+  create: {
+    headerText: 'Создать фото Lumine',
+    handleButton: 'Опубликовать',
+    chooseFile: 'Выберите файл или перетащите его сюда',
+    recomendedFile: 'Мы рекомендуем использовать файлы .jpg высокого качества размером менее 20 МБ',
+    titleForm: 'Заголовок',
+    descriptionForm: 'Описание',
+    tagForm: 'Тег',
+    categoryForm: 'Категория',
+    imageType: 'Пожалуйста, загрузите действительный файл изображения (JPEG, PNG, JPG)',
+    successMsg: 'Фото успешно опубликовано',
+    errorMsg: 'Не удалось опубликовать фото',
+    validate: {
+      titleMaxLength: 'Заголовок не может быть больше 255 символов',
+      descriptionMaxLength: 'Описание не может быть больше 255 символов',
+      tagMaxLength: 'Тег не может быть больше 20 символов'
     }
   }
 }

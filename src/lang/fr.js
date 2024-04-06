@@ -1,4 +1,8 @@
 export default {
+  public: {
+    requiredText: '*',
+    optionalText: '(optionnel)'
+  },
   navbar: {
     homeTab: 'Accueil',
     exploreTab: 'Explorer',
@@ -43,6 +47,24 @@ export default {
       passwordConfirmationRequired: 'La confirmation du mot de passe doit être renseignée',
       passwordConfirmationMinLength: 'La confirmation du mot de passe doit comporter au moins 6 caractères',
       passwordConfirmationSame: 'La confirmation du mot de passe ne correspond pas'
+    }
+  },
+  create: {
+    headerText: 'Créer une Photo Lumine',
+    handleButton: 'Publier',
+    chooseFile: 'Choisissez un fichier ou faites-le glisser ici',
+    recomendedFile: "Nous recommandons d'utiliser des fichiers .jpg de haute qualité de moins de 20 Mo",
+    titleForm: 'Titre',
+    descriptionForm: 'Description',
+    tagForm: 'Étiquette',
+    categoryForm: 'Catégorie',
+    imageType: 'Veuillez télécharger un fichier image valide (JPEG, PNG, JPG)',
+    successMsg: 'Photo publiée avec succès',
+    errorMsg: 'Échec de la publication de la photo',
+    validate: {
+      titleMaxLength: 'Le titre ne doit pas dépasser 255 caractères',
+      descriptionMaxLength: 'La description ne doit pas dépasser 255 caractères',
+      tagMaxLength: 'La balise ne doit pas dépasser 20 caractères'
     }
   }
 }

@@ -1,4 +1,8 @@
 export default {
+  public: {
+    requiredText: '*',
+    optionalText: '(pilihan)'
+  },
   navbar: {
     homeTab: 'Laman Utama',
     exploreTab: 'Teroka',
@@ -43,6 +47,24 @@ export default {
       passwordConfirmationRequired: 'Pengesahan kata laluan mesti diisi',
       passwordConfirmationMinLength: 'Pengesahan kata laluan minimum adalah 6 aksara',
       passwordConfirmationSame: 'Pengesahan kata laluan tidak sepadan'
+    }
+  },
+  create: {
+    headerText: 'Buat Foto Lumine',
+    handleButton: 'Terbitkan',
+    chooseFile: 'Pilih fail atau seret dan lepaskan di sini',
+    recomendedFile: 'Kami mengesyorkan menggunakan fail .jpg berkualiti tinggi kurang daripada 20mb',
+    titleForm: 'Tajuk',
+    descriptionForm: 'Penerangan',
+    tagForm: 'Tag',
+    categoryForm: 'Kategori',
+    imageType: 'Sila muat naik fail gambar yang sah (JPEG, PNG, JPG)',
+    successMsg: 'Foto Berjaya Diterbitkan',
+    errorMsg: 'Gagal Menerbitkan Foto',
+    validate: {
+      titleMaxLength: 'Tajuk tidak boleh melebihi 255 aksara',
+      descriptionMaxLength: 'Penerangan tidak boleh melebihi 255 aksara',
+      tagMaxLength: 'Tag tidak boleh melebihi 20 aksara'
     }
   }
 }

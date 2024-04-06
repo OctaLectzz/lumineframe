@@ -1,4 +1,8 @@
 export default {
+  public: {
+    requiredText: '*',
+    optionalText: '(اختياري)'
+  },
   navbar: {
     homeTab: 'الصفحة الرئيسية',
     exploreTab: 'استكشاف',
@@ -43,6 +47,24 @@ export default {
       passwordConfirmationRequired: 'يجب ملء تأكيد كلمة المرور',
       passwordConfirmationMinLength: 'الحد الأدنى لتأكيد كلمة المرور هو 6 أحرف',
       passwordConfirmationSame: 'تأكيد كلمة المرور غير متطابق'
+    }
+  },
+  create: {
+    headerText: 'إنشاء صورة Lumine',
+    handleButton: 'نشر',
+    chooseFile: 'اختر ملفًا أو اسحبه وأفلته هنا',
+    recomendedFile: 'نوصي باستخدام ملفات .jpg عالية الجودة بحجم أقل من 20 ميجابايت',
+    titleForm: 'العنوان',
+    descriptionForm: 'الوصف',
+    tagForm: 'الوسم',
+    categoryForm: 'الفئة',
+    imageType: 'يرجى تحميل ملف صورة صالح (JPEG ، PNG ، JPG)',
+    successMsg: 'تم نشر الصورة بنجاح',
+    errorMsg: 'فشل نشر الصورة',
+    validate: {
+      titleMaxLength: 'العنوان لا يجب أن يزيد عن 255 حرفًا',
+      descriptionMaxLength: 'الوصف لا يجب أن يزيد عن 255 حرفًا',
+      tagMaxLength: 'الوسم لا يجب أن يزيد عن 20 حرفًا'
     }
   }
 }

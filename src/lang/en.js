@@ -57,6 +57,14 @@ export default {
     titleForm: 'Title',
     descriptionForm: 'Description',
     tagForm: 'Tag',
-    categoryForm: 'Category'
+    categoryForm: 'Category',
+    imageType: 'Please upload a valid image file (JPEG, PNG, JPG)',
+    successMsg: 'Photo Published Successfully',
+    errorMsg: 'Photo Failed to Publish',
+    validate: {
+      titleMaxLength: 'The Title may not be greater than 255 characters',
+      descriptionMaxLength: 'The Description may not be greater than 255 characters',
+      tagMaxLength: 'The Tag may not be greater than 20 characters'
+    }
   }
 }

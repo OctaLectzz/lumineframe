@@ -1,4 +1,8 @@
 export default {
+  public: {
+    requiredText: '*',
+    optionalText: '(opsional)'
+  },
   navbar: {
     homeTab: 'Beranda',
     exploreTab: 'Jelajahi',
@@ -43,6 +47,24 @@ export default {
       passwordConfirmationRequired: 'Konfirmasi kata sandi harus diisi',
       passwordConfirmationMinLength: 'Konfirmasi kata sandi minimal 6 karakter',
       passwordConfirmationSame: 'Konfirmasi kata sandi tidak cocok'
+    }
+  },
+  create: {
+    headerText: 'Buat Foto Lumine',
+    handleButton: 'Terbitkan',
+    chooseFile: 'Pilih file atau seret dan lepas di sini',
+    recomendedFile: 'Kami merekomendasikan menggunakan file .jpg berkualitas tinggi kurang dari 20mb',
+    titleForm: 'Judul',
+    descriptionForm: 'Deskripsi',
+    tagForm: 'Tag',
+    categoryForm: 'Kategori',
+    imageType: 'Silakan unggah file gambar yang valid (JPEG, PNG, JPG)',
+    successMsg: 'Foto berhasil diterbitkan',
+    errorMsg: 'Foto gagal diterbitkan',
+    validate: {
+      titleMaxLength: 'Judul tidak boleh lebih dari 255 karakter',
+      descriptionMaxLength: 'Deskripsi tidak boleh lebih dari 255 karakter',
+      tagMaxLength: 'Tag tidak boleh lebih dari 20 karakter'
     }
   }
 }

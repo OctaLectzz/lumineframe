@@ -1,4 +1,8 @@
 export default {
+  public: {
+    requiredText: '*',
+    optionalText: '(ไม่จำเป็น)'
+  },
   navbar: {
     homeTab: 'หน้าแรก',
     exploreTab: 'สำรวจ',
@@ -43,6 +47,24 @@ export default {
       passwordConfirmationRequired: 'จำเป็นต้องกรอกยืนยันรหัสผ่าน',
       passwordConfirmationMinLength: 'ยืนยันรหัสผ่านขั้นต่ำคือ 6 ตัวอักษร',
       passwordConfirmationSame: 'ยืนยันรหัสผ่านไม่ตรงกัน'
+    }
+  },
+  create: {
+    headerText: 'สร้างภาพ Lumine',
+    handleButton: 'เผยแพร่',
+    chooseFile: 'เลือกไฟล์หรือลากร่องและวางที่นี่',
+    recomendedFile: 'เราขอแนะนำให้ใช้ไฟล์ .jpg คุณภาพสูงน้อยกว่า 20mb',
+    titleForm: 'หัวข้อ',
+    descriptionForm: 'คำอธิบาย',
+    tagForm: 'แท็ก',
+    categoryForm: 'หมวดหมู่',
+    imageType: 'โปรดอัปโหลดไฟล์รูปภาพที่ถูกต้อง (JPEG, PNG, JPG)',
+    successMsg: 'เผยแพร่รูปภาพเรียบร้อยแล้ว',
+    errorMsg: 'การเผยแพร่รูปภาพล้มเหลว',
+    validate: {
+      titleMaxLength: 'หัวข้อต้องไม่เกิน 255 ตัวอักษร',
+      descriptionMaxLength: 'คำอธิบายต้องไม่เกิน 255 ตัวอักษร',
+      tagMaxLength: 'แท็กต้องไม่เกิน 20 ตัวอักษร'
     }
   }
 }
