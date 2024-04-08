@@ -1,31 +1,31 @@
 <template>
   <q-page class="q-pa-md">
-    <div class="header text-h5 text-bold fixed-top bg-white q-pa-md">
+    <div class="header text-h5 text-bold fixed-top q-pa-md" :class="$q.dark.isActive ? 'bg-dark' : 'bg-white'">
       {{ $t('create.headerText') }}
-      <q-btn class="float-right" color="primary" :label="$t('create.handleButton')" :loading="loading" @click="createPhoto" rounded>
+      <q-btn class="float-right" color="primary" :label="$t('create.handleButton')" :loading="loading" :disable="disabledButton" @click="createPhoto" rounded>
         <template v-slot:loading>
-          <q-spinner-hourglass class="on-left" />
-          Loading...
+          <q-spinner-hourglass class="on-center" />
         </template>
       </q-btn>
     </div>
-    <div class="row justify-center q-gutter-xl" style="margin: 100px 0">
+    <div class="row justify-center q-gutter-xl" style="margin: 120px 0">
       <!-- Image -->
       <div class="col-xs-10 col-md-3">
         <div
           class="dropzone cursor-pointer"
           :class="{ 'active-dropzone': active, 'dropzone-image': image }"
+          :style="$q.dark.isActive ? 'border: 2px dashed #fff' : 'border: 2px dashed var(--q-primary)'"
           @dragenter.prevent="toggleActive"
           @dragleave.prevent="toggleActive"
-          @dragover.prevent
+          @dragover.prevent="toggleActive"
           @drop.prevent="drop"
         >
           <span v-if="!image" class="text-center cursor-pointer" @click="openFileInput">
             <label for="dropzoneFile" class="upload-icon cursor-pointer">
               <q-icon name="upload" />
             </label>
-            <div class="text-bold q-mt-md q-mb-xl q-pb-xl">{{ $t('create.chooseFile') }}</div>
-            <div class="text-grey-7 q-mt-xl q-pt-xl">{{ $t('create.recomendedFile') }}</div>
+            <div class="text-bold q-mt-md q-mb-xl q-pb-xl" :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'">{{ $t('create.chooseFile') }}</div>
+            <div class="recomended-text text-grey-7 q-mt-xl q-pt-xl">{{ $t('create.recomendedFile') }}</div>
           </span>
           <div v-if="image">
             <img :src="image" alt="Preview" class="preview-image" width="100%" />
@@ -42,13 +42,13 @@
           <!-- Title -->
           <div class="q-my-lg">
             <label for="title" class="text-grey-8 text-subtitle2">{{ $t('create.titleForm') }}{{ $t('public.optionalText') }}</label>
-            <q-input type="text" v-model="data.title" :label="$t('create.titleForm')" :rules="rules.title" outlined dense />
+            <q-input type="text" v-model="data.title" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('create.titleForm')" :rules="rules.title" outlined dense />
           </div>
 
           <!-- Description -->
           <div class="q-my-lg">
             <label for="description" class="text-grey-8 text-subtitle2">{{ $t('create.descriptionForm') }}{{ $t('public.optionalText') }}</label>
-            <q-input type="textarea" v-model="data.description" :label="$t('create.descriptionForm')" :rules="rules.description" outlined dense />
+            <q-input type="textarea" v-model="data.description" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('create.descriptionForm')" :rules="rules.description" outlined dense />
           </div>
 
           <!-- Category -->
@@ -56,8 +56,9 @@
             <label for="category" class="text-grey-8 text-subtitle2">{{ $t('create.categoryForm') }}{{ $t('public.optionalText') }}</label>
             <q-select
               v-model="data.category"
-              :label="$t('create.categoryForm')"
               :options="categoryOptions"
+              :color="$q.dark.isActive ? 'secondary' : 'primary'"
+              :label="$t('create.categoryForm')"
               @filter="categoryFilter"
               input-debounce="0"
               use-input
@@ -72,12 +73,23 @@
           <!-- Tag -->
           <div class="q-my-lg">
             <label for="tag" class="text-grey-8 text-subtitle2">{{ $t('create.tagForm') }}{{ $t('public.optionalText') }}</label>
-            <q-input v-model="tagInput" :label="$t('create.tagForm')" @keydown.enter="addTag" autocomplete="list" :list="tagListId" :disable="disabledTag" :rules="rules.tag" outlined dense>
+            <q-input
+              v-model="tagInput"
+              :color="$q.dark.isActive ? 'secondary' : 'primary'"
+              :label="$t('create.tagForm')"
+              @keydown.enter="addTag"
+              autocomplete="list"
+              :list="tagListId"
+              :disable="disabledTag"
+              :rules="rules.tag"
+              outlined
+              dense
+            >
               <template v-slot:append>
                 <q-btn color="primary" size="sm" icon="add" @click="addTag" dense />
               </template>
             </q-input>
-            <q-list v-show="showTagList && tagInput.length > 0" class="tag-list" dense>
+            <q-list v-show="showTagList && tagInput.length > 0" class="tag-list" :class="$q.dark.isActive ? 'bg-dark' : 'bg-white'" dense>
               <q-item v-for="(tag, index) in filteredTags" :key="index" clickable @click="addTagFromList(tag)">
                 <q-item-section>{{ tag }}</q-item-section>
               </q-item>
@@ -93,18 +105,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-import { useQuasar } from 'quasar'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
 import { usePhotoStore } from 'src/stores/photo-store'
 import { useCategoryStore } from 'src/stores/category-store'
 import { useTagStore } from 'src/stores/tag-store'
 
-const $q = useQuasar()
 const { t } = useI18n()
 const photoStore = usePhotoStore()
-const loading = ref(false)
 
 // Data
 const data = ref({
@@ -118,10 +127,16 @@ const data = ref({
 
 // Validate
 const rules = {
-  title: [(val) => !val || val.length <= 255 || t('create.validate.titleMaxLength')],
+  title: [(val) => !val || val.length <= 20 || t('create.validate.titleMaxLength')],
   description: [(val) => !val || val.length <= 255 || t('create.validate.descriptionMaxLength')],
   tag: [(val) => !val || val.length <= 20 || t('create.validate.tagMaxLength')]
 }
+
+// Loading Button
+const loading = ref(false)
+const disabledButton = computed(() => {
+  return loading.value || !image.value
+})
 
 // Image
 const image = ref(null)
@@ -255,7 +270,9 @@ const createPhoto = async () => {
 
   try {
     data.value.image = dropzoneFile.value
-    data.value.category_id = categories.value.find((category) => category.label === data.value.category).id
+    if (data.value.category) {
+      data.value.category_id = categories.value.find((category) => category.label === data.value.category).id
+    }
 
     await photoStore.create(data.value)
 
@@ -295,7 +312,6 @@ const createPhoto = async () => {
   justify-content: center;
   align-items: center;
   color: var(--q-primary);
-  border: 2px dashed var(--q-primary);
   border-radius: 30px;
   transition: 0.3s ease all;
 
@@ -311,9 +327,13 @@ const createPhoto = async () => {
   }
 }
 
+.recomended-text {
+  font-size: 10px;
+}
+
 .active-dropzone {
   color: #fff;
-  background-color: var(--q-secondary);
+  background-color: #2732b049;
 
   label {
     color: var(--q-primary);
@@ -330,7 +350,6 @@ const createPhoto = async () => {
 }
 .active-dropzone.dropzone-image {
   color: var(--q-primary);
-  background-color: #fff;
 
   label {
     color: #fff;

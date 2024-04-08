@@ -1,32 +1,45 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <!-- Desktop -->
-    <q-header :class="$q.dark.isActive ? 'desktop bg-secondary ' : 'desktop bg-white'">
+    <q-header class="desktop" :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-white'">
       <q-toolbar class="text-primary q-my-md">
         <!-- Tab -->
         <q-toolbar-title style="font-size: 16px">
           <q-img src="src/assets/img/logo.png" class="q-pa-md q-mr-md" style="width: 30px" />
-          <router-link :to="{ name: 'home' }" class="nav__link q-mx-sm text-bold active__tab" :class="{ active__tab: $route.name === 'home' }">{{ $t('navbar.homeTab') }}</router-link>
-          <router-link to="/" class="nav__link q-mx-sm text-bold">{{ $t('navbar.exploreTab') }}</router-link>
-          <router-link :to="{ name: 'creationTool' }" class="nav__link q-mx-sm text-bold" :class="{ active__tab: $route.name === 'creationTool' }">{{ $t('navbar.createTab') }}</router-link>
+          <router-link :to="{ name: 'home' }" class="nav-link q-mx-sm text-bold" :class="{ 'active-tab text-white': $route.name === 'home', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }">
+            {{ $t('navbar.homeTab') }}
+          </router-link>
+          <router-link to="/" class="nav-link q-mx-sm text-bold" :class="{ 'active-tab text-white': $route.name === 'explore', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }">
+            {{ $t('navbar.exploreTab') }}
+          </router-link>
+          <router-link
+            :to="{ name: 'creationTool' }"
+            class="nav-link q-mx-sm text-bold"
+            :class="{ 'active-tab text-white': $route.name === 'creationTool', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }"
+          >
+            {{ $t('navbar.createTab') }}
+          </router-link>
         </q-toolbar-title>
 
         <!-- Search -->
         <div class="q-mr-lg">
           <input type="text" v-model="search" class="search-bar" placeholder="Search..." hint="Search" />
-          <q-icon name="search" size="1.5em" style="margin-left: -38px" />
+          <q-icon name="search" :color="$q.dark.isActive ? 'secondary' : 'primary'" size="1.5em" style="margin-left: -38px" />
         </div>
+
+        <!-- Switch Mode -->
+        <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" @click="toggleSwitchMode" :icon="$q.dark.isActive ? 'brightness_7' : 'brightness_4'" flat round />
 
         <!-- Authentication -->
         <div v-if="!token">
           <!-- Login -->
-          <q-btn color="primary" text-color="white" :label="$t('navbar.loginBtn')" class="q-mx-xs" @click="openLoginDialog" rounded />
+          <q-btn color="primary" text-color="secondary" :label="$t('navbar.loginBtn')" class="q-mx-xs" @click="openLoginDialog" rounded />
           <q-dialog v-model="loginDialog">
             <LoginDialog @register="openRegister" />
           </q-dialog>
 
           <!-- Register -->
-          <q-btn color="secondary" text-color="white" :label="$t('navbar.signupBtn')" class="q-mx-xs" @click="openRegisterDialog" rounded />
+          <q-btn color="secondary" text-color="primary" :label="$t('navbar.signupBtn')" class="q-mx-xs" @click="openRegisterDialog" rounded />
           <q-dialog v-model="registerDialog">
             <RegisterDialog @login="openLogin" />
           </q-dialog>
@@ -34,7 +47,7 @@
 
         <!-- Switch Languages -->
         <div v-else>
-          <q-btn-dropdown class="q-mx-xs" dense flat>
+          <q-btn-dropdown :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" dense flat>
             <template v-slot:label>
               <img :src="'src/assets/img/lang/' + lang + '.png'" width="20" />
             </template>
@@ -70,7 +83,7 @@
           </q-btn-dropdown>
 
           <!-- Profile Menu -->
-          <q-btn-dropdown class="q-mx-xs" rounded dense flat push glossy split>
+          <q-btn-dropdown :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" rounded dense flat push glossy split>
             <template v-slot:label>
               <q-avatar size="26px">
                 <img :src="url + '/avatars/' + profile.avatar" />
@@ -124,14 +137,17 @@
     </q-header>
 
     <!-- Mobile -->
-    <q-header :class="$q.dark.isActive ? 'mobile bg-secondary ' : 'mobile bg-white'">
+    <q-header class="mobile" :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-white'">
       <q-toolbar class="text-primary">
         <q-toolbar-title>
           <q-img src="src/assets/img/logo.png" class="q-pa-md q-mr-md" style="width: 30px" />
         </q-toolbar-title>
 
+        <!-- Switch Mode -->
+        <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" @click="toggleSwitchMode" :icon="$q.dark.isActive ? 'brightness_7' : 'brightness_4'" flat round dense />
+
         <!-- Switch Languages -->
-        <q-btn-dropdown class="q-mx-xs" dense flat>
+        <q-btn-dropdown :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" dense flat>
           <template v-slot:label>
             <img :src="'src/assets/img/lang/' + lang + '.png'" width="20" />
           </template>
@@ -169,13 +185,13 @@
         <!-- Authentication -->
         <div v-if="!token">
           <!-- Login -->
-          <q-btn color="primary" text-color="white" size="sm" :label="$t('navbar.loginBtn')" class="q-mx-xs" @click="openLoginDialog" rounded />
+          <q-btn color="primary" text-color="secondary" size="sm" :label="$t('navbar.loginBtn')" class="q-mx-xs" @click="openLoginDialog" rounded />
           <q-dialog v-model="loginDialog">
             <LoginDialog @register="openRegister" />
           </q-dialog>
 
           <!-- Register -->
-          <q-btn color="secondary" text-color="white" size="sm" :label="$t('navbar.signupBtn')" class="q-mx-xs" @click="openRegisterDialog" rounded />
+          <q-btn color="secondary" text-color="primary" size="sm" :label="$t('navbar.signupBtn')" class="q-mx-xs" @click="openRegisterDialog" rounded />
           <q-dialog v-model="registerDialog">
             <RegisterDialog @login="openLogin" />
           </q-dialog>
@@ -183,7 +199,7 @@
 
         <!-- Profile Menu -->
         <div v-else>
-          <q-btn-dropdown class="q-mx-xs" rounded dense flat push glossy split>
+          <q-btn-dropdown :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" rounded dense flat push glossy split>
             <template v-slot:label>
               <q-avatar size="26px">
                 <img :src="url + '/avatars/' + profile.avatar" />
@@ -279,9 +295,22 @@ const { t } = useI18n()
 const authStore = useAuthStore()
 const token = localStorage.getItem('token')
 const role = localStorage.getItem('role')
+const darkmode = localStorage.getItem('darkmode') || 'false'
 
 // Search
 const search = ref()
+
+// Switch Mode
+const isDarkMode = ref(JSON.parse(darkmode))
+$q.dark.set(isDarkMode.value)
+const toggleSwitchMode = () => {
+  const newMode = !isDarkMode.value
+  $q.dark.set(newMode)
+
+  isDarkMode.value = newMode
+  localStorage.setItem('darkmode', newMode)
+  window.location.reload()
+}
 
 // Change Language
 const changeLanguage = (newLocale) => {
@@ -356,20 +385,18 @@ const logout = async () => {
 </script>
 
 <style scoped>
-/* Responsive Navbar & Tab */
 .mobile {
   display: none;
 }
 
-.nav__link {
+.nav-link {
   color: #000;
   text-decoration: none;
   font-size: 12px;
 }
 
-.active__tab {
-  background-color: #00085a;
-  color: #fff;
+.active-tab {
+  background-color: var(--q-primary);
   padding: 5px 10px;
   border-radius: 50px;
 }
@@ -402,7 +429,7 @@ const logout = async () => {
   }
 }
 @media screen and (min-width: 691px) {
-  .nav__link {
+  .nav-link {
     font-size: 14px;
   }
   .search-bar {
@@ -413,7 +440,7 @@ const logout = async () => {
 
 /* For medium devices */
 @media screen and (min-width: 909px) {
-  .nav__link {
+  .nav-link {
     font-size: 16px;
   }
   .search-bar {
@@ -424,7 +451,7 @@ const logout = async () => {
 
 /* For large devices */
 @media screen and (min-width: 1150px) {
-  .nav__link {
+  .nav-link {
     font-size: 16px;
   }
   .search-bar {

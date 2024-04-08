@@ -62,7 +62,7 @@ export default {
     successMsg: 'Foto berhasil diterbitkan',
     errorMsg: 'Foto gagal diterbitkan',
     validate: {
-      titleMaxLength: 'Judul tidak boleh lebih dari 255 karakter',
+      titleMaxLength: 'Judul tidak boleh lebih dari 20 karakter',
       descriptionMaxLength: 'Deskripsi tidak boleh lebih dari 255 karakter',
       tagMaxLength: 'Tag tidak boleh lebih dari 20 karakter'
     }

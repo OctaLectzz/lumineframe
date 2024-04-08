@@ -62,7 +62,7 @@ export default {
     successMsg: 'เผยแพร่รูปภาพเรียบร้อยแล้ว',
     errorMsg: 'การเผยแพร่รูปภาพล้มเหลว',
     validate: {
-      titleMaxLength: 'หัวข้อต้องไม่เกิน 255 ตัวอักษร',
+      titleMaxLength: 'หัวข้อต้องไม่เกิน 20 ตัวอักษร',
       descriptionMaxLength: 'คำอธิบายต้องไม่เกิน 255 ตัวอักษร',
       tagMaxLength: 'แท็กต้องไม่เกิน 20 ตัวอักษร'
     }

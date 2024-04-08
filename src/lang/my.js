@@ -62,7 +62,7 @@ export default {
     successMsg: 'Foto Berjaya Diterbitkan',
     errorMsg: 'Gagal Menerbitkan Foto',
     validate: {
-      titleMaxLength: 'Tajuk tidak boleh melebihi 255 aksara',
+      titleMaxLength: 'Tajuk tidak boleh melebihi 30 aksara',
       descriptionMaxLength: 'Penerangan tidak boleh melebihi 255 aksara',
       tagMaxLength: 'Tag tidak boleh melebihi 20 aksara'
     }

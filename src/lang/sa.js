@@ -62,7 +62,7 @@ export default {
     successMsg: 'تم نشر الصورة بنجاح',
     errorMsg: 'فشل نشر الصورة',
     validate: {
-      titleMaxLength: 'العنوان لا يجب أن يزيد عن 255 حرفًا',
+      titleMaxLength: 'العنوان لا يجب أن يزيد عن 20 حرفًا',
       descriptionMaxLength: 'الوصف لا يجب أن يزيد عن 255 حرفًا',
       tagMaxLength: 'الوسم لا يجب أن يزيد عن 20 حرفًا'
     }

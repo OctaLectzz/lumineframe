@@ -62,7 +62,7 @@ export default {
     successMsg: 'Photo publiée avec succès',
     errorMsg: 'Échec de la publication de la photo',
     validate: {
-      titleMaxLength: 'Le titre ne doit pas dépasser 255 caractères',
+      titleMaxLength: 'Le titre ne doit pas dépasser 20 caractères',
       descriptionMaxLength: 'La description ne doit pas dépasser 255 caractères',
       tagMaxLength: 'La balise ne doit pas dépasser 20 caractères'
     }

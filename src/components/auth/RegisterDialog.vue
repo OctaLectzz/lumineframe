@@ -17,41 +17,50 @@
           <!-- First Name -->
           <div class="col-5 q-mr-sm">
             <label for="first_name">{{ $t('auth.firstNameForm') }}</label>
-            <q-input type="text" v-model="first_name" name="first_name" :label="$t('auth.firstNameForm')" :rules="first_nameRules" outlined dense />
+            <q-input type="text" v-model="first_name" :color="$q.dark.isActive ? 'secondary' : 'primary'" name="first_name" :label="$t('auth.firstNameForm')" :rules="first_nameRules" outlined dense />
           </div>
 
           <!-- Last Name -->
           <div class="col-5 q-ml-sm">
             <label for="last_name">{{ $t('auth.lastNameForm') }}</label>
-            <q-input type="text" v-model="last_name" name="last_name" :label="$t('auth.lastNameForm')" outlined dense />
+            <q-input type="text" v-model="last_name" :color="$q.dark.isActive ? 'secondary' : 'primary'" name="last_name" :label="$t('auth.lastNameForm')" outlined dense />
           </div>
         </div>
 
         <!-- Username -->
         <div class="q-px-md">
           <label for="username">{{ $t('auth.usernameForm') }}</label>
-          <q-input type="text" v-model="username" name="username" :label="$t('auth.usernameForm')" :rules="usernameRules" outlined dense />
+          <q-input type="text" v-model="username" :color="$q.dark.isActive ? 'secondary' : 'primary'" name="username" :label="$t('auth.usernameForm')" :rules="usernameRules" outlined dense />
         </div>
 
         <!-- Email -->
         <div class="q-px-md">
           <label for="email">{{ $t('auth.emailForm') }}</label>
-          <q-input type="email" v-model="email" name="email" :label="$t('auth.emailForm')" :rules="emailRules" outlined dense />
+          <q-input type="email" v-model="email" :color="$q.dark.isActive ? 'secondary' : 'primary'" name="email" :label="$t('auth.emailForm')" :rules="emailRules" outlined dense />
         </div>
 
         <!-- Password -->
         <div class="q-px-md">
           <label for="password">{{ $t('auth.passwordForm') }}</label>
-          <q-input type="password" v-model="password" name="password" :label="$t('auth.passwordForm')" :rules="passwordRules" outlined dense />
+          <q-input type="password" v-model="password" :color="$q.dark.isActive ? 'secondary' : 'primary'" name="password" :label="$t('auth.passwordForm')" :rules="passwordRules" outlined dense />
         </div>
 
         <!-- Password Confirmation -->
         <div class="q-px-md">
           <label for="passwordconfirmation">{{ $t('auth.passwordConfirmationForm') }}</label>
-          <q-input type="password" v-model="passwordconfirmation" name="passwordconfirmation" :label="$t('auth.passwordConfirmationForm')" :rules="passwordconfirmationRules" outlined dense />
+          <q-input
+            type="password"
+            v-model="passwordconfirmation"
+            :color="$q.dark.isActive ? 'secondary' : 'primary'"
+            name="passwordconfirmation"
+            :label="$t('auth.passwordConfirmationForm')"
+            :rules="passwordconfirmationRules"
+            outlined
+            dense
+          />
         </div>
 
-        <q-btn color="primary" label="Sign Up" class="full-width q-mt-sm" :loading="loading" @click="register" rounded>
+        <q-btn color="primary" label="Sign Up" class="full-width q-mt-sm" :loading="loading" :disable="loading" @click="register" rounded>
           <template v-slot:loading>
             <q-spinner-hourglass class="on-left" />
             Loading...
@@ -59,16 +68,16 @@
         </q-btn>
       </q-form>
 
-      <div class="q-mt-lg text-center text-grey-8" style="font-size: 11px">
+      <div class="q-mt-lg text-center text-grey-7" style="font-size: 11px">
         <div>{{ $t('auth.permissionText1') }}</div>
         <div>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="text-primary permission__link">Terms of Service</a>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="permission__link" :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'">Terms of Service</a>
           {{ $t('auth.permissionText2') }}
         </div>
         <div>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="text-primary permission__link">Privacy Policy</a>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="permission__link" :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'">Privacy Policy</a>
           .
-          <a href="#" target="_blank" rel="noopener noreferrer" class="text-primary permission__link">Notice at collection</a>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="permission__link" :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'">Notice at collection</a>
           .
         </div>
       </div>
@@ -82,11 +91,10 @@
 
 <script setup>
 import { ref, defineEmits } from 'vue'
-import { useQuasar } from 'quasar'
+import { toast } from 'vue3-toastify'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from 'src/stores/auth-store'
 
-const $q = useQuasar()
 const { t } = useI18n()
 const authStore = useAuthStore()
 const emits = defineEmits(['login'])
@@ -121,25 +129,13 @@ const register = async () => {
       localStorage.setItem('token', res.data.data.token)
       localStorage.setItem('role', res.data.data.role)
 
-      $q.notify({
-        icon: 'check',
-        color: 'positive',
-        message: t('auth.successRegisterMsg')
-      })
+      toast.success(t('auth.successRegisterMsg'))
       window.location.reload()
     } else {
-      $q.notify({
-        icon: 'warning',
-        color: 'negative',
-        message: res.data.message
-      })
+      toast.error(res.data.message)
     }
   } catch (error) {
-    $q.notify({
-      icon: 'warning',
-      color: 'negative',
-      message: t('auth.failedRegisterMsg')
-    })
+    toast.error(t('auth.failedRegisterMsg'))
     console.error(error)
   }
   loading.value = false

@@ -62,7 +62,7 @@ export default {
     successMsg: '写真が正常に公開されました',
     errorMsg: '写真の公開に失敗しました',
     validate: {
-      titleMaxLength: 'タイトルは255文字を超えることはできません',
+      titleMaxLength: 'タイトルは20文字を超えることはできません',
       descriptionMaxLength: '説明は255文字を超えることはできません',
       tagMaxLength: 'タグは20文字を超えることはできません'
     }

@@ -49,6 +49,11 @@ export default {
       passwordConfirmationSame: 'Password Confirmation do not match'
     }
   },
+  home: {
+    menu1: 'Preview Image',
+    menu2: 'Download Image',
+    menu3: 'Report Image',
+  },
   create: {
     headerText: 'Create Lumine Photo',
     handleButton: 'Publish',
@@ -62,7 +67,7 @@ export default {
     successMsg: 'Photo Published Successfully',
     errorMsg: 'Photo Failed to Publish',
     validate: {
-      titleMaxLength: 'The Title may not be greater than 255 characters',
+      titleMaxLength: 'The Title may not be greater than 20 characters',
       descriptionMaxLength: 'The Description may not be greater than 255 characters',
       tagMaxLength: 'The Tag may not be greater than 20 characters'
     }

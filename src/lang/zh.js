@@ -62,7 +62,7 @@ export default {
     successMsg: '照片发布成功',
     errorMsg: '照片发布失败',
     validate: {
-      titleMaxLength: '标题不得超过 255 个字符',
+      titleMaxLength: '标题不得超过 20 个字符',
       descriptionMaxLength: '描述不得超过 255 个字符',
       tagMaxLength: '标签不得超过 20 个字符'
     }
