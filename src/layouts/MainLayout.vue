@@ -1,54 +1,111 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <!-- Desktop -->
-    <q-header class="desktop" :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-white'">
-      <q-toolbar class="text-primary q-my-md">
-        <!-- Logo -->
-        <img src="/src/assets/img/logo.png" width="60" class="q-pa-sm" />
+    <div class="desktop">
+      <q-header :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-white'">
+        <q-toolbar class="text-primary q-my-md">
+          <!-- Logo -->
+          <img src="/src/assets/img/logo.png" width="60" class="q-pa-sm" />
 
-        <!-- Tab -->
-        <q-toolbar-title class="q-py-sm" style="font-size: 16px">
-          <router-link :to="{ name: 'home' }" class="nav-link q-mx-sm text-bold" :class="{ 'active-tab text-white': $route.name === 'home', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }">
-            {{ $t('navbar.homeTab') }}
-          </router-link>
-          <router-link to="/" class="nav-link q-mx-sm text-bold" :class="{ 'active-tab text-white': $route.name === 'explore', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }">
-            {{ $t('navbar.exploreTab') }}
-          </router-link>
-          <router-link
-            :to="{ name: 'creationTool' }"
-            class="nav-link q-mx-sm text-bold"
-            :class="{ 'active-tab text-white': $route.name === 'creationTool', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }"
-          >
-            {{ $t('navbar.createTab') }}
-          </router-link>
-        </q-toolbar-title>
+          <!-- Tab -->
+          <q-toolbar-title class="q-py-sm" style="font-size: 16px">
+            <router-link :to="{ name: 'home' }" class="nav-link q-mx-sm text-bold" :class="{ 'active-tab text-white': $route.name === 'home', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }">
+              {{ $t('navbar.homeTab') }}
+            </router-link>
+            <router-link to="/" class="nav-link q-mx-sm text-bold" :class="{ 'active-tab text-white': $route.name === 'explore', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }">
+              {{ $t('navbar.exploreTab') }}
+            </router-link>
+            <router-link
+              :to="{ name: 'creationTool' }"
+              class="nav-link q-mx-sm text-bold"
+              :class="{ 'active-tab text-white': $route.name === 'creationTool', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }"
+            >
+              {{ $t('navbar.createTab') }}
+            </router-link>
+          </q-toolbar-title>
 
-        <!-- Search -->
-        <div class="q-mr-lg">
-          <input type="text" v-model="search" class="search-bar" placeholder="Search..." hint="Search" />
-          <q-icon name="search" :color="$q.dark.isActive ? 'secondary' : 'primary'" size="1.5em" style="margin-left: -38px" />
-        </div>
+          <!-- Search -->
+          <div class="q-mr-lg">
+            <input type="text" v-model="search" class="search-bar" placeholder="Search..." hint="Search" />
+            <q-icon name="search" :color="$q.dark.isActive ? 'secondary' : 'primary'" size="1.5em" style="margin-left: -38px" />
+          </div>
 
-        <!-- Switch Mode -->
-        <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" @click="toggleSwitchMode" :icon="$q.dark.isActive ? 'brightness_7' : 'brightness_4'" flat round />
+          <!-- Switch Mode -->
+          <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" @click="toggleSwitchMode" :icon="$q.dark.isActive ? 'brightness_7' : 'brightness_4'" flat round />
 
-        <!-- Authentication -->
-        <div v-if="!token">
-          <!-- Login -->
-          <q-btn color="primary" text-color="secondary" :label="$t('navbar.loginBtn')" class="q-mx-xs" @click="openLoginDialog" rounded />
-          <q-dialog v-model="loginDialog">
-            <LoginDialog @register="openRegister" />
-          </q-dialog>
+          <!-- Authentication -->
+          <div v-if="!token">
+            <!-- Login -->
+            <q-btn color="primary" text-color="secondary" :label="$t('navbar.loginBtn')" class="q-mx-xs" @click="openLoginDialog" rounded />
+            <q-dialog v-model="loginDialog">
+              <LoginDialog @register="openRegister" />
+            </q-dialog>
 
-          <!-- Register -->
-          <q-btn color="secondary" text-color="primary" :label="$t('navbar.signupBtn')" class="q-mx-xs" @click="openRegisterDialog" rounded />
-          <q-dialog v-model="registerDialog">
-            <RegisterDialog @login="openLogin" />
-          </q-dialog>
-        </div>
+            <!-- Register -->
+            <q-btn color="secondary" text-color="primary" :label="$t('navbar.signupBtn')" class="q-mx-xs" @click="openRegisterDialog" rounded />
+            <q-dialog v-model="registerDialog">
+              <RegisterDialog @login="openLogin" />
+            </q-dialog>
+          </div>
 
-        <!-- Switch Languages -->
-        <div v-else>
+          <!-- Switch Languages -->
+          <div v-else>
+            <q-btn-dropdown :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" dense flat>
+              <template v-slot:label>
+                <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
+              </template>
+              <div class="row no-wrap q-pa-md">
+                <div class="column items-center">
+                  <q-list>
+                    <q-item v-for="lang in languages.left" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
+                      <q-item-section>
+                        <q-item-label>
+                          <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
+                          {{ languageNames[lang] }}
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </div>
+
+                <q-separator vertical inset class="q-mx-md" />
+
+                <div class="column items-center">
+                  <q-list>
+                    <q-item v-for="lang in languages.right" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
+                      <q-item-section>
+                        <q-item-label>
+                          <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
+                          {{ languageNames[lang] }}
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </div>
+              </div>
+            </q-btn-dropdown>
+
+            <!-- Profile Menu -->
+            <ProfileMenu :url="url" :loading="loading" :profile="profile" />
+          </div>
+        </q-toolbar>
+      </q-header>
+    </div>
+
+    <!-- Mobile -->
+    <div class="mobile">
+      <!-- Header -->
+      <q-header :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-white'">
+        <q-toolbar class="text-primary">
+          <!-- Logo -->
+          <q-toolbar-title>
+            <img src="/src/assets/img/logo.png" width="60" class="q-pa-sm" />
+          </q-toolbar-title>
+
+          <!-- Switch Mode -->
+          <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" @click="toggleSwitchMode" :icon="$q.dark.isActive ? 'brightness_7' : 'brightness_4'" flat round dense />
+
+          <!-- Switch Languages -->
           <q-btn-dropdown :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" dense flat>
             <template v-slot:label>
               <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
@@ -84,200 +141,61 @@
             </div>
           </q-btn-dropdown>
 
-          <!-- Profile Menu -->
-          <q-btn-dropdown
-            :to="{ name: 'indexprofile', params: { username: profile.username } }"
-            :color="$q.dark.isActive ? 'secondary' : 'primary'"
-            class="q-mx-xs"
-            rounded
-            dense
-            flat
-            push
-            glossy
-            split
-          >
-            <template v-slot:label>
-              <q-skeleton v-if="loading" type="QAvatar" size="26px" />
+          <!-- Authentication -->
+          <div v-if="!token">
+            <!-- Login -->
+            <q-btn color="primary" text-color="secondary" size="sm" :label="$t('navbar.loginBtn')" class="q-mx-xs" @click="openLoginDialog" rounded />
+            <q-dialog v-model="loginDialog">
+              <LoginDialog @register="openRegister" />
+            </q-dialog>
 
-              <q-avatar v-else size="26px">
-                <img :src="url + '/avatars/' + profile.avatar" />
-              </q-avatar>
-            </template>
-            <div class="row no-wrap q-pa-md">
-              <div class="column">
-                <q-list>
-                  <q-item v-if="role === 'Admin'" @click="navigateTo('home')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>{{ $t('navbar.dashboardDrpdwn') }}</q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="navigateTo('indexprofile', { username: profile.username })" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>{{ $t('navbar.profileDrpdwn') }}</q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="navigateTo('home')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>{{ $t('navbar.likesDrpdwn') }}</q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="navigateTo('home')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>{{ $t('navbar.collectionsDrpdwn') }}</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </div>
-
-              <q-separator vertical inset class="q-mx-md" />
-
-              <div class="column items-center">
-                <q-avatar size="72px">
-                  <img :src="url + '/avatars/' + profile.avatar" />
-                </q-avatar>
-
-                <div class="text-subtitle1 text-bold q-mt-sm">{{ profile.name }}</div>
-                <div class="text-subtitle2 text-grey-8 q-mb-sm" style="margin-top: -7px">{{ profile.email }}</div>
-
-                <q-btn color="primary" :label="$t('navbar.logoutBtn')" push size="sm" v-close-popup @click="logout" />
-              </div>
-            </div>
-          </q-btn-dropdown>
-        </div>
-      </q-toolbar>
-    </q-header>
-
-    <!-- Mobile -->
-    <q-header class="mobile" :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-white'">
-      <q-toolbar class="text-primary">
-        <!-- Logo -->
-        <q-toolbar-title>
-          <img src="/src/assets/img/logo.png" width="60" class="q-pa-sm" />
-        </q-toolbar-title>
-
-        <!-- Switch Mode -->
-        <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" @click="toggleSwitchMode" :icon="$q.dark.isActive ? 'brightness_7' : 'brightness_4'" flat round dense />
-
-        <!-- Switch Languages -->
-        <q-btn-dropdown :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" dense flat>
-          <template v-slot:label>
-            <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
-          </template>
-          <div class="row no-wrap q-pa-md">
-            <div class="column items-center">
-              <q-list>
-                <q-item v-for="lang in languages.left" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
-                  <q-item-section>
-                    <q-item-label>
-                      <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
-                      {{ languageNames[lang] }}
-                    </q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </div>
-
-            <q-separator vertical inset class="q-mx-md" />
-
-            <div class="column items-center">
-              <q-list>
-                <q-item v-for="lang in languages.right" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
-                  <q-item-section>
-                    <q-item-label>
-                      <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
-                      {{ languageNames[lang] }}
-                    </q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </div>
+            <!-- Register -->
+            <q-btn color="secondary" text-color="primary" size="sm" :label="$t('navbar.signupBtn')" class="q-mx-xs" @click="openRegisterDialog" rounded />
+            <q-dialog v-model="registerDialog">
+              <RegisterDialog @login="openLogin" />
+            </q-dialog>
           </div>
-        </q-btn-dropdown>
 
-        <!-- Authentication -->
-        <div v-if="!token">
-          <!-- Login -->
-          <q-btn color="primary" text-color="secondary" size="sm" :label="$t('navbar.loginBtn')" class="q-mx-xs" @click="openLoginDialog" rounded />
-          <q-dialog v-model="loginDialog">
-            <LoginDialog @register="openRegister" />
-          </q-dialog>
+          <!-- Profile Menu -->
+          <div v-else>
+            <ProfileMenu :url="url" :loading="loading" :profile="profile" />
+          </div>
+        </q-toolbar>
+      </q-header>
 
-          <!-- Register -->
-          <q-btn color="secondary" text-color="primary" size="sm" :label="$t('navbar.signupBtn')" class="q-mx-xs" @click="openRegisterDialog" rounded />
-          <q-dialog v-model="registerDialog">
-            <RegisterDialog @login="openLogin" />
-          </q-dialog>
-        </div>
+      <!-- Footer -->
+      <q-footer elevated>
+        <q-tabs :class="$q.dark.isActive ? 'bg-primary text-light' : 'bg-secondary text-dark'" align="justify" dense>
+          <!-- Home -->
+          <q-route-tab name="home" icon="home" :to="{ name: 'home' }" />
 
-        <!-- Profile Menu -->
-        <div v-else>
-          <q-btn-dropdown
-            :to="{ name: 'indexprofile', params: { username: profile.username } }"
-            :color="$q.dark.isActive ? 'secondary' : 'primary'"
-            class="q-mx-xs"
-            rounded
-            dense
-            flat
-            push
-            glossy
-            split
-          >
-            <template v-slot:label>
-              <q-skeleton v-if="loading" type="QAvatar" size="26px" />
+          <!-- Explore -->
+          <q-route-tab name="explore" icon="search" />
 
-              <q-avatar v-else size="26px">
-                <img :src="url + '/avatars/' + profile.avatar" />
-              </q-avatar>
-            </template>
-            <div class="row no-wrap q-pa-md">
-              <div class="column">
-                <q-list>
-                  <q-item v-if="role === 'Admin'" @click="navigateTo('home')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>{{ $t('navbar.dashboardDrpdwn') }}</q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="navigateTo('indexprofile', { username: profile.username })" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>{{ $t('navbar.profileDrpdwn') }}</q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="navigateTo('home')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>{{ $t('navbar.likesDrpdwn') }}</q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item @click="navigateTo('home')" clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>{{ $t('navbar.collectionsDrpdwn') }}</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </div>
-
-              <q-separator vertical inset class="q-mx-md" />
-
-              <div class="column items-center">
-                <q-avatar size="72px">
-                  <img :src="url + '/avatars/' + profile.avatar" />
-                </q-avatar>
-
-                <div class="text-subtitle1 text-bold q-mt-sm">{{ profile.name }}</div>
-                <div class="text-subtitle2 text-grey-8 q-mb-sm" style="margin-top: -7px">{{ profile.email }}</div>
-
-                <q-btn color="primary" :label="$t('navbar.logoutBtn')" push size="sm" v-close-popup @click="logout" />
-              </div>
+          <!-- Create -->
+          <q-route-tab name="create" class="larger-tab" :to="{ name: 'creationTool' }">
+            <div>
+              <q-icon name="add_circle" color="light" size="30px" />
             </div>
-          </q-btn-dropdown>
-        </div>
-      </q-toolbar>
-    </q-header>
+          </q-route-tab>
+
+          <!-- Category -->
+          <q-route-tab name="category" icon="category" />
+
+          <!-- Profile -->
+          <q-route-tab v-if="!token" name="profile" @click="openLoginDialog">
+            <q-avatar size="20px"><img :src="url + '/avatars/user-profile-default.jpg'" /></q-avatar>
+          </q-route-tab>
+          <q-route-tab v-else name="profile" :to="{ name: 'indexprofile' }">
+            <q-skeleton v-if="loading" type="QAvatar" size="20px" />
+
+            <q-avatar v-else size="20px">
+              <img :src="url + '/avatars/' + profile.avatar" />
+            </q-avatar>
+          </q-route-tab>
+        </q-tabs>
+      </q-footer>
+    </div>
 
     <q-page-container>
       <router-view v-slot="{ Component }">
@@ -286,30 +204,6 @@
         </keep-alive>
       </router-view>
     </q-page-container>
-
-    <!-- Mobile -->
-    <q-footer class="mobile" elevated>
-      <q-tabs :class="$q.dark.isActive ? 'bg-primary text-light' : 'bg-secondary text-dark'" align="justify" dense>
-        <q-route-tab name="home" icon="home" :to="{ name: 'home' }" />
-        <q-route-tab name="search" icon="search" />
-        <q-route-tab name="create" class="larger-tab" :to="{ name: 'creationTool' }">
-          <div>
-            <q-icon name="add_circle" color="light" size="30px" />
-          </div>
-        </q-route-tab>
-        <q-route-tab name="category" icon="category" />
-        <q-route-tab v-if="!token" name="profile">
-          <q-avatar size="20px"><img :src="url + '/avatars/user-profile-default.jpg'" /></q-avatar>
-        </q-route-tab>
-        <q-route-tab v-else name="profile" :to="{ name: 'indexprofile' }">
-          <q-skeleton v-if="loading" type="QAvatar" size="20px" />
-
-          <q-avatar v-else size="20px">
-            <img :src="url + '/avatars/' + profile.avatar" />
-          </q-avatar>
-        </q-route-tab>
-      </q-tabs>
-    </q-footer>
   </q-layout>
 </template>
 
@@ -323,13 +217,13 @@ import { lang, languages, languageNames } from '/src/boot/lang'
 import { useAuthStore } from '/src/stores/auth-store'
 import LoginDialog from '/src/components/auth/LoginDialog.vue'
 import RegisterDialog from '/src/components/auth/RegisterDialog.vue'
+import ProfileMenu from '/src/components/ProfileMenu.vue'
 
 const $q = useQuasar()
 const { t } = useI18n()
 const router = useRouter()
 const authStore = useAuthStore()
 const token = localStorage.getItem('token')
-const role = localStorage.getItem('role')
 const darkmode = localStorage.getItem('darkmode') || 'false'
 
 // Search
@@ -394,33 +288,6 @@ const getProfile = async () => {
 onMounted(() => {
   getProfile()
 })
-
-// Logout
-const logout = async () => {
-  $q.dialog({
-    title: 'Logout',
-    message: t('auth.comfirmationLogoutMsg'),
-    cancel: true,
-    persistent: true
-  }).onOk(async () => {
-    try {
-      await authStore.logout()
-
-      $q.notify({
-        icon: 'check',
-        color: 'positive',
-        message: t('auth.successLogoutMsg')
-      })
-    } catch (error) {
-      console.error('Error submitting form:', error)
-      $q.notify({
-        icon: 'warning',
-        color: 'negative',
-        message: error.response.data.message || t('auth.failedLogoutMsg')
-      })
-    }
-  })
-}
 </script>
 
 <style scoped>

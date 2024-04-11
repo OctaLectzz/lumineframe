@@ -23,23 +23,23 @@
     <div v-else class="row justify-center">
       <!-- Avatar -->
       <q-avatar size="110px" class="q-my-md">
-        <img :src="url + '/avatars/' + profile.avatar" />
+        <img :src="url + '/avatars/' + user.avatar" />
       </q-avatar>
       <div class="col-12 text-center">
         <!-- Name -->
-        <div class="text-h5 text-bold">{{ profile.name }}</div>
+        <div class="text-h5 text-bold">{{ user.name }}</div>
 
         <!-- Username & Pronouns -->
         <div class="text-subtitle2 text-grey-7">
-          {{ profile.username }}
-          <span v-if="profile.pronouns">• {{ profile.pronouns }}</span>
+          {{ user.username }}
+          <span v-if="user.pronouns">• {{ user.pronouns }}</span>
         </div>
 
         <!-- URL & About -->
-        <a v-if="profile.url" :href="profile.url" target="_blank" rel="noopener noreferrer" class="permission__link text-bold" :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'">
-          {{ profile.url }} •
+        <a v-if="user.url" :href="user.url" target="_blank" rel="noopener noreferrer" class="permission__link text-bold" :class="$q.dark.isActive ? 'text-secondary' : 'text-primary'">
+          {{ user.url }} •
         </a>
-        {{ profile.about }}
+        {{ user.about }}
       </div>
     </div>
   </div>
@@ -64,16 +64,31 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { url } from '/src/boot/axios'
 import { useUserStore } from '/src/stores/user-store'
+import { useAuthStore } from '/src/stores/auth-store'
 
 const route = useRoute()
 const userStore = useUserStore()
+const authStore = useAuthStore()
+
+// User
+const user = ref([])
+const loading = ref(true)
+const getUser = async (username) => {
+  try {
+    const res = await userStore.show(username)
+
+    user.value = res.data.data
+    loading.value = false
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+}
 
 // Profile
 const profile = ref([])
-const loading = ref(true)
-const getProfile = async (username) => {
+const getProfile = async () => {
   try {
-    const res = await userStore.show(username)
+    const res = await authStore.profile()
 
     profile.value = res.data.data
     loading.value = false
@@ -81,8 +96,10 @@ const getProfile = async (username) => {
     console.error('Error fetching data:', error)
   }
 }
+
 onMounted(() => {
-  getProfile(route.params.username)
+  getUser(route.params.username)
+  getProfile()
 })
 </script>
 
