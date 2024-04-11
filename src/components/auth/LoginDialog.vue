@@ -7,7 +7,7 @@
 
     <q-card-section class="q-px-lg q-pb-xl">
       <div class="row justify-center">
-        <q-img src="src/assets/img/logo.png" style="width: 50px" />
+        <q-img src="/src/assets/img/logo.png" style="width: 50px" />
       </div>
 
       <div class="text-h5 text-bold text-center q-mb-lg">{{ $t('auth.welcomeMsg') }}</div>
@@ -58,7 +58,7 @@
 import { ref, defineEmits } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
-import { useAuthStore } from 'src/stores/auth-store'
+import { useAuthStore } from '/src/stores/auth-store'
 
 const { t } = useI18n()
 const authStore = useAuthStore()

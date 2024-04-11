@@ -84,8 +84,8 @@
 import { ref, onMounted, computed, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import MasonryWall from '@yeger/vue-masonry-wall'
-import { url } from 'src/boot/axios'
-import { usePhotoStore } from 'src/stores/photo-store'
+import { url } from '/src/boot/axios'
+import { usePhotoStore } from '/src/stores/photo-store'
 
 const photoStore = usePhotoStore()
 const router = useRouter()

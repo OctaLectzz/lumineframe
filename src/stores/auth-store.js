@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { server } from 'src/boot/axios'
+import { server } from '/src/boot/axios'
 
 const token = localStorage.getItem('token')
 const headers = {
@@ -18,6 +18,9 @@ export const useAuthStore = defineStore('auth', {
     password: null,
     passwordconfirmation: null,
     role: null,
+    about: null,
+    pronouns: null,
+    birthday: null,
     gender: null,
     phone: null,
     url: null,
@@ -38,7 +41,7 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    async register(username, first_name, last_name, email, password, passwordconfirmation, avatar, birthday, gender, phone, url, address) {
+    async register(username, first_name, last_name, email, password, passwordconfirmation, avatar, about, pronouns, birthday, gender, phone, url, address) {
       try {
         return await server.post('api/auth/register', {
           username,
@@ -48,6 +51,8 @@ export const useAuthStore = defineStore('auth', {
           password,
           passwordconfirmation,
           avatar,
+          about,
+          pronouns,
           birthday,
           gender,
           phone,
@@ -69,10 +74,11 @@ export const useAuthStore = defineStore('auth', {
 
     async logout() {
       try {
-        await server.get('api/auth/logout', { headers })
-
         localStorage.removeItem('token')
         localStorage.removeItem('role')
+        window.location.reload()
+
+        await server.get('api/auth/logout', { headers })
       } catch (error) {
         if (error) throw error
       }

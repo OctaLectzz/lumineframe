@@ -108,9 +108,9 @@
 import { ref, onMounted, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
-import { usePhotoStore } from 'src/stores/photo-store'
-import { useCategoryStore } from 'src/stores/category-store'
-import { useTagStore } from 'src/stores/tag-store'
+import { usePhotoStore } from '/src/stores/photo-store'
+import { useCategoryStore } from '/src/stores/category-store'
+import { useTagStore } from '/src/stores/tag-store'
 
 const { t } = useI18n()
 const photoStore = usePhotoStore()

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { server } from 'src/boot/axios'
+import { server } from '/src/boot/axios'
 
 const token = localStorage.getItem('token')
 const headers = {
@@ -10,13 +10,17 @@ export const useUserStore = defineStore('user', {
   state: () => ({
     id: null,
     avatar: null,
+    username: null,
     first_name: null,
     last_name: null,
     name: null,
     email: null,
     password: null,
-    repassword: null,
+    passwordconfirmation: null,
     role: null,
+    about: null,
+    pronouns: null,
+    birthday: null,
     gender: null,
     phone: null,
     url: null,
@@ -31,8 +35,8 @@ export const useUserStore = defineStore('user', {
       return await server.get('api/user', { headers })
     },
 
-    async show(id) {
-      return await server.get(`api/user/${id}`, { headers })
+    async show(username) {
+      return await server.get(`api/user/${username}`, { headers })
     },
 
     async create(data) {
