@@ -53,6 +53,10 @@ export default {
     menu1: 'Preview Image',
     menu2: 'Download Image',
     menu3: 'Report Image',
+    successLikeMsg: 'Photo Liked Successfully',
+    failedLikeMsg: 'Failed to Like Photo',
+    successDislikeMsg: 'Photo Disliked Successfully',
+    failedDislikeMsg: 'Failed to Dislike Photo',
   },
   create: {
     headerText: 'Create Lumine Photo',

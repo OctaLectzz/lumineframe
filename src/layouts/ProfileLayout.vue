@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { url } from '/src/boot/axios'
 import { useUserStore } from '/src/stores/user-store'
@@ -99,6 +99,12 @@ const getProfile = async () => {
 
 onMounted(() => {
   getUser(route.params.username)
+  getProfile()
+})
+watchEffect(() => {
+  if (route.params.username) {
+    getUser(route.params.username)
+  }
   getProfile()
 })
 </script>

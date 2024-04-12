@@ -209,9 +209,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { useI18n } from 'vue-i18n'
 import { url } from '/src/boot/axios'
 import { lang, languages, languageNames } from '/src/boot/lang'
 import { useAuthStore } from '/src/stores/auth-store'
@@ -220,8 +218,6 @@ import RegisterDialog from '/src/components/auth/RegisterDialog.vue'
 import ProfileMenu from '/src/components/ProfileMenu.vue'
 
 const $q = useQuasar()
-const { t } = useI18n()
-const router = useRouter()
 const authStore = useAuthStore()
 const token = localStorage.getItem('token')
 const darkmode = localStorage.getItem('darkmode') || 'false'
@@ -265,11 +261,6 @@ const openRegisterDialog = () => {
 const openRegister = () => {
   loginDialog.value = false
   registerDialog.value = true
-}
-
-// Navigate
-const navigateTo = (name, params) => {
-  router.push({ name: name, params: params })
 }
 
 // Profile

@@ -71,9 +71,23 @@
 
 <script setup>
 import { defineProps } from 'vue'
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
+import { toast } from 'vue3-toastify'
+import { useAuthStore } from '/src/stores/auth-store'
 
+const $q = useQuasar()
+const router = useRouter()
+const { t } = useI18n()
+const authStore = useAuthStore()
 const { url, loading, profile } = defineProps(['url', 'loading', 'profile'])
 const role = localStorage.getItem('role')
+
+// Navigate
+const navigateTo = (name, params) => {
+  router.push({ name: name, params: params })
+}
 
 // Logout
 const logout = async () => {
@@ -86,18 +100,10 @@ const logout = async () => {
     try {
       await authStore.logout()
 
-      $q.notify({
-        icon: 'check',
-        color: 'positive',
-        message: t('auth.successLogoutMsg')
-      })
+      toast.success(t('auth.successLogoutMsg'))
     } catch (error) {
       console.error('Error submitting form:', error)
-      $q.notify({
-        icon: 'warning',
-        color: 'negative',
-        message: error.response.data.message || t('auth.failedLogoutMsg')
-      })
+      toast.error(t('auth.failedLogoutMsg'))
     }
   })
 }
