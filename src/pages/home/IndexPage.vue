@@ -66,9 +66,9 @@
               <div class="action-button q-ma-sm">
                 <q-btn
                   color="primary"
-                  :text-color="item.isLiked ? 'red' : ''"
+                  :text-color="item.liked ? 'red' : ''"
                   :size="buttonSize"
-                  :icon="item.isLiked ? 'favorite' : 'favorite_border'"
+                  :icon="item.liked ? 'favorite' : 'favorite_border'"
                   class="q-mr-xs"
                   @click.stop="toggleLike(item)"
                   round
@@ -135,7 +135,7 @@ const getPhoto = async () => {
     const res = await photoStore.all()
     photos.value = res.data.data.map((photo) => ({
       ...photo,
-      isLiked: userlikes.value.some((userlike) => userlike.photo_id === photo.id)
+      liked: userlikes.value.some((userlike) => userlike.photo_id === photo.id)
     }))
   } catch (error) {
     console.error('Error fetching photos:', error)
@@ -187,9 +187,9 @@ const onLoad = async () => {
 
 // Like Photo
 const toggleLike = async (item) => {
-  if (item.isLiked) {
+  if (item.liked) {
     try {
-      item.isLiked = false
+      item.liked = false
 
       await likeStore.dislike(item.id)
 
@@ -200,7 +200,7 @@ const toggleLike = async (item) => {
     }
   } else {
     try {
-      item.isLiked = true
+      item.liked = true
 
       await likeStore.like(item.id)
 
