@@ -57,6 +57,8 @@ export default {
     failedLikeMsg: 'Failed to Like Photo',
     successDislikeMsg: 'Photo Disliked Successfully',
     failedDislikeMsg: 'Failed to Dislike Photo',
+    successDownloadMsg: 'Photo Downloaded Successfully',
+    failedDownloadMsg: 'Failed to Download Photo',
   },
   create: {
     headerText: 'Create Lumine Photo',

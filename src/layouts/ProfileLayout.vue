@@ -44,7 +44,7 @@
     </div>
   </div>
 
-  <q-tabs :class="$q.dark.isActive ? 'bg-primary' : 'bg-secondary'" align="justify" no-caps dense>
+  <q-tabs align="justify" no-caps dense>
     <q-route-tab name="index" label="Created" :to="{ name: 'indexprofile' }" />
     <q-route-tab name="collection" label="Collections" :to="{ name: 'collectionsprofile' }" />
     <q-route-tab name="like" label="Likes" :to="{ name: 'likesprofile' }" />

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { server } from '/src/boot/axios'
+import { server, url } from '/src/boot/axios'
 
 const token = localStorage.getItem('token')
 const headers = {
@@ -46,6 +46,24 @@ export const usePhotoStore = defineStore('photo', {
 
     async delete(data) {
       return await server.delete(`api/photo/${data}`, { headers })
+    },
+
+    async download(data) {
+      const res = await server.get(`api/photo/download/${data.image}`, {
+        responseType: 'arraybuffer'
+      })
+
+      const blob = new Blob([res.data], { type: res.headers['content-type'] })
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+
+      link.href = url
+      link.setAttribute('download', data.image)
+      document.body.appendChild(link)
+      link.click()
+
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
     }
   },
   persist: true
