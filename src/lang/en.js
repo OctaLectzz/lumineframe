@@ -27,13 +27,13 @@ export default {
     permissionText2: "and acknowledge you've read our",
     loginRedirect: 'Already a member? Log In',
     registerRedirect: 'Not on LumineFrame yet? Sign up',
-    successRegisterMsg: 'Register Successfully',
+    successRegisterMsg: 'Register successfully',
     failedRegisterMsg: 'The format is still wrong, please try again',
-    successLoginMsg: 'Login Successfully',
+    successLoginMsg: 'Login successfully',
     failedLoginMsg: 'Incorrect email or password, please try again',
     comfirmationLogoutMsg: 'Are you sure?',
-    successLogoutMsg: 'Logout Successfully',
-    failedLogoutMsg: 'Logout Failed',
+    successLogoutMsg: 'Logout successfully',
+    failedLogoutMsg: 'Logout failed',
     validate: {
       firstNameRequired: 'Name must be filled in',
       firstNameMaxLength: 'Maximum Name is 50 characters',
@@ -49,16 +49,23 @@ export default {
       passwordConfirmationSame: 'Password Confirmation do not match'
     }
   },
-  home: {
+  photo: {
     menu1: 'Preview Image',
     menu2: 'Download Image',
     menu3: 'Report Image',
-    successLikeMsg: 'Photo Liked Successfully',
+    successLikeMsg: 'Photo liked successfully',
     failedLikeMsg: 'Failed to Like Photo',
-    successDislikeMsg: 'Photo Disliked Successfully',
-    failedDislikeMsg: 'Failed to Dislike Photo',
-    successDownloadMsg: 'Photo Downloaded Successfully',
-    failedDownloadMsg: 'Failed to Download Photo',
+    successDislikeMsg: 'Photo disliked successfully',
+    failedDislikeMsg: 'Failed to dislike Photo',
+    successDownloadMsg: 'Photo downloaded successfully',
+    failedDownloadMsg: 'Failed to download photo',
+    commentTitle: 'Comments',
+    commentForm: 'Add a comment',
+    commentRules: 'Maximum 255 characters allowed',
+    successCommentMsg: 'Comment added successfully',
+    errorCommentMsg: 'Comment failed to add',
+    editComment: 'Edit',
+    deleteComment: 'Delete'
   },
   create: {
     headerText: 'Create Lumine Photo',
@@ -70,8 +77,8 @@ export default {
     tagForm: 'Tag',
     categoryForm: 'Category',
     imageType: 'Please upload a valid image file (JPEG, PNG, JPG)',
-    successMsg: 'Photo Published Successfully',
-    errorMsg: 'Photo Failed to Publish',
+    successMsg: 'Photo published successfully',
+    errorMsg: 'Photo failed to publish',
     validate: {
       titleMaxLength: 'The Title may not be greater than 20 characters',
       descriptionMaxLength: 'The Description may not be greater than 255 characters',

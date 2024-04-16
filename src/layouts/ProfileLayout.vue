@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mb-xl">
+  <div class="q-my-xl q-pt-lg">
     <div v-if="loading" class="row justify-center">
       <!-- Avatar -->
       <q-skeleton type="QAvatar" size="110px" class="q-my-md" />

@@ -3,7 +3,7 @@
     <q-infinite-scroll @load="onLoad" :offset="500" scroll-target="#lumine-photo">
       <MasonryWall :items="photos" :ssr-columns="6" :column-width="columnWidth" :gap="gap">
         <template #default="{ item }">
-          <div class="lumine-container" @click="singlePhoto(item.id)" @mouseover="showButtons(item)" @mouseleave="hideButtons(item)">
+          <div class="lumine-container" @click="singlePhoto(item)" @mouseover="showButtons(item)" @mouseleave="hideButtons(item)">
             <!-- Image -->
             <q-img :src="url + '/images/' + item.image" :alt="item.image || 'Lumine Photo'" class="lumine-photo" />
 
@@ -23,19 +23,7 @@
               <!-- Menu -->
               <div class="float-right">
                 <q-btn :size="buttonSize" icon="more_horiz" class="q-mx-sm" @click.stop="showMenu(item)" round flat dense>
-                  <q-menu transition-show="jump-down" transition-hide="jump-up">
-                    <q-list dense>
-                      <q-item clickable v-close-popup @click="previewImage(item)">
-                        <q-item-section>{{ $t('home.menu1') }}</q-item-section>
-                      </q-item>
-                      <q-item clickable v-close-popup @click="downloadImage(item)">
-                        <q-item-section>{{ $t('home.menu2') }}</q-item-section>
-                      </q-item>
-                      <q-item clickable v-close-popup>
-                        <q-item-section>{{ $t('home.menu3') }}</q-item-section>
-                      </q-item>
-                    </q-list>
-                  </q-menu>
+                  <MenuPhoto :item="item" />
                 </q-btn>
               </div>
 
@@ -53,19 +41,7 @@
               <!-- Menu -->
               <div v-if="desktop" class="menu-button">
                 <q-btn color="primary" text-color="white" :size="buttonSize" icon="more_vert" class="q-ma-sm" @click.stop="showMenu(item)" round dense>
-                  <q-menu transition-show="jump-down" transition-hide="jump-up">
-                    <q-list dense>
-                      <q-item clickable v-close-popup @click="previewImage(item)">
-                        <q-item-section>{{ $t('home.menu1') }}</q-item-section>
-                      </q-item>
-                      <q-item clickable v-close-popup @click="downloadImage(item)">
-                        <q-item-section>{{ $t('home.menu2') }}</q-item-section>
-                      </q-item>
-                      <q-item clickable v-close-popup>
-                        <q-item-section>{{ $t('home.menu3') }}</q-item-section>
-                      </q-item>
-                    </q-list>
-                  </q-menu>
+                  <MenuPhoto :item="item" />
                 </q-btn>
               </div>
 
@@ -77,7 +53,7 @@
                   :size="buttonSize"
                   :icon="item.liked ? 'favorite' : 'favorite_border'"
                   class="q-mr-xs"
-                  @click.stop="likeImage(item)"
+                  @click.stop="likePhoto(item)"
                   round
                   dense
                 />
@@ -87,10 +63,8 @@
           </div>
 
           <!-- Preview -->
-          <div v-if="item.previewMode" class="preview-overlay" @click="previewImage(item)">
-            <div class="preview-image-container">
-              <img :src="url + '/images/' + item.image" :alt="item.image || 'Lumine Photo'" class="preview-image" />
-            </div>
+          <div v-if="item.previewMode" @click="previewPhoto(item)">
+            <PreviewPhoto :url="url" :item="item" />
           </div>
         </template>
       </MasonryWall>
@@ -114,6 +88,8 @@ import { toast } from 'vue3-toastify'
 import { url } from '/src/boot/axios'
 import { usePhotoStore } from '/src/stores/photo-store'
 import { useLikeStore } from '/src/stores/like-store'
+import PreviewPhoto from '/src/components/PreviewPhoto.vue'
+import MenuPhoto from '/src/components/MenuPhoto.vue'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -154,7 +130,7 @@ const getPhoto = async () => {
       liked: userlikes.value.some((userlike) => userlike.photo_id === photo.id)
     }))
   } catch (error) {
-    console.error('Error fetching photos:', error)
+    console.error('Error fetching data:', error)
   }
   loading.value = false
 }
@@ -166,7 +142,7 @@ const getUserLike = async () => {
     const res = await likeStore.userlike('userlike')
     userlikes.value = res.data.data
   } catch (error) {
-    console.error('Error fetching likes:', error)
+    console.error('Error fetching data:', error)
   }
 }
 
@@ -202,16 +178,16 @@ const onLoad = async () => {
 }
 
 // Like Photo
-const likeImage = async (item) => {
+const likePhoto = async (item) => {
   if (item.liked) {
     try {
       item.liked = false
 
       await likeStore.dislike(item.id)
 
-      toast.success(t('home.successDislikeMsg'))
+      toast.success(t('photo.successDislikeMsg'))
     } catch (error) {
-      toast.error(t('home.failedDislikeMsg'))
+      toast.error(t('photo.failedDislikeMsg'))
       console.error(error)
     }
   } else {
@@ -220,36 +196,24 @@ const likeImage = async (item) => {
 
       await likeStore.like(item.id)
 
-      toast.success(t('home.successLikeMsg'))
+      toast.success(t('photo.successLikeMsg'))
     } catch (error) {
       console.error(error)
-      toast.error(t('home.failedLikeMsg'))
+      toast.error(t('photo.failedLikeMsg'))
     }
   }
   getUserLike()
 }
 
 // Preview Photo
-const previewImage = (item) => {
+const previewPhoto = (item) => {
   item.previewMode = !item.previewMode
 }
 
-// Download Photo
-const downloadImage = async (data) => {
-  try {
-    await photoStore.download(data)
-
-    toast.success(t('home.successDownloadMsg'))
-  } catch (error) {
-    console.error('Error downloading image:', error)
-    toast.error(t('home.failedDownloadMsg'))
-  }
-}
-
 // Redirect to Single Photo
-const singlePhoto = (id) => {
-  router.push('/')
-  resetShowMenu(id)
+const singlePhoto = (data) => {
+  router.push({ name: 'showphoto', params: { photo_number: data.photo_number } })
+  resetShowMenu(data)
 }
 
 // Redirect to User Photo
@@ -299,31 +263,6 @@ const userPhoto = (username) => {
   bottom: 20px;
 }
 
-.preview-overlay {
-  position: fixed;
-  top: 40px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.preview-image-container {
-  max-width: 90%;
-  max-height: 90%;
-  text-align: center;
-}
-
-.preview-image {
-  max-width: 800px;
-  max-height: 500px;
-  display: inline-block;
-}
-
 @media screen and (max-width: 691px) {
   .lumine-text div {
     font-size: 7px;
@@ -341,13 +280,6 @@ const userPhoto = (username) => {
   }
   .with-title .action-button {
     top: 0;
-  }
-}
-@media screen and (max-width: 430px) {
-  .preview-image {
-    max-width: 300px;
-    max-height: 450px;
-    display: inline-block;
   }
 }
 </style>

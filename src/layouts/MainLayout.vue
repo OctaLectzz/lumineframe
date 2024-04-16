@@ -16,9 +16,9 @@
               {{ $t('navbar.exploreTab') }}
             </router-link>
             <router-link
-              :to="{ name: 'creationTool' }"
+              :to="{ name: 'creationtool' }"
               class="nav-link q-mx-sm text-bold"
-              :class="{ 'active-tab text-white': $route.name === 'creationTool', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }"
+              :class="{ 'active-tab text-white': $route.name === 'creationtool', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }"
             >
               {{ $t('navbar.createTab') }}
             </router-link>
@@ -173,7 +173,7 @@
           <q-route-tab name="explore" icon="search" />
 
           <!-- Create -->
-          <q-route-tab name="create" class="larger-tab" :to="{ name: 'creationTool' }">
+          <q-route-tab name="create" class="larger-tab" :to="{ name: 'creationtool' }">
             <div>
               <q-icon name="add_circle" color="light" size="30px" />
             </div>
