@@ -1,5 +1,5 @@
 <template>
-  <q-btn-dropdown v-if="loading" class="q-mx-xs" rounded dense flat push glossy split>
+  <q-btn-dropdown v-if="loading" :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" rounded dense flat push glossy split>
     <template v-slot:label>
       <q-skeleton type="QAvatar" size="26px" />
     </template>

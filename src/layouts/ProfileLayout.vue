@@ -62,10 +62,9 @@
 <script setup>
 import { ref, onMounted, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
-import { url } from '/src/boot/axios'
+import { url, token } from '/src/boot/axios'
 import { useUserStore } from '/src/stores/user-store'
 import { useAuthStore } from '/src/stores/auth-store'
-import { token } from '/src/boot/axios'
 
 const route = useRoute()
 const userStore = useUserStore()
@@ -100,7 +99,7 @@ const getProfile = async () => {
 
 onMounted(() => {
   getUser(route.params.username)
-  if(token) {
+  if (token) {
     getProfile()
   }
 })
@@ -108,7 +107,7 @@ watchEffect(() => {
   if (route.params.username) {
     getUser(route.params.username)
   }
-  if(token) {
+  if (token) {
     getProfile()
   }
 })

@@ -198,6 +198,7 @@
       </q-footer>
     </div>
 
+    <!-- Pages -->
     <q-page-container>
       <router-view v-slot="{ Component }">
         <keep-alive>

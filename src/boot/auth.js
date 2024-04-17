@@ -13,10 +13,10 @@ export default ({ router }) => {
       }
     } else if (to.name === 'login' && token) {
       // Jika pengguna sudah memiliki token, redirect dari halaman login
-      next({ name: 'index' })
+      next({ name: 'home' })
     } else if (to.name === 'register' && token) {
       // Jika pengguna sudah memiliki token, redirect dari halaman login
-      next({ name: 'index' })
+      next({ name: 'home' })
     } else {
       // Jika route tidak memerlukan autentikasi, lanjutkan navigasi
       next()
