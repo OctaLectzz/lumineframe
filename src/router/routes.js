@@ -6,7 +6,7 @@ const routes = [
     children: [
       { path: '', name: 'home', component: () => import('pages/home/IndexPage.vue') },
       { path: 'lumine/:photo_number', name: 'showphoto', component: () => import('pages/home/ShowPhoto.vue') },
-      { path: 'creation-tool', name: 'creationtool', component: () => import('pages/home/CreationToolPage.vue') },
+      { path: 'creation-tool', meta: { requiresAuth: true }, name: 'creationtool', component: () => import('pages/home/CreationToolPage.vue') },
       {
         path: ':username',
         component: () => import('layouts/ProfileLayout.vue'),

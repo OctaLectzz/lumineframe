@@ -1,10 +1,5 @@
 import { defineStore } from 'pinia'
-import { server } from '/src/boot/axios'
-
-const token = localStorage.getItem('token')
-const headers = {
-  Authorization: `Bearer ${token}`
-}
+import { server, headers } from '/src/boot/axios'
 
 export const useCollectionStore = defineStore('collection', {
   state: () => ({

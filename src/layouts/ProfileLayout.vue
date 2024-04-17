@@ -65,6 +65,7 @@ import { useRoute } from 'vue-router'
 import { url } from '/src/boot/axios'
 import { useUserStore } from '/src/stores/user-store'
 import { useAuthStore } from '/src/stores/auth-store'
+import { token } from '/src/boot/axios'
 
 const route = useRoute()
 const userStore = useUserStore()
@@ -99,13 +100,17 @@ const getProfile = async () => {
 
 onMounted(() => {
   getUser(route.params.username)
-  getProfile()
+  if(token) {
+    getProfile()
+  }
 })
 watchEffect(() => {
   if (route.params.username) {
     getUser(route.params.username)
   }
-  getProfile()
+  if(token) {
+    getProfile()
+  }
 })
 </script>
 

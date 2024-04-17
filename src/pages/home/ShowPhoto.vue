@@ -1,7 +1,96 @@
 <template>
   <div class="row justify-center q-my-xl q-py-xl">
     <q-card class="my-card">
-      <q-card-section>
+      <!-- Loading -->
+      <q-card-section v-if="loading">
+        <div class="row">
+          <!-- Image -->
+          <div class="col-xs-12 col-md-6">
+            <q-skeleton height="100%" square />
+          </div>
+
+          <!-- Content -->
+          <div class="col-xs-12 col-md-6">
+            <div class="q-mx-md">
+              <!-- Button -->
+              <div class="q-my-md">
+                <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" icon="download" size="15px" class="q-mr-sm" @click="downloadPhoto(photo)" flat round />
+                <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" icon="more_horiz" size="15px" class="q-ml-sm" flat round>
+                  <MenuPhoto :item="photo" />
+                </q-btn>
+                <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" :text-color="$q.dark.isActive ? 'primary' : 'secondary'" label="Save" class="float-right" push />
+              </div>
+              <div class="q-ml-md">
+                <!-- Title -->
+                <q-skeleton width="250px" class="q-my-sm" />
+
+                <!-- Description -->
+                <q-skeleton width="100%" height="15px" class="q-my-sm" />
+                <q-skeleton width="100%" height="15px" class="q-my-sm" />
+
+                <!-- User -->
+                <div v-if="user.role != 'Admin'" class="cursor-pointer q-pa-md" @click="userPhoto(user.username)">
+                  <q-avatar class="lumine-avatar float-left">
+                    <q-skeleton type="QAvatar" />
+                  </q-avatar>
+                  <span class="q-mx-sm">
+                    <span class="text-subtitle2 text-bold">{{ user.name }}</span>
+                    <div class="q-ml-xl text-subtitle2 text-grey-8">{{ user.username }}</div>
+                  </span>
+                </div>
+
+                <!-- Comment -->
+                <div class="text-body1 text-bold">{{ $t('photo.commentTitle') }}</div>
+                <q-scroll-area class="q-my-md" style="height: 200px">
+                  <div v-for="index in 4" :key="index" class="q-py-sm">
+                    <div class="row">
+                      <!-- Avatar -->
+                      <div class="col-md-1 col-sm-1 col-xs-2">
+                        <q-avatar size="25px" class="float-left q-pt-xs">
+                          <q-skeleton type="QAvatar" />
+                        </q-avatar>
+                      </div>
+
+                      <!-- Content -->
+                      <div class="col-md-11 col-sm-11 col-xs-10">
+                        <div class="comment-content">
+                          <q-skeleton width="150px" height="15px" class="q-my-sm" />
+                          <q-skeleton width="200px" height="15px" class="q-my-sm" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </q-scroll-area>
+
+                <!-- Comment Form -->
+                <div v-if="token">
+                  <q-form @submit="createComment">
+                    <div class="row justify-center">
+                      <div class="col-10">
+                        <q-input v-model="data.content" type="textarea" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('photo.commentForm')" :rows="2" outlined dense />
+                      </div>
+                      <div class="col-2">
+                        <q-btn type="submit" :color="$q.dark.isActive ? 'secondary' : 'primary'" icon="send" :loading="commentLoading" :disable="disabledButton" class="full-height" flat>
+                          <template v-slot:loading>
+                            <q-spinner-hourglass class="on-center" />
+                          </template>
+                        </q-btn>
+                      </div>
+                    </div>
+                  </q-form>
+                </div>
+                <div v-else>
+                  <q-banner dense inline-actions class="text-white text-center bg-red">
+                    {{ $t('photo.commentNotAuth') }}
+                  </q-banner>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </q-card-section>
+
+      <q-card-section v-else>
         <div class="row">
           <!-- Image -->
           <div class="col-xs-12 col-md-6">
@@ -60,7 +149,7 @@
                       <!-- Content -->
                       <div class="col-md-11 col-sm-11 col-xs-10">
                         <div class="comment-content">
-                          <span class="text-subtitle1 text-bold q-mr-xs">{{ comment.name }}</span>
+                          <span class="text-subtitle1 text-bold q-mr-xs cursor-pointer" @click="userPhoto(user.username)">{{ comment.name }}</span>
                           <span class="text-subtitle2">{{ comment.content }}</span>
                         </div>
                         <div>
@@ -84,29 +173,27 @@
                 </q-scroll-area>
 
                 <!-- Comment Form -->
-                <q-form @submit="createComment">
-                  <div class="row">
-                    <div class="col-10">
-                      <q-input
-                        v-model="data.content"
-                        type="textarea"
-                        :color="$q.dark.isActive ? 'secondary' : 'primary'"
-                        :label="$t('photo.commentForm')"
-                        :rows="2"
-                        :rules="[(v) => v.length <= 255 || $t('photo.commentRules')]"
-                        outlined
-                        dense
-                      />
+                <div v-if="token">
+                  <q-form @submit="createComment">
+                    <div class="row justify-center">
+                      <div class="col-10">
+                        <q-input v-model="data.content" type="textarea" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('photo.commentForm')" :rows="2" outlined dense />
+                      </div>
+                      <div class="col-2">
+                        <q-btn type="submit" :color="$q.dark.isActive ? 'secondary' : 'primary'" icon="send" :loading="commentLoading" :disable="disabledButton" class="full-height" flat>
+                          <template v-slot:loading>
+                            <q-spinner-hourglass class="on-center" />
+                          </template>
+                        </q-btn>
+                      </div>
                     </div>
-                    <div class="col-2">
-                      <q-btn type="submit" :color="$q.dark.isActive ? 'secondary' : 'primary'" icon="send" :loading="commentLoading" :disable="disabledButton" class="full-height" flat>
-                        <template v-slot:loading>
-                          <q-spinner-hourglass class="on-center" />
-                        </template>
-                      </q-btn>
-                    </div>
-                  </div>
-                </q-form>
+                  </q-form>
+                </div>
+                <div v-else>
+                  <q-banner dense inline-actions class="text-white text-center bg-red">
+                    {{ $t('photo.commentNotAuth') }}
+                  </q-banner>
+                </div>
               </div>
             </div>
           </div>
@@ -124,7 +211,7 @@ import { ref, onMounted, watchEffect, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
-import { url } from '/src/boot/axios'
+import { url, token } from '/src/boot/axios'
 import { usePhotoStore } from '/src/stores/photo-store'
 import { useCommentStore } from '/src/stores/comment-store'
 import PreviewPhoto from '/src/components/PreviewPhoto.vue'
@@ -156,7 +243,9 @@ onMounted(() => {
   showPhoto(route.params.photo_number)
 })
 watchEffect(() => {
-  showPhoto(route.params.photo_number)
+  if (route.params.photo_number) {
+    showPhoto(route.params.photo_number)
+  }
 })
 
 // Preview Photo
@@ -192,18 +281,22 @@ const disabledButton = computed(() => {
   return commentLoading.value || !data.value.content
 })
 const createComment = async () => {
-  commentLoading.value = true
-  try {
-    await commentStore.create(data.value)
+  if (data.value.content.length <= 255) {
+    commentLoading.value = true
+    try {
+      await commentStore.create(data.value)
 
-    data.value.content = ''
-    toast.success(t('photo.successCommentMsg'))
-    showPhoto(route.params.photo_number)
-  } catch (error) {
-    console.error('Error submitting form:', error)
-    toast.error(t('photo.errorCommentMsg'))
+      data.value.content = ''
+      toast.success(t('photo.successCommentMsg'))
+      showPhoto(route.params.photo_number)
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      toast.error(t('photo.errorCommentMsg'))
+    }
+    commentLoading.value = false
+  } else {
+    toast.error(t('photo.commentRules'))
   }
-  commentLoading.value = false
 }
 </script>
 

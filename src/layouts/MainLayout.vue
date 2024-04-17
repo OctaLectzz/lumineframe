@@ -16,6 +16,7 @@
               {{ $t('navbar.exploreTab') }}
             </router-link>
             <router-link
+              v-if="token"
               :to="{ name: 'creationtool' }"
               class="nav-link q-mx-sm text-bold"
               :class="{ 'active-tab text-white': $route.name === 'creationtool', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }"
@@ -173,7 +174,7 @@
           <q-route-tab name="explore" icon="search" />
 
           <!-- Create -->
-          <q-route-tab name="create" class="larger-tab" :to="{ name: 'creationtool' }">
+          <q-route-tab v-if="token" name="create" class="larger-tab" :to="{ name: 'creationtool' }">
             <div>
               <q-icon name="add_circle" color="light" size="30px" />
             </div>
@@ -210,7 +211,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
-import { url } from '/src/boot/axios'
+import { url, token } from '/src/boot/axios'
 import { lang, languages, languageNames } from '/src/boot/lang'
 import { useAuthStore } from '/src/stores/auth-store'
 import LoginDialog from '/src/components/auth/LoginDialog.vue'
@@ -219,7 +220,6 @@ import ProfileMenu from '/src/components/ProfileMenu.vue'
 
 const $q = useQuasar()
 const authStore = useAuthStore()
-const token = localStorage.getItem('token')
 const darkmode = localStorage.getItem('darkmode') || 'false'
 
 // Search
@@ -277,7 +277,9 @@ const getProfile = async () => {
   }
 }
 onMounted(() => {
-  getProfile()
+  if (token) {
+    getProfile()
+  }
 })
 </script>
 

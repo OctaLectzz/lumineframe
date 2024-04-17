@@ -1,11 +1,5 @@
 import { defineStore } from 'pinia'
-import { server, url } from '/src/boot/axios'
-
-const token = localStorage.getItem('token')
-const headers = {
-  Authorization: `Bearer ${token}`,
-  'Content-Type': 'multipart/form-data'
-}
+import { server, headers } from '/src/boot/axios'
 
 export const usePhotoStore = defineStore('photo', {
   state: () => ({

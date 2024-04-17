@@ -60,6 +60,7 @@ export default {
     successDownloadMsg: 'Photo downloaded successfully',
     failedDownloadMsg: 'Failed to download photo',
     commentTitle: 'Comments',
+    commentNotAuth: 'You must log in first to be able to comment',
     commentForm: 'Add a comment',
     commentRules: 'Maximum 255 characters allowed',
     successCommentMsg: 'Comment added successfully',
