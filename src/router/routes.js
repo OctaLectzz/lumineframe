@@ -15,15 +15,13 @@ const routes = [
           { path: 'collections', name: 'collectionsprofile', component: () => import('pages/home/profile/CollectionsProfile.vue') },
           { path: 'likes', name: 'likesprofile', component: () => import('pages/home/profile/LikesProfile.vue') }
         ]
+      },
+      {
+        path: '/:catchAll(.*)*',
+        name: 'notfound',
+        component: () => import('pages/ErrorNotFound.vue')
       }
     ]
-  },
-
-  // Always leave this as last one,
-  // but you can also remove it
-  {
-    path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue')
   }
 ]
 

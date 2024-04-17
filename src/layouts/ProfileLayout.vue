@@ -61,12 +61,13 @@
 
 <script setup>
 import { ref, onMounted, watchEffect } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { url, token } from '/src/boot/axios'
 import { useUserStore } from '/src/stores/user-store'
 import { useAuthStore } from '/src/stores/auth-store'
 
 const route = useRoute()
+const router = useRouter()
 const userStore = useUserStore()
 const authStore = useAuthStore()
 
@@ -81,6 +82,7 @@ const getUser = async (username) => {
     loading.value = false
   } catch (error) {
     console.error('Error fetching data:', error)
+    router.push({ name: 'notfound' })
   }
 }
 
