@@ -187,7 +187,7 @@
           <q-route-tab v-if="!token" name="profile" @click="openLoginDialog">
             <q-avatar size="20px"><img :src="url + '/avatars/user-profile-default.jpg'" /></q-avatar>
           </q-route-tab>
-          <q-route-tab v-else name="profile" :to="{ name: 'indexprofile' }">
+          <q-route-tab v-else name="profile" :to="{ name: 'indexprofile', params: { username: profile.username } }">
             <q-skeleton v-if="loading" type="QAvatar" size="20px" />
 
             <q-avatar v-else size="20px">

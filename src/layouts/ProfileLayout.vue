@@ -55,8 +55,6 @@
       <component :is="Component" />
     </keep-alive>
   </router-view>
-
-  <div style="padding-bottom: 500px"></div>
 </template>
 
 <script setup>
