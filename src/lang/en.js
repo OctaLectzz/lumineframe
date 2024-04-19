@@ -1,7 +1,10 @@
 export default {
   public: {
     requiredText: '*',
-    optionalText: '(optional)'
+    optionalText: '(optional)',
+    createText: 'Create',
+    nameText: 'Name',
+    descriptionText: 'Description'
   },
   navbar: {
     homeTab: 'Home',
@@ -54,9 +57,17 @@ export default {
     menu2: 'Download Image',
     menu3: 'Report Image',
     successLikeMsg: 'Photo liked successfully',
-    failedLikeMsg: 'Failed to Like Photo',
+    failedLikeMsg: 'You have already liked this Photo',
     successDislikeMsg: 'Photo disliked successfully',
     failedDislikeMsg: 'Failed to dislike Photo',
+    collectionTitle: 'Add to Collection',
+    createCollectionTitle: 'Create Collection',
+    nameMaxLength: 'Maximum Name is 20 characters',
+    descriptionMaxLength: 'Maximum Description is 255 characters',
+    successCreateCollectionMsg: 'Collection created successfully',
+    failedCreateCollectionMsg: 'Collection failed to create',
+    successSaveMsg: 'Photo saved successfully',
+    failedSaveMsg: 'You have saved this Photo in this collection',
     successDownloadMsg: 'Photo downloaded successfully',
     failedDownloadMsg: 'Failed to download photo',
     commentTitle: 'Comments',

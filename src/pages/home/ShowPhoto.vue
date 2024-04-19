@@ -142,14 +142,14 @@
                       <!-- Avatar -->
                       <div class="col-md-1 col-sm-1 col-xs-2">
                         <q-avatar size="25px" class="float-left q-pt-xs">
-                          <img :src="url + '/avatars/' + comment.avatar" />
+                          <img :src="url + '/avatars/' + comment.user.avatar" />
                         </q-avatar>
                       </div>
 
                       <!-- Content -->
                       <div class="col-md-11 col-sm-11 col-xs-10">
                         <div class="comment-content">
-                          <span class="text-subtitle1 text-bold q-mr-xs cursor-pointer" @click="userPhoto(user.username)">{{ comment.name }}</span>
+                          <span class="text-subtitle1 text-bold q-mr-xs cursor-pointer" @click="userPhoto(user.username)">{{ comment.user.name }}</span>
                           <span class="text-subtitle2">{{ comment.content }}</span>
                         </div>
                         <div>

@@ -35,6 +35,10 @@ export const useCollectionStore = defineStore('collection', {
 
     async delete(data) {
       return await server.delete(`api/collection/${data}`, { headers })
+    },
+
+    async usercollection(id) {
+      return await server.get(`api/collection/user/${id}`, { headers })
     }
   },
   persist: true

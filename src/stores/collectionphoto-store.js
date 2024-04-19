@@ -35,6 +35,10 @@ export const useCollectionphotoStore = defineStore('collectionphoto', {
 
     async delete(data) {
       return await server.delete(`api/collectionphoto/${data}`, { headers })
+    },
+
+    async usersave(id) {
+      return await server.get(`api/collectionphoto/user/${id}`, { headers })
     }
   },
   persist: true

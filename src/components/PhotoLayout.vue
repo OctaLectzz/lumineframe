@@ -1,7 +1,8 @@
 <template>
   <div class="q-pa-md" id="lumine-photo">
     <q-infinite-scroll @load="onLoad" :offset="500" scroll-target="#lumine-photo">
-      <MasonryWall v-if="loading" :items="load" :ssr-columns="6" :column-width="columnWidth" :gap="gap">
+      <!-- Loading -->
+      <MasonryWall v-if="loading" :items="load" :ssr-columns="8" :column-width="columnWidth" :gap="gap">
         <template #default="{ item }">
           <div class="lumine-container">
             <q-skeleton width="100%" :height="item.height" />
@@ -9,14 +10,15 @@
         </template>
       </MasonryWall>
 
-      <MasonryWall v-else :items="photos" :ssr-columns="6" :column-width="columnWidth" :gap="gap">
+      <MasonryWall v-else :items="photos" :ssr-columns="8" :column-width="columnWidth" :gap="gap">
         <template #default="{ item }">
           <div class="lumine-container" @click="singlePhoto(item)" @mouseover="showButtons(item)" @mouseleave="hideButtons(item)">
             <!-- Image -->
             <q-img :src="url + '/images/' + item.image" :alt="item.image || 'Lumine Photo'" class="lumine-photo" />
 
-            <!-- Text -->
+            <!-- Desktop -->
             <div v-if="desktop" class="lumine-text" @click.stop="userPhoto(item.user.username)">
+              <!-- Text -->
               <div class="text-subtitle2 text-bold q-px-sm">{{ item.title }}</div>
               <div v-if="item.user.role != 'Admin'" class="text-subtitle2 q-pa-sm float-right">
                 {{ item.user.name }}
@@ -65,7 +67,16 @@
                   round
                   dense
                 />
-                <q-btn color="primary" text-color="white" :size="buttonSize" icon="bookmark_border" class="q-mr-xs" round dense />
+                <q-btn
+                  color="primary"
+                  :text-color="item.saved ? 'yellow' : ''"
+                  :size="buttonSize"
+                  :icon="item.saved ? 'bookmark' : 'bookmark_border'"
+                  class="q-mr-xs"
+                  @click.stop="openCollection(item)"
+                  round
+                  dense
+                />
               </div>
             </div>
           </div>
@@ -74,8 +85,77 @@
           <div v-if="item.previewMode" @click="previewPhoto(item)">
             <PreviewPhoto :url="url" :item="item" />
           </div>
+
+          <!-- Collection -->
+          <q-dialog v-model="item.collectionDialog" position="bottom">
+            <q-card>
+              <q-card-section>
+                <div class="text-h6">{{ $t('photo.collectionTitle') }}</div>
+                <q-btn color="primary" icon="add" class="absolute absolute-top-right q-ma-md" @click="createCollectionDialog = true" square />
+              </q-card-section>
+
+              <q-separator />
+
+              <q-card-section class="q-py-lg scroll" style="max-width: 100vw; max-height: 50vh; width: 600px; height: 300px; scrollbar-width: none">
+                <div class="row q-gutter-lg justify-center">
+                  <div v-for="collection in usercollections" :key="collection.id" class="col-xs-3 collection-container" @click="savePhoto(item, collection)">
+                    <!-- Image -->
+                    <div>
+                      <div v-if="collection.photos && collection.photos.length > 0">
+                        <div class="row">
+                          <div v-for="photo in collection.photos.slice(0, 3)" :key="photo.id" class="col-2">
+                            <img :src="url + '/images/' + photo.image" class="collection-image" />
+                          </div>
+                        </div>
+                      </div>
+                      <div v-else>
+                        <img src="no_image_available.jpg" class="collection-image" />
+                      </div>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="text-body2">{{ collection.name }}</div>
+                  </div>
+                </div>
+              </q-card-section>
+            </q-card>
+          </q-dialog>
         </template>
       </MasonryWall>
+
+      <!-- Create Collection -->
+      <q-dialog v-model="createCollectionDialog" backdrop-filter="blur(4px) saturate(150%)">
+        <q-card style="width: 350px">
+          <q-form @submit="createCollection">
+            <q-card-section>
+              <div class="text-h6">{{ $t('photo.createCollectionTitle') }}</div>
+            </q-card-section>
+
+            <q-card-section>
+              <q-input
+                v-model="collection.name"
+                :label="$t('public.nameText')"
+                class="q-mt-sm"
+                :rules="[(v) => (v && v.length <= 20) || $t('photo.nameMaxLength')]"
+                outlined
+                dense
+                required
+                autofocus
+              />
+              <q-input type="textarea" v-model="collection.description" :label="$t('public.descriptionText')" class="q-mt-sm" outlined dense />
+            </q-card-section>
+
+            <q-card-actions align="right" class="text-primary">
+              <q-btn color="primary" label="Cancel" flat v-close-popup />
+              <q-btn type="submit" color="primary" :label="$t('public.createText')" :loading="createCollectionLoading" :disable="createCollectionLoading">
+                <template v-slot:loading>
+                  <q-spinner-hourglass class="on-center" />
+                </template>
+              </q-btn>
+            </q-card-actions>
+          </q-form>
+        </q-card>
+      </q-dialog>
 
       <!-- Load More Photo -->
       <template v-slot:loading>
@@ -88,20 +168,26 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, onBeforeUnmount, defineProps, defineEmits } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed, defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import MasonryWall from '@yeger/vue-masonry-wall'
 import { toast } from 'vue3-toastify'
 import { url, token } from '/src/boot/axios'
+import { useAuthStore } from '/src/stores/auth-store'
 import { useLikeStore } from '/src/stores/like-store'
+import { useCollectionStore } from '/src/stores/collection-store'
+import { useCollectionphotoStore } from '/src/stores/collectionphoto-store'
 import PreviewPhoto from '/src/components/PreviewPhoto.vue'
 import MenuPhoto from '/src/components/MenuPhoto.vue'
 
 const { t } = useI18n()
 const router = useRouter()
-const { items } = defineProps(['items'])
+const authStore = useAuthStore()
 const likeStore = useLikeStore()
+const collectionStore = useCollectionStore()
+const collectiophotoStore = useCollectionphotoStore()
+const { items } = defineProps(['items'])
 const loading = ref(true)
 
 // Responsive
@@ -110,7 +196,7 @@ const detectDesktop = () => {
   desktop.value = window.innerWidth >= 691
 }
 const columnWidth = computed(() => {
-  return desktop.value ? 300 : 150
+  return desktop.value ? 280 : 150
 })
 const gap = computed(() => {
   return desktop.value ? 20 : 12
@@ -126,6 +212,7 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', detectDesktop)
 })
 
+// Skeleton
 const load = ref([
   { height: '450px' },
   { height: '250px' },
@@ -138,29 +225,42 @@ const load = ref([
   { height: '450px' }
 ])
 
-// Get Photo
-const photos = ref([])
-const getPhoto = () => {
-  photos.value = items.map((photo) => ({
-    ...photo,
-    liked: userlikes.value.some((userlike) => userlike.photo_id === photo.id)
-  }))
-  loading.value = false
-}
+// Load Photo
+const onLoad = async () => {}
 
-// Get User Likes
-const userlikes = ref([])
-const getUserLike = async () => {
+// Profile
+const profile = ref([])
+const usercollections = ref([])
+const getProfile = async () => {
   try {
-    const res = await likeStore.userlike('userlike')
-    userlikes.value = res.data.data
+    const res = await authStore.profile()
+
+    profile.value = res.data.data
+    usercollections.value = res.data.data.collections
   } catch (error) {
     console.error('Error fetching data:', error)
   }
 }
+
+// Get Photo
+const photos = ref([])
+const getPhoto = () => {
+  if (token) {
+    photos.value = items.map((photo) => ({
+      ...photo,
+      liked: profile.value.likes.some((userlike) => userlike.photo_id === photo.id),
+      saved: profile.value.collectionphoto.some((usersave) => usersave.photo_id === photo.id)
+    }))
+  } else {
+    photos.value = items
+  }
+
+  loading.value = false
+}
+
 onMounted(async () => {
   if (token) {
-    await getUserLike()
+    await getProfile()
   }
   getPhoto()
 })
@@ -183,10 +283,6 @@ const resetShowMenu = (clickedItemId) => {
     }
   })
 }
-
-// Load Photo
-const perpage = ref(10)
-const onLoad = async () => {}
 
 // Like Photo
 const likePhoto = async (item) => {
@@ -213,7 +309,56 @@ const likePhoto = async (item) => {
       toast.error(t('photo.failedLikeMsg'))
     }
   }
-  getUserLike()
+  getProfile()
+}
+
+// Save Photo
+const data = ref({
+  photo_id: null,
+  collection_id: null
+})
+const savePhoto = async (item, collection) => {
+  try {
+    item.saved = true
+    data.value.collection_id = collection.id
+
+    await collectiophotoStore.create(data.value)
+
+    toast.success(t('photo.successSaveMsg'))
+  } catch (error) {
+    toast.error(t('photo.failedSaveMsg'))
+    console.error(error)
+  }
+  item.collectionDialog = false
+  getProfile()
+}
+
+// Create Collection
+const collection = ref({
+  name: '',
+  description: ''
+})
+const createCollectionDialog = ref(false)
+const createCollectionLoading = ref(false)
+const openCollection = (item) => {
+  item.collectionDialog = true
+  data.value.photo_id = item.id
+}
+const createCollection = async () => {
+  createCollectionLoading.value = true
+  try {
+    await collectionStore.create(collection.value)
+    toast.success(t('photo.successCreateCollectionMsg'))
+
+    collection.value.name = ''
+    collection.value.description = ''
+    createCollectionDialog.value = false
+    getProfile()
+  } catch (error) {
+    console.error('Error fetching data:', error)
+    toast.error(t('photo.failedCreateCollectionMsg'))
+  }
+  createCollectionLoading.value = false
 }
 
 // Preview Photo
@@ -234,6 +379,10 @@ const userPhoto = (username) => {
 </script>
 
 <style scoped>
+::-webkit-scrollbar {
+  display: none;
+}
+
 .lumine-container {
   position: relative;
   cursor: pointer;
@@ -272,6 +421,27 @@ const userPhoto = (username) => {
 }
 .with-title .action-button {
   bottom: 20px;
+}
+
+.collection-container {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.collection-container:hover {
+  filter: brightness(90%);
+  transform: scale(1.02);
+}
+
+.collection-image {
+  width: 80px;
+  height: 80px;
+  box-shadow: -2px 2px 3px #000;
+}
+@media screen and (max-width: 397px) {
+  .collection-image {
+    width: 50px;
+    height: 50px;
+  }
 }
 
 @media screen and (max-width: 691px) {
