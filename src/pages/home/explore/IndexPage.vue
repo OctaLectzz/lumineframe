@@ -56,7 +56,7 @@
               <q-skeleton width="100%" height="180px" />
             </div>
           </div>
-          <PhotoLayout v-else :items="photos" :loading="photoloading" style="" />
+          <PhotoLayout v-else :items="photos" :loading="photoloading" />
         </div>
       </div>
     </div>

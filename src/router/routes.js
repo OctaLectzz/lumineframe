@@ -5,6 +5,8 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', name: 'home', component: () => import('pages/home/IndexPage.vue') },
+      { path: 'lumine/:photo_number', name: 'showphoto', component: () => import('pages/home/ShowPhoto.vue') },
+      { path: 'search/:search', name: 'searchphoto', component: () => import('pages/home/SearchPhoto.vue') },
       {
         path: 'explore',
         children: [
@@ -32,10 +34,9 @@ const routes = [
           }
         ]
       },
-      { path: 'lumine/:photo_number', name: 'showphoto', component: () => import('pages/home/ShowPhoto.vue') },
       { path: 'lumine-creation-tool', meta: { requiresAuth: true, roles: ['Admin', 'Member'] }, name: 'creationtool', component: () => import('pages/home/CreationToolPage.vue') },
       {
-        path: ':username',
+        path: 'profile/:username',
         component: () => import('layouts/ProfileLayout.vue'),
         children: [
           { path: '', name: 'indexprofile', component: () => import('pages/home/profile/IndexProfile.vue') },

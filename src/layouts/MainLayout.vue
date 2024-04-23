@@ -30,9 +30,9 @@
           </q-toolbar-title>
 
           <!-- Search -->
-          <q-input v-model="search" :color="$q.dark.isActive ? 'secondary' : 'primary'" class="search-bar" outlined dense>
+          <q-input v-model="search" :color="$q.dark.isActive ? 'secondary' : 'primary'" class="search-bar" @keyup.enter="searchPhoto" outlined dense>
             <template v-slot:append>
-              <q-icon name="search" :color="$q.dark.isActive ? 'secondary' : 'primary'" />
+              <q-icon name="search" :color="$q.dark.isActive ? 'secondary' : 'primary'" class="search-icon" @click="searchPhoto" />
             </template>
           </q-input>
 
@@ -216,6 +216,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { url, token } from '/src/boot/axios'
 import { lang, languages, languageNames } from '/src/boot/lang'
@@ -225,11 +226,19 @@ import RegisterDialog from '/src/components/auth/RegisterDialog.vue'
 import ProfileMenu from '/src/components/ProfileMenu.vue'
 
 const $q = useQuasar()
+const route = useRoute()
+const router = useRouter()
 const authStore = useAuthStore()
 const darkmode = localStorage.getItem('darkmode') || 'false'
 
 // Search
-const search = ref()
+const search = ref(route.params.search || '')
+const searchPhoto = () => {
+  router.push({ name: 'searchphoto', params: { search: search.value || undefined } })
+  setTimeout(() => {
+    window.location.reload()
+  }, 100)
+}
 
 // Switch Mode
 const isDarkMode = ref(JSON.parse(darkmode))
@@ -314,6 +323,13 @@ onMounted(() => {
   outline: none;
   transform: scale(1.02);
   border: 2px solid #00000080;
+}
+.search-icon {
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.search-icon:hover {
+  transform: scale(1.1);
 }
 
 /* For small devices */
