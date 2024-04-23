@@ -79,6 +79,12 @@ export default {
     editComment: 'Edit',
     deleteComment: 'Delete'
   },
+  explore: {
+    collectionList: 'Collection List',
+    categoryList: 'Category List',
+    tagList: 'Tag List',
+    recomendedPhoto: 'Recommended for you',
+  },
   create: {
     headerText: 'Create Lumine Photo',
     handleButton: 'Publish',

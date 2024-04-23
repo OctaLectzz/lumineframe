@@ -94,7 +94,14 @@
                 <q-item-section>{{ tag }}</q-item-section>
               </q-item>
             </q-list>
-            <q-chip v-for="(tag, index) in data.tags" :key="index" color="primary" text-color="white" @remove="removeTag(index)" removable>
+            <q-chip
+              v-for="(tag, index) in data.tags"
+              :key="index"
+              :color="$q.dark.isActive ? 'secondary' : 'primary'"
+              :text-color="$q.dark.isActive ? 'primary' : 'secondary'"
+              @remove="removeTag(index)"
+              removable
+            >
               {{ tag }}
             </q-chip>
           </div>

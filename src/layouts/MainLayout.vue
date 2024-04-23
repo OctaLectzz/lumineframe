@@ -12,7 +12,11 @@
             <router-link :to="{ name: 'home' }" class="nav-link q-mx-sm text-bold" :class="{ 'active-tab text-white': $route.name === 'home', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }">
               {{ $t('navbar.homeTab') }}
             </router-link>
-            <router-link to="/" class="nav-link q-mx-sm text-bold" :class="{ 'active-tab text-white': $route.name === 'explore', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }">
+            <router-link
+              :to="{ name: 'explore' }"
+              class="nav-link q-mx-sm text-bold"
+              :class="{ 'active-tab text-white': $route.name === 'explore', 'text-white': $q.dark.isActive, '': !$q.dark.isActive }"
+            >
               {{ $t('navbar.exploreTab') }}
             </router-link>
             <router-link
@@ -26,10 +30,11 @@
           </q-toolbar-title>
 
           <!-- Search -->
-          <div class="q-mr-lg">
-            <input type="text" v-model="search" class="search-bar" placeholder="Search..." hint="Search" />
-            <q-icon name="search" :color="$q.dark.isActive ? 'secondary' : 'primary'" size="1.5em" style="margin-left: -38px" />
-          </div>
+          <q-input v-model="search" :color="$q.dark.isActive ? 'secondary' : 'primary'" class="search-bar" outlined dense>
+            <template v-slot:append>
+              <q-icon name="search" :color="$q.dark.isActive ? 'secondary' : 'primary'" />
+            </template>
+          </q-input>
 
           <!-- Switch Mode -->
           <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" @click="toggleSwitchMode" :icon="$q.dark.isActive ? 'brightness_7' : 'brightness_4'" flat round />
@@ -171,7 +176,7 @@
           <q-route-tab name="home" icon="home" :to="{ name: 'home' }" />
 
           <!-- Explore -->
-          <q-route-tab name="explore" icon="search" />
+          <q-route-tab name="explore" icon="search" :to="{ name: 'explore' }" />
 
           <!-- Create -->
           <q-route-tab v-if="token" name="create" class="larger-tab" :to="{ name: 'creationtool' }">
@@ -181,7 +186,7 @@
           </q-route-tab>
 
           <!-- Category -->
-          <q-route-tab name="category" icon="category" />
+          <q-route-tab name="category" icon="category" :to="{ name: 'categories' }" />
 
           <!-- Profile -->
           <q-route-tab v-if="!token" name="profile" @click="openLoginDialog">
@@ -303,15 +308,7 @@ onMounted(() => {
 
 /* Search Bar */
 .search-bar {
-  padding: 8px;
-  padding-right: 40px;
-  font-size: 16px;
-  border: none;
-  border-radius: 20px;
   width: 150px;
-  height: 30px;
-  background-color: #c0c0c04d;
-  transition: all 0.3s;
 }
 .search-bar:focus {
   outline: none;

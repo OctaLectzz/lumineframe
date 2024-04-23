@@ -1,52 +1,12 @@
 <template>
-  <q-page class="q-py-lg">
-    <!-- Loading -->
-    <div v-if="loading" class="row justify-center q-gutter-lg">
-      <div v-for="n in 9" :key="n" class="col-sm-3 col-xs-4 collections">
-        <q-skeleton width="100%" height="100px" />
-      </div>
-    </div>
-
-    <div v-else class="row justify-center q-gutter-lg">
-      <div v-for="collection in collections" :key="collection.id" class="col-sm-3 col-xs-4 collections" @click="showCollection(collection)">
-        <!-- Image -->
-        <div class="collection-container">
-          <div v-if="collection.photos && collection.photos.length > 0">
-            <div class="row">
-              <template v-for="photo in collection.photos.slice(0, 4)" :key="photo.id">
-                <div class="col-2">
-                  <img v-if="photo.image" :src="url + '/images/' + photo.image" class="collection-image" />
-                  <img v-else src="/src/assets/img/no_image_available.jpg" class="collection-image" />
-                </div>
-              </template>
-              <template v-if="collection.photos.length < 4">
-                <div v-for="n in 4 - collection.photos.length" :key="n" class="col-2">
-                  <img src="/src/assets/img/no_image_available.jpg" class="collection-image" />
-                </div>
-              </template>
-            </div>
-          </div>
-          <div v-else>
-            <div class="row">
-              <div v-for="n in 4" :key="n" class="col-2">
-                <img src="/src/assets/img/no_image_available.jpg" class="collection-image" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Name -->
-        <div class="text-body1 text-center text-bold">{{ collection.name }}</div>
-      </div>
-    </div>
-  </q-page>
+  <CollectionLayout :collections="collections" :loading="loading" />
 </template>
 
 <script setup>
 import { ref, onMounted, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { url } from '/src/boot/axios'
 import { useUserStore } from '/src/stores/user-store'
+import CollectionLayout from '/src/components/CollectionLayout.vue'
 
 const route = useRoute()
 const router = useRouter()

@@ -1,169 +1,151 @@
 <template>
-  <div class="q-pa-md" id="lumine-photo">
-    <q-infinite-scroll @load="onLoad" :offset="500" scroll-target="#lumine-photo">
-      <!-- Loading -->
-      <MasonryWall v-if="loading" :items="load" :ssr-columns="8" :column-width="columnWidth" :gap="gap">
-        <template #default="{ item }">
-          <div class="lumine-container">
-            <q-skeleton width="100%" :height="item.height" />
-          </div>
-        </template>
-      </MasonryWall>
-
-      <MasonryWall v-else :items="photos" :ssr-columns="8" :column-width="columnWidth" :gap="gap">
-        <template #default="{ item }">
-          <div class="lumine-container" @click="singlePhoto(item)" @mouseover="showButtons(item)" @mouseleave="hideButtons(item)">
-            <!-- Image -->
-            <q-img :src="url + '/images/' + item.image" :alt="item.image || 'Lumine Photo'" class="lumine-photo" />
-
-            <!-- Desktop -->
-            <div v-if="desktop" class="lumine-text" @click.stop="userPhoto(item.user.username)">
-              <!-- Text -->
-              <div class="text-subtitle2 text-bold q-px-sm">{{ item.title }}</div>
-              <div v-if="item.user.role != 'Admin'" class="text-subtitle2 q-pa-sm float-right">
-                {{ item.user.name }}
-                <q-avatar class="lumine-avatar">
-                  <img :src="url + '/avatars/' + item.user.avatar" />
-                </q-avatar>
-              </div>
-            </div>
-
-            <!-- Mobile -->
-            <div v-if="!desktop" class="lumine-text">
-              <!-- Menu -->
-              <div class="float-right">
-                <q-btn :size="buttonSize" icon="more_horiz" class="q-mx-sm" @click.stop="showMenu(item)" round flat dense>
-                  <MenuPhoto :item="item" />
-                </q-btn>
-              </div>
-
-              <!-- Text -->
-              <div class="text-subtitle2 text-bold q-px-sm">{{ item.title }}</div>
-              <div v-if="item.user.role != 'Admin'" class="text-subtitle2 q-px-sm" @click.stop="userPhoto(item.user.username)">
-                <q-avatar class="lumine-avatar">
-                  <img :src="url + '/avatars/' + item.user.avatar" />
-                </q-avatar>
-                {{ item.user.name }}
-              </div>
-            </div>
-
-            <div v-if="item.showButtons || item.showMenu" class="buttons" :class="{ 'with-title': item.title }">
-              <!-- Menu -->
-              <div v-if="desktop" class="menu-button">
-                <q-btn color="primary" text-color="white" :size="buttonSize" icon="more_vert" class="q-ma-sm" @click.stop="showMenu(item)" round dense>
-                  <MenuPhoto :item="item" />
-                </q-btn>
-              </div>
-
-              <!-- Action Button -->
-              <div v-if="token" class="action-button q-ma-sm">
-                <q-btn
-                  color="primary"
-                  :text-color="item.liked ? 'red' : ''"
-                  :size="buttonSize"
-                  :icon="item.liked ? 'favorite' : 'favorite_border'"
-                  class="q-mr-xs"
-                  @click.stop="likePhoto(item)"
-                  round
-                  dense
-                />
-                <q-btn
-                  color="primary"
-                  :text-color="item.saved ? 'yellow' : ''"
-                  :size="buttonSize"
-                  :icon="item.saved ? 'bookmark' : 'bookmark_border'"
-                  class="q-mr-xs"
-                  @click.stop="openCollection(item)"
-                  round
-                  dense
-                />
-              </div>
-            </div>
-          </div>
-
-          <!-- Preview -->
-          <div v-if="item.previewMode" @click="previewPhoto(item)">
-            <PreviewPhoto :url="url" :item="item" />
-          </div>
-
-          <!-- Collection -->
-          <q-dialog v-model="item.collectionDialog" position="bottom">
-            <q-card>
-              <q-card-section>
-                <div class="text-h6">{{ $t('photo.collectionTitle') }}</div>
-                <q-btn color="primary" icon="add" class="absolute absolute-top-right q-ma-md" @click="createCollectionDialog = true" square />
-              </q-card-section>
-
-              <q-separator />
-
-              <q-card-section class="q-py-lg scroll" style="max-width: 100vw; max-height: 50vh; width: 600px; height: 300px; scrollbar-width: none">
-                <div class="row q-gutter-lg justify-center">
-                  <div v-for="collection in usercollections" :key="collection.id" class="col-xs-3 collection-container" @click="savePhoto(item, collection)">
-                    <!-- Image -->
-                    <div>
-                      <div v-if="collection.photos && collection.photos.length > 0">
-                        <div class="row">
-                          <div v-for="photo in collection.photos.slice(0, 3)" :key="photo.id" class="col-2">
-                            <img :src="url + '/images/' + photo.image" class="collection-image" />
-                          </div>
-                        </div>
-                      </div>
-                      <div v-else>
-                        <img src="no_image_available.jpg" class="collection-image" />
-                      </div>
-                    </div>
-
-                    <!-- Name -->
-                    <div class="text-body2">{{ collection.name }}</div>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-          </q-dialog>
-        </template>
-      </MasonryWall>
-
-      <!-- Create Collection -->
-      <q-dialog v-model="createCollectionDialog" backdrop-filter="blur(4px) saturate(150%)">
-        <q-card style="width: 350px">
-          <q-form @submit="createCollection">
-            <q-card-section>
-              <div class="text-h6">{{ $t('photo.createCollectionTitle') }}</div>
-            </q-card-section>
-
-            <q-card-section>
-              <q-input
-                v-model="collection.name"
-                :label="$t('public.nameText')"
-                class="q-mt-sm"
-                :rules="[(v) => (v && v.length <= 20) || $t('photo.nameMaxLength')]"
-                outlined
-                dense
-                required
-                autofocus
-              />
-              <q-input type="textarea" v-model="collection.description" :label="$t('public.descriptionText')" class="q-mt-sm" outlined dense />
-            </q-card-section>
-
-            <q-card-actions align="right" class="text-primary">
-              <q-btn color="primary" label="Cancel" flat v-close-popup />
-              <q-btn type="submit" color="primary" :label="$t('public.createText')" :loading="createCollectionLoading" :disable="createCollectionLoading">
-                <template v-slot:loading>
-                  <q-spinner-hourglass class="on-center" />
-                </template>
-              </q-btn>
-            </q-card-actions>
-          </q-form>
-        </q-card>
-      </q-dialog>
-
-      <!-- Load More Photo -->
-      <template v-slot:loading>
-        <div class="row justify-center q-my-md">
-          <q-spinner-dots color="primary" size="40px" />
+  <div class="q-pa-md">
+    <!-- Loading -->
+    <MasonryWall v-if="loading" :items="load" :ssr-columns="8" :column-width="columnWidth" :gap="gap">
+      <template #default="{ item }">
+        <div class="lumine-container">
+          <q-skeleton width="100%" :height="item.height" />
         </div>
       </template>
-    </q-infinite-scroll>
+    </MasonryWall>
+
+    <MasonryWall v-else :items="photos" :ssr-columns="8" :column-width="columnWidth" :gap="gap">
+      <template #default="{ item }">
+        <div class="lumine-container" @click="singlePhoto(item)" @mouseover="showButtons(item)" @mouseleave="hideButtons(item)">
+          <!-- Image -->
+          <q-img :src="url + '/images/' + item.image" :alt="item.image || 'Lumine Photo'" class="lumine-photo" />
+
+          <!-- Desktop -->
+          <div v-if="desktop" class="lumine-text" @click.stop="userPhoto(item.user.username)">
+            <!-- Text -->
+            <div class="text-subtitle2 text-bold q-px-sm">{{ item.title }}</div>
+            <div v-if="item.user.role != 'Admin'" class="text-subtitle2 q-pa-sm float-right">
+              {{ item.user.name }}
+              <q-avatar class="lumine-avatar">
+                <img :src="url + '/avatars/' + item.user.avatar" />
+              </q-avatar>
+            </div>
+          </div>
+
+          <!-- Mobile -->
+          <div v-if="!desktop" class="lumine-text">
+            <!-- Menu -->
+            <div class="float-right">
+              <q-btn :size="buttonSize" icon="more_horiz" class="q-mx-sm" @click.stop="showMenu(item)" round flat dense>
+                <MenuPhoto :item="item" />
+              </q-btn>
+            </div>
+
+            <!-- Text -->
+            <div class="text-subtitle2 text-bold q-px-sm">{{ item.title }}</div>
+            <div v-if="item.user.role != 'Admin'" class="text-subtitle2 q-px-sm" @click.stop="userPhoto(item.user.username)">
+              <q-avatar class="lumine-avatar">
+                <img :src="url + '/avatars/' + item.user.avatar" />
+              </q-avatar>
+              {{ item.user.name }}
+            </div>
+          </div>
+
+          <div v-if="item.showButtons || item.showMenu" class="buttons" :class="{ 'with-title': item.title }">
+            <!-- Menu -->
+            <div v-if="desktop" class="menu-button">
+              <q-btn color="primary" text-color="white" :size="buttonSize" icon="more_vert" class="q-ma-sm" @click.stop="showMenu(item)" round dense>
+                <MenuPhoto :item="item" />
+              </q-btn>
+            </div>
+
+            <!-- Action Button -->
+            <div v-if="token" class="action-button q-ma-sm">
+              <q-btn
+                color="primary"
+                :text-color="item.liked ? 'red' : ''"
+                :size="buttonSize"
+                :icon="item.liked ? 'favorite' : 'favorite_border'"
+                class="q-mr-xs"
+                @click.stop="likePhoto(item)"
+                round
+                dense
+              />
+              <q-btn
+                color="primary"
+                :text-color="item.saved ? 'yellow' : ''"
+                :size="buttonSize"
+                :icon="item.saved ? 'bookmark' : 'bookmark_border'"
+                class="q-mr-xs"
+                @click.stop="openCollection(item)"
+                round
+                dense
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview -->
+        <div v-if="item.previewMode" @click="previewPhoto(item)">
+          <PreviewPhoto :url="url" :item="item" />
+        </div>
+
+        <!-- Collection -->
+        <q-dialog v-model="item.collectionDialog" position="bottom">
+          <q-card>
+            <q-card-section>
+              <div class="text-h6">{{ $t('photo.collectionTitle') }}</div>
+              <q-btn color="primary" icon="add" class="absolute absolute-top-right q-ma-md" @click="createCollectionDialog = true" square />
+            </q-card-section>
+
+            <q-separator />
+
+            <q-card-section class="q-py-lg scroll" style="max-width: 100vw; max-height: 50vh; width: 600px; height: 300px; scrollbar-width: none">
+              <div class="row q-gutter-lg justify-center">
+                <div v-for="collection in usercollections" :key="collection.id" class="col-xs-3 collection-container" @click="savePhoto(item, collection)">
+                  <!-- Image -->
+                  <div>
+                    <div v-if="collection.photos && collection.photos.length > 0">
+                      <div class="row">
+                        <div v-for="photo in collection.photos.slice(0, 3)" :key="photo.id" class="col-2">
+                          <img :src="url + '/images/' + photo.image" class="collection-image" />
+                        </div>
+                      </div>
+                    </div>
+                    <div v-else>
+                      <img src="no_image_available.jpg" class="collection-image" />
+                    </div>
+                  </div>
+
+                  <!-- Name -->
+                  <div class="text-body2">{{ collection.name }}</div>
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
+      </template>
+    </MasonryWall>
+
+    <!-- Create Collection -->
+    <q-dialog v-model="createCollectionDialog" backdrop-filter="blur(4px) saturate(150%)">
+      <q-card style="width: 350px">
+        <q-form @submit="createCollection">
+          <q-card-section>
+            <div class="text-h6">{{ $t('photo.createCollectionTitle') }}</div>
+          </q-card-section>
+
+          <q-card-section>
+            <q-input v-model="collection.name" :label="$t('public.nameText')" class="q-mt-sm" :rules="[(v) => (v && v.length <= 20) || $t('photo.nameMaxLength')]" outlined dense required autofocus />
+            <q-input type="textarea" v-model="collection.description" :label="$t('public.descriptionText')" class="q-mt-sm" outlined dense />
+          </q-card-section>
+
+          <q-card-actions align="right" class="text-primary">
+            <q-btn color="primary" label="Cancel" flat v-close-popup />
+            <q-btn type="submit" color="primary" :label="$t('public.createText')" :loading="createCollectionLoading" :disable="createCollectionLoading">
+              <template v-slot:loading>
+                <q-spinner-hourglass class="on-center" />
+              </template>
+            </q-btn>
+          </q-card-actions>
+        </q-form>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -196,7 +178,7 @@ const detectDesktop = () => {
   desktop.value = window.innerWidth >= 691
 }
 const columnWidth = computed(() => {
-  return desktop.value ? 280 : 150
+  return desktop.value ? 280 : 120
 })
 const gap = computed(() => {
   return desktop.value ? 20 : 12
@@ -224,9 +206,6 @@ const load = ref([
   { height: '450px' },
   { height: '450px' }
 ])
-
-// Load Photo
-const onLoad = async () => {}
 
 // Profile
 const profile = ref([])
