@@ -12,8 +12,8 @@
         type="text"
         v-model="search"
         :color="$q.dark.isActive ? 'secondary' : 'primary'"
+        :label="$t('public.searchText')"
         class="search-all"
-        label="Search..."
         :style="$q.dark.isActive ? 'background-color: #2f2f2fca;' : 'background-color: #d1d1d1;'"
         dense
         borderless

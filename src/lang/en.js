@@ -4,7 +4,8 @@ export default {
     optionalText: '(optional)',
     createText: 'Create',
     nameText: 'Name',
-    descriptionText: 'Description'
+    descriptionText: 'Description',
+    searchText: 'Search...'
   },
   navbar: {
     homeTab: 'Home',
@@ -84,6 +85,9 @@ export default {
     categoryList: 'Category List',
     tagList: 'Tag List',
     recomendedPhoto: 'Recommended for you',
+    collectionSearch: 'Search Collection...',
+    categorySearch: 'Search Category...',
+    tagSearch: 'Search Tag...',
   },
   create: {
     headerText: 'Create Lumine Photo',
