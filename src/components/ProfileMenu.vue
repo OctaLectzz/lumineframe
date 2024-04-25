@@ -45,7 +45,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item @click="navigateTo('home')" clickable v-close-popup>
+          <q-item @click="navigateTo('setting')" clickable v-close-popup>
             <q-item-section>
               <q-item-label>{{ $t('navbar.settingDrpdwn') }}</q-item-label>
             </q-item-section>

@@ -35,6 +35,7 @@ const routes = [
         ]
       },
       { path: 'lumine-creation-tool', meta: { requiresAuth: true, roles: ['Admin', 'Member'] }, name: 'creationtool', component: () => import('pages/home/CreationToolPage.vue') },
+      { path: 'setting', meta: { requiresAuth: true, roles: ['Admin', 'Member'] }, name: 'setting', component: () => import('pages/home/profile/SettingProfile.vue') },
       {
         path: 'profile/:username',
         component: () => import('layouts/ProfileLayout.vue'),

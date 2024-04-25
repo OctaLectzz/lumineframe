@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mb-xl">
+  <div class="q-mb-lg">
     <div v-if="loading" class="row justify-center">
       <!-- Avatar -->
       <q-skeleton type="QAvatar" size="110px" class="q-my-md" />
@@ -42,6 +42,17 @@
         </a>
         {{ user.about }}
       </div>
+
+      <!-- Edit Profile -->
+      <q-btn
+        v-if="profile.username === route.params.username"
+        :to="{ name: 'setting' }"
+        :color="$q.dark.isActive ? 'secondary' : 'primary'"
+        :text-color="$q.dark.isActive ? 'primary' : 'secondary'"
+        :label="$t('profile.editProfileText')"
+        class="q-my-md"
+        rounded
+      />
     </div>
   </div>
 

@@ -22,7 +22,7 @@ export default {
     dashboardDrpdwn: 'Dashboard',
     profileDrpdwn: 'Profile',
     collectionsDrpdwn: 'Your Collections',
-    settingDrpdwn: 'Setting',
+    settingDrpdwn: 'Setting'
   },
   auth: {
     welcomeMsg: 'Welcome to LumineFrame',
@@ -114,5 +114,41 @@ export default {
       descriptionMaxLength: 'The Description may not be greater than 255 characters',
       tagMaxLength: 'The Tag may not be greater than 20 characters'
     }
-  }
+  },
+  profile: {
+    editProfileText: 'Edit Profile',
+    completeEditProfileText: 'Complete your profile',
+    changePhotoText: 'Change Photo',
+    usernameForm: 'Username',
+    firstNameForm: 'First Name',
+    lastNameForm: 'Last Name',
+    emailForm: 'Email',
+    phoneForm: 'Phone Number',
+    pronounsForm: 'Pronouns',
+    urlForm: 'URL',
+    birthdayForm: 'Date of Birth',
+    genderForm: 'Gender',
+    manGenderForm: 'Man',
+    womanGenderForm: 'Woman',
+    addressForm: 'Address',
+    aboutForm: 'About',
+    editProfileBtn: 'Update User Info',
+    successEditProfileMsg: 'Collection edited successfully',
+    failedEditProfileMsg: 'Invalid data. Please check the fields and try again',
+    validate: {
+      usernameRequired: 'Username must be filled in',
+      usernameMaxLength: 'Username must be a maximum of 15 characters',
+      usernameUnique: 'Username already exists',
+      firstNameRequired: 'First Name must be filled in',
+      firstNameMaxLength: 'First Name must be a maximum of 15 characters',
+      lastNameMaxLength: 'Last Name must be a maximum of 15 characters',
+      emailRequired: 'Email must be filled in',
+      emailFormat: 'Invalid Email',
+      phoneMaxLength: 'Phone Number must be a maximum of 15 characters',
+      urlMaxLength: 'URL must be a maximum of 255 characters',
+      addressMaxLength: 'Address must be a maximum of 255 characters',
+      aboutMaxLength: 'About must be a maximum of 100 characters',
+    }
+  },
+  dashboard: {}
 }

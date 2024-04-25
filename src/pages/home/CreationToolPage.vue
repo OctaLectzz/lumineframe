@@ -2,7 +2,16 @@
   <q-page class="q-pa-md">
     <div class="header text-h5 text-bold fixed-top q-pa-md" :class="$q.dark.isActive ? 'bg-dark' : 'bg-white'">
       {{ $t('create.headerText') }}
-      <q-btn class="float-right" color="primary" :label="$t('create.handleButton')" :loading="loading" :disable="disabledButton" @click="createPhoto" rounded>
+      <q-btn
+        class="float-right"
+        :color="$q.dark.isActive ? 'secondary' : 'primary'"
+        :text-color="$q.dark.isActive ? 'primary' : 'secondary'"
+        :label="$t('create.handleButton')"
+        :loading="loading"
+        :disable="disabledButton"
+        @click="createPhoto"
+        rounded
+      >
         <template v-slot:loading>
           <q-spinner-hourglass class="on-center" />
         </template>
@@ -133,11 +142,11 @@ const data = ref({
 })
 
 // Validate
-const rules = {
+const rules = ref({
   title: [(val) => !val || val.length <= 20 || t('create.validate.titleMaxLength')],
   description: [(val) => !val || val.length <= 255 || t('create.validate.descriptionMaxLength')],
   tag: [(val) => !val || val.length <= 20 || t('create.validate.tagMaxLength')]
-}
+})
 
 // Loading Button
 const loading = ref(false)

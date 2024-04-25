@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { server, headers } from '/src/boot/axios'
+import { server, headers, headersImage } from '/src/boot/axios'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -40,6 +40,10 @@ export const useUserStore = defineStore('user', {
 
     async edit(data) {
       return await server.put(`api/user/${data.id}`, data, { headers })
+    },
+
+    async editavatar(data) {
+      return await server.patch(`api/user/avatar/${data.id}`, data, { headers: headersImage })
     },
 
     async delete(data) {
