@@ -27,7 +27,7 @@
     <div class="row no-wrap q-pa-md">
       <div class="column">
         <q-list class="nav-profile">
-          <q-item v-if="role === 'Admin'" @click="navigateTo('home')" clickable v-close-popup>
+          <q-item v-if="role === 'Admin'" @click="navigateTo('dashboardhome')" clickable v-close-popup>
             <q-item-section>
               <q-item-label>{{ $t('navbar.dashboardDrpdwn') }}</q-item-label>
             </q-item-section>

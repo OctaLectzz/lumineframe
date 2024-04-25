@@ -51,6 +51,15 @@ const routes = [
         component: () => import('pages/ErrorNotFound.vue')
       }
     ]
+  },
+  {
+    path: '/dashboard',
+    component: () => import('layouts/DashboardLayout.vue'),
+    meta: { requiresAuth: true, roles: ['Admin', 'Karyawan'] },
+    children: [
+      { path: 'home', name: 'dashboardhome', component: () => import('pages/dashboard/IndexDashboard.vue') },
+      { path: 'user', name: 'dashboarduser', component: () => import('pages/dashboard/user/IndexUser.vue') }
+    ]
   }
 ]
 
