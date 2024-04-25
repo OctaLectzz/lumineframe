@@ -61,8 +61,8 @@ import { toast } from 'vue3-toastify'
 import { useAuthStore } from '/src/stores/auth-store'
 
 const { t } = useI18n()
-const authStore = useAuthStore()
 const emits = defineEmits(['register'])
+const authStore = useAuthStore()
 const loading = ref(false)
 
 // Data

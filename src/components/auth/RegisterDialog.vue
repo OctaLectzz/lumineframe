@@ -96,8 +96,8 @@ import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '/src/stores/auth-store'
 
 const { t } = useI18n()
-const authStore = useAuthStore()
 const emits = defineEmits(['login'])
+const authStore = useAuthStore()
 const loading = ref(false)
 
 // Data

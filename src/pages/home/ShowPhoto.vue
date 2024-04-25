@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-center">
+  <div class="row justify-center q-mb-xl">
     <q-card class="my-card">
       <!-- Loading -->
       <q-card-section v-if="loading">
@@ -14,10 +14,15 @@
             <div class="q-mx-md">
               <!-- Button -->
               <div class="q-my-md">
+                <!-- Download -->
                 <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" icon="download" size="15px" class="q-mr-sm" @click="downloadPhoto(photo)" flat round />
+
+                <!-- More -->
                 <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" icon="more_horiz" size="15px" class="q-ml-sm" flat round>
                   <MenuPhoto :item="photo" />
                 </q-btn>
+
+                <!-- Collection -->
                 <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" :text-color="$q.dark.isActive ? 'primary' : 'secondary'" label="Save" class="float-right" push />
               </div>
               <div class="q-ml-md">
@@ -111,7 +116,18 @@
                 <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" icon="more_horiz" size="15px" class="q-ml-sm" flat round>
                   <MenuPhoto :item="photo" />
                 </q-btn>
-                <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" :text-color="$q.dark.isActive ? 'primary' : 'secondary'" label="Save" class="float-right" push />
+                <q-btn
+                  :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                  :text-color="$q.dark.isActive ? 'primary' : 'secondary'"
+                  label="Save"
+                  class="float-right"
+                  @click="openCollection(photo)"
+                  push
+                />
+                <!-- Collection -->
+                <q-dialog v-model="photo.collectionDialog" position="bottom">
+                  <CollectionDialog :item="photo" />
+                </q-dialog>
               </div>
               <div class="q-ml-md">
                 <!-- Title -->
@@ -129,6 +145,22 @@
                     <span class="text-subtitle2 text-bold">{{ user.name }}</span>
                     <div class="q-ml-xl text-subtitle2 text-grey-8">{{ user.username }}</div>
                   </span>
+                </div>
+
+                <!-- Like -->
+                <div class="float-right">
+                  <span class="text-bold">{{ likes }}</span>
+                  <q-btn
+                    :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                    :text-color="liked ? 'red' : ''"
+                    size="15px"
+                    :icon="liked ? 'favorite' : 'favorite_border'"
+                    class="q-mr-xs"
+                    @click="likePhoto(photo)"
+                    round
+                    dense
+                    flat
+                  />
                 </div>
 
                 <!-- Comment -->
@@ -154,7 +186,7 @@
                         </div>
                         <div>
                           <span class="text-grey-7" style="font-size: 11px">{{ comment.created_at }}</span>
-                          <q-btn color="grey-7" icon="more_horiz" size="xs" class="q-mx-sm" flat round>
+                          <q-btn v-if="profile.username === comment.user.username" color="grey-7" icon="more_horiz" size="xs" class="q-mx-sm" flat round>
                             <q-menu transition-show="jump-down" transition-hide="jump-up">
                               <q-list dense>
                                 <q-item clickable v-close-popup>
@@ -212,39 +244,70 @@ import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
 import { url, token } from '/src/boot/axios'
+import { useAuthStore } from '/src/stores/auth-store'
 import { usePhotoStore } from '/src/stores/photo-store'
+import { useLikeStore } from '/src/stores/like-store'
 import { useCommentStore } from '/src/stores/comment-store'
 import PreviewPhoto from '/src/components/PreviewPhoto.vue'
 import MenuPhoto from '/src/components/MenuPhoto.vue'
 import IndexPage from '/src/pages/home/IndexPage.vue'
+import CollectionDialog from '/src/components/CollectionDialog.vue'
 
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
+const authStore = useAuthStore()
 const photoStore = usePhotoStore()
-const photo = ref('')
-const user = ref('')
-const loading = ref(false)
+const loading = ref(true)
 
-// Show Photo
-const showPhoto = async (photonumber) => {
-  loading.value = true
+// Profile
+const profile = ref({})
+const getProfile = async () => {
   try {
-    const res = await photoStore.show(photonumber)
-    photo.value = res.data.data
-    user.value = res.data.data.user
-    data.value.photo_id = photo.value.id
+    const res = await authStore.profile()
+
+    profile.value = res.data.data
   } catch (error) {
     console.error('Error fetching data:', error)
   }
-  loading.value = false
 }
-onMounted(() => {
+
+// Show Photo
+const photo = ref({})
+const user = ref({})
+const likes = ref(0)
+const liked = ref(false)
+const saved = ref(false)
+const showPhoto = async (photonumber) => {
+  try {
+    const res = await photoStore.show(photonumber)
+
+    photo.value = res.data.data
+    user.value = res.data.data.user
+    likes.value = res.data.data.likes.length
+    if (profile.value && profile.value.likes && profile.value.collectionphoto) {
+      liked.value = profile.value.likes.some((userlike) => userlike.photo_id === photo.value.id)
+      saved.value = profile.value.collectionphoto.some((usersave) => usersave.photo_id === photo.value.id)
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+}
+
+onMounted(async () => {
+  if (token) {
+    await getProfile()
+  }
   showPhoto(route.params.photo_number)
 })
-watchEffect(() => {
+watchEffect(async () => {
   if (route.params.photo_number) {
-    showPhoto(route.params.photo_number)
+    loading.value = true
+    if (token) {
+      await getProfile()
+    }
+    await showPhoto(route.params.photo_number)
+    loading.value = false
   }
 })
 
@@ -270,6 +333,42 @@ const userPhoto = (username) => {
   router.push({ name: 'indexprofile', params: { username: username } })
 }
 
+// Save Photo
+const openCollection = (photo) => {
+  photo.collectionDialog = true
+}
+
+// Like Photo
+const likeStore = useLikeStore()
+const likePhoto = async (photo) => {
+  if (liked.value) {
+    try {
+      liked.value = false
+      likes.value -= 1
+
+      await likeStore.dislike(photo.id)
+
+      toast.success(t('photo.successDislikeMsg'))
+    } catch (error) {
+      toast.error(t('photo.failedDislikeMsg'))
+      console.error(error)
+    }
+  } else {
+    try {
+      liked.value = true
+      likes.value += 1
+
+      await likeStore.like(photo.id)
+
+      toast.success(t('photo.successLikeMsg'))
+    } catch (error) {
+      console.error(error)
+      toast.error(t('photo.failedLikeMsg'))
+    }
+  }
+  getProfile()
+}
+
 // Comment
 const commentStore = useCommentStore()
 const commentLoading = ref(false)
@@ -284,6 +383,8 @@ const createComment = async () => {
   if (data.value.content.length <= 255) {
     commentLoading.value = true
     try {
+      data.value.photo_id = photo.value.id
+
       await commentStore.create(data.value)
 
       data.value.content = ''

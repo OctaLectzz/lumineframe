@@ -21,8 +21,8 @@ export default {
     logoutBtn: 'Logout',
     dashboardDrpdwn: 'Dashboard',
     profileDrpdwn: 'Profile',
-    likesDrpdwn: 'Likes',
-    collectionsDrpdwn: 'Collections'
+    collectionsDrpdwn: 'Your Collections',
+    settingDrpdwn: 'Setting',
   },
   auth: {
     welcomeMsg: 'Welcome to LumineFrame',

@@ -26,7 +26,7 @@
     </template>
     <div class="row no-wrap q-pa-md">
       <div class="column">
-        <q-list>
+        <q-list class="nav-profile">
           <q-item v-if="role === 'Admin'" @click="navigateTo('home')" clickable v-close-popup>
             <q-item-section>
               <q-item-label>{{ $t('navbar.dashboardDrpdwn') }}</q-item-label>
@@ -39,15 +39,15 @@
             </q-item-section>
           </q-item>
 
-          <q-item @click="navigateTo('home')" clickable v-close-popup>
+          <q-item @click="navigateTo('collectionsprofile')" clickable v-close-popup>
             <q-item-section>
-              <q-item-label>{{ $t('navbar.likesDrpdwn') }}</q-item-label>
+              <q-item-label>{{ $t('navbar.collectionsDrpdwn') }}</q-item-label>
             </q-item-section>
           </q-item>
 
           <q-item @click="navigateTo('home')" clickable v-close-popup>
             <q-item-section>
-              <q-item-label>{{ $t('navbar.collectionsDrpdwn') }}</q-item-label>
+              <q-item-label>{{ $t('navbar.settingDrpdwn') }}</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -60,8 +60,8 @@
           <img :src="url + '/avatars/' + profile.avatar" />
         </q-avatar>
 
-        <div class="text-subtitle1 text-bold q-mt-sm">{{ profile.name }}</div>
-        <div class="text-subtitle2 text-grey-8 q-mb-sm" style="margin-top: -7px">{{ profile.email }}</div>
+        <div class="nav-profile text-subtitle1 text-bold q-mt-sm">{{ profile.name }}</div>
+        <div class="nav-profile text-subtitle2 text-grey-8 q-mb-sm" style="margin-top: -7px">{{ profile.email }}</div>
 
         <q-btn color="primary" :label="$t('navbar.logoutBtn')" push size="sm" v-close-popup @click="logout" />
       </div>
@@ -80,8 +80,8 @@ import { useAuthStore } from '/src/stores/auth-store'
 const $q = useQuasar()
 const router = useRouter()
 const { t } = useI18n()
-const authStore = useAuthStore()
 const { url, loading, profile } = defineProps(['url', 'loading', 'profile'])
+const authStore = useAuthStore()
 const role = localStorage.getItem('role')
 
 // Navigate
@@ -108,3 +108,16 @@ const logout = async () => {
   })
 }
 </script>
+
+<style scoped>
+@media screen and (max-width: 691px) {
+  .nav-profile {
+    font-size: 10px;
+  }
+}
+@media screen and (max-width: 360px) {
+  .nav-profile {
+    font-size: 5px;
+  }
+}
+</style>

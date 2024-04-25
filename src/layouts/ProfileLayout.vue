@@ -86,7 +86,7 @@ const getUser = async (username) => {
 }
 
 // Profile
-const profile = ref([])
+const profile = ref({})
 const getProfile = async () => {
   try {
     const res = await authStore.profile()

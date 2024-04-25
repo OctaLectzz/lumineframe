@@ -113,7 +113,7 @@ const collectionStore = useCollectionStore()
 const authStore = useAuthStore()
 
 // Profile
-const profile = ref([])
+const profile = ref({})
 const profileLoading = ref(true)
 const getProfile = async () => {
   try {
