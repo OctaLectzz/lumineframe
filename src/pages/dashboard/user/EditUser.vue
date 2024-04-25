@@ -1,44 +1,192 @@
 <template>
   <div>
-    <q-form @submit="editUser">
+    <q-form @submit="editData">
       <q-card style="min-width: 400px">
         <q-card-section class="row items-center q-py-sm">
-          <div class="text-h6">Edit User</div>
+          <div class="text-h6">{{ $t('dashboard.user.editText') }}</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
 
         <q-separator />
 
-        <q-card-section class="scroll">
+        <q-card-section class="scroll" style="max-height: 70vh">
           <div class="row justify-center">
-            <!-- Name -->
-            <div class="col-5 q-mr-md">
-              <div class="text-bold" style="margin-bottom: -10px">Name :</div>
-              <q-input v-model="data.name" label="Name" class="q-my-sm" dense outlined required :rules="nameRules" autofocus />
+            <!-- Username -->
+            <div class="col-10 q-ma-sm">
+              <div class="text-bold">{{ $t('dashboard.user.crud.usernameForm') }} :</div>
+              <q-input
+                v-model="data.username"
+                :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                :label="$t('dashboard.user.crud.usernameForm')"
+                class="q-mb-sm"
+                :rules="rules.username"
+                dense
+                outlined
+                required
+                autofocus
+              />
+            </div>
+
+            <!-- First Name -->
+            <div class="col-sm-5 col-xs-10 q-mx-sm">
+              <div class="text-bold">{{ $t('dashboard.user.crud.firstNameForm') }} :</div>
+              <q-input
+                v-model="data.first_name"
+                :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                :label="$t('dashboard.user.crud.firstNameForm')"
+                class="q-mb-sm"
+                :rules="rules.first_name"
+                dense
+                outlined
+                required
+              />
+            </div>
+
+            <!-- Last Name -->
+            <div class="col-sm-5 col-xs-10 q-mx-sm">
+              <div class="text-bold">{{ $t('dashboard.user.crud.lastNameForm') }} :</div>
+              <q-input
+                v-model="data.last_name"
+                :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                :label="$t('dashboard.user.crud.lastNameForm')"
+                class="q-mb-sm"
+                :rules="rules.last_name"
+                dense
+                outlined
+                required
+              />
             </div>
 
             <!-- Email -->
-            <div class="col-5 q-ml-md">
-              <div class="text-bold" style="margin-bottom: -10px">Email :</div>
-              <q-input v-model="data.email" label="Email" class="q-my-sm" dense outlined required :rules="emailRules" />
+            <div class="col-sm-5 col-xs-10 q-mx-sm">
+              <div class="text-bold">{{ $t('dashboard.user.crud.emailForm') }} :</div>
+              <q-input
+                type="email"
+                v-model="data.email"
+                :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                :label="$t('dashboard.user.crud.emailForm')"
+                class="q-mb-sm"
+                :rules="rules.email"
+                dense
+                outlined
+                required
+              />
             </div>
-          </div>
 
-          <div class="row justify-center">
-            <!-- Alamat -->
-            <div class="col-5 q-mr-md">
-              <div class="text-bold" style="margin-bottom: -10px">Alamat :</div>
-              <q-input v-model="data.alamat" type="textarea" label="Alamat" class="q-my-sm" dense outlined />
+            <!-- phone -->
+            <div class="col-sm-5 col-xs-10 q-mx-sm">
+              <div class="text-bold">{{ $t('dashboard.user.crud.phoneForm') }} :</div>
+              <q-input
+                type="number"
+                v-model="data.phone"
+                :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                :label="$t('dashboard.user.crud.phoneForm')"
+                class="q-mb-sm"
+                :rules="rules.phone"
+                dense
+                outlined
+                required
+              />
             </div>
 
-            <div class="col-5 q-ml-md">
-              <!-- Jenis Kelamin -->
-              <div class="text-bold" style="margin-bottom: 10px">Jenis Kelamin :</div>
-              <div class="q-gutter-sm">
-                <q-radio dense v-model="data.jenis_kelamin" val="Laki-Laki" label="Laki-Laki" />
-                <q-radio dense v-model="data.jenis_kelamin" val="Perempuan" label="Perempuan" />
+            <!-- Role -->
+            <div class="col-10 q-ma-sm">
+              <div class="text-bold">{{ $t('dashboard.user.crud.roleForm') }} :</div>
+              <q-select
+                v-model="data.role"
+                :options="['Admin', 'Member']"
+                :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                :label="$t('dashboard.user.crud.roleForm')"
+                class="q-mb-sm"
+                :rules="rules.role"
+                dense
+                outlined
+                required
+              />
+            </div>
+
+            <!-- Pronouns -->
+            <div class="col-sm-5 col-xs-10 q-mx-sm">
+              <div class="text-bold">{{ $t('dashboard.user.crud.pronounsForm') }} :</div>
+              <q-select
+                v-model="data.pronouns"
+                :options="['ey/em', 'he/him', 'ne/nem', 'she/her', 'they/them', 've/ver', 'xe/xem', 'xie/xem', 'ze/zir']"
+                :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                :label="$t('dashboard.user.crud.pronounsForm')"
+                class="q-mb-sm"
+                outlined
+                dense
+              />
+            </div>
+
+            <!-- Last Name -->
+            <div class="col-sm-5 col-xs-10 q-mx-sm">
+              <div class="text-bold">{{ $t('dashboard.user.crud.urlForm') }} :</div>
+              <q-input v-model="data.url" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('dashboard.user.crud.urlForm')" class="q-mb-sm" :rules="rules.url" dense outlined required />
+            </div>
+
+            <!-- Birthday -->
+            <div class="col-sm-5 col-xs-10 q-mx-sm q-mb-md">
+              <div class="text-bold">{{ $t('dashboard.user.crud.birthdayForm') }} :</div>
+              <q-input v-model="data.birthday" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('dashboard.user.crud.birthdayForm')" class="q-mb-sm" mask="date" outlined dense>
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy transition-show="scale" transition-hide="scale" cover>
+                      <q-date v-model="data.birthday" :color="$q.dark.isActive ? 'secondary' : 'primary'" :text-color="$q.dark.isActive ? 'primary' : 'secondary'">
+                        <div class="row items-center justify-end">
+                          <q-btn v-close-popup label="Close" :color="$q.dark.isActive ? 'secondary' : 'primary'" flat />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+            </div>
+
+            <!-- Gender -->
+            <div class="col-sm-5 col-xs-10 q-mx-sm q-mb-md self-center">
+              <span class="text-bold q-mr-sm">{{ $t('dashboard.user.crud.genderForm') }} :</span>
+              <div class="q-mb-sm">
+                <q-radio v-model="data.gender" val="man" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('dashboard.user.crud.manGenderForm')" class="q-mx-sm" dense />
+                <q-radio v-model="data.gender" val="woman" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('dashboard.user.crud.womanGenderForm')" class="q-mx-sm" dense />
               </div>
+            </div>
+
+            <!-- Address -->
+            <div class="col-sm-5 col-xs-10 q-mx-sm">
+              <div class="text-bold">{{ $t('dashboard.user.crud.addressForm') }} :</div>
+              <q-input
+                v-model="data.address"
+                type="textarea"
+                :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                :label="$t('dashboard.user.crud.addressForm')"
+                class="q-mb-sm"
+                :rules="rules.address"
+                dense
+                outlined
+              />
+            </div>
+
+            <!-- About -->
+            <div class="col-sm-5 col-xs-10 q-mx-sm">
+              <div class="text-bold">{{ $t('dashboard.user.crud.aboutForm') }} :</div>
+              <q-input
+                v-model="data.about"
+                type="textarea"
+                :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                :label="$t('dashboard.user.crud.aboutForm')"
+                class="q-mb-sm"
+                :rules="rules.about"
+                dense
+                outlined
+              />
+            </div>
+
+            <!-- status -->
+            <div class="col-10 q-ma-sm">
+              <div class="text-bold">{{ $t('dashboard.user.crud.statusForm') }} :</div>
+              <q-toggle v-model="data.status" size="50px" :color="$q.dark.isActive ? 'secondary' : 'primary'" />
             </div>
           </div>
         </q-card-section>
@@ -46,8 +194,19 @@
         <q-separator />
 
         <q-card-actions align="right" class="text-primary">
-          <q-btn flat label="Batal" color="dark" v-close-popup />
-          <q-btn type="submit" label="Simpan" color="dark" :disable="disabledButton"></q-btn>
+          <q-btn :label="$t('public.cancelText')" :color="$q.dark.isActive ? 'secondary' : 'primary'" flat v-close-popup />
+          <q-btn
+            type="submit"
+            :label="$t('public.editText')"
+            :color="$q.dark.isActive ? 'secondary' : 'primary'"
+            :text-color="$q.dark.isActive ? 'primary' : 'secondary'"
+            :loading="loading"
+            :disable="disabledButton"
+          >
+            <template v-slot:loading>
+              <q-spinner-hourglass class="on-center" />
+            </template>
+          </q-btn>
         </q-card-actions>
       </q-card>
     </q-form>
@@ -55,53 +214,89 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, computed, defineProps } from 'vue'
-import { useQuasar } from 'quasar'
-import { useUserStore } from 'src/stores/user-store.js'
+import { ref, onMounted, computed, defineProps, defineEmits } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { toast } from 'vue3-toastify'
+import { useUserStore } from '/src/stores/user-store.js'
 
-const $q = useQuasar()
+const { t } = useI18n()
 const emits = defineEmits(['edited'])
-const { user } = defineProps(['user'])
+const { item } = defineProps(['item'])
 const userStore = useUserStore()
 const data = ref({
-  id: user.id,
-  name: user.name,
-  email: user.email,
-  role: user.role,
-  jenis_kelamin: user.jenis_kelamin,
-  alamat: user.alamat
+  id: item.id,
+  username: item.username,
+  first_name: item.first_name,
+  last_name: item.last_name,
+  email: item.email,
+  phone: item.phone,
+  role: item.role,
+  pronouns: item.pronouns,
+  url: item.url,
+  birthday: item.birthday,
+  gender: item.gender,
+  address: item.address,
+  about: item.about,
+  status: item.status
+})
+
+// User
+const users = ref([])
+const getUser = async () => {
+  try {
+    const res = await userStore.all()
+
+    users.value = res.data.data
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+}
+onMounted(() => {
+  getUser()
 })
 
 // Validate
-const nameRules = [(v) => !!v || 'Nama harus diisi', (v) => (v && v.length <= 255) || 'Nama tidak boleh lebih dari 255 karakter']
-const emailRules = [(v) => !!v || 'Email harus diisi', (v) => /.+@.+\..+/.test(v) || 'Format email tidak valid']
-const roleRules = [(v) => !!v || 'Role harus diisi']
+const rules = ref({
+  username: [
+    (v) => !!v || t('dashboard.user.validate.usernameRequired'),
+    (v) => v.length <= 15 || t('dashboard.user.validate.usernameMaxLength'),
+    (v) => {
+      if (typeof v === 'string') {
+        if (users.value) {
+          const userUsername = item.username.toLowerCase()
+          return !users.value.some((user) => user.username.toLowerCase() === v.toLowerCase() && user.username.toLowerCase() !== userUsername) || t('dashboard.user.validate.usernameUnique')
+        }
+      }
+      return true
+    }
+  ],
+  first_name: [(v) => !!v || t('dashboard.user.validate.firstNameRequired'), (v) => v.length <= 15 || t('dashboard.user.validate.firstNameMaxLength')],
+  last_name: [(v) => v.length <= 15 || t('dashboard.user.validate.lastNameMaxLength')],
+  email: [(v) => !!v || t('dashboard.user.validate.emailRequired'), (v) => /.+@.+/.test(v) || t('dashboard.user.validate.emailFormat')],
+  phone: [(v) => v.length <= 15 || t('dashboard.user.validate.phoneMaxLength')],
+  url: [(v) => v.length <= 255 || t('dashboard.user.validate.urlMaxLength')],
+  address: [(v) => v.length <= 255 || t('dashboard.user.validate.addressMaxLength')],
+  about: [(v) => v.length <= 100 || t('dashboard.user.validate.aboutMaxLength')]
+})
 
 // Disabled Button
 const loading = ref(false)
 const disabledButton = computed(() => {
-  return loading.value || !data.value.name || !data.value.email || !data.value.role || !data.value.jenis_kelamin
+  return loading.value || !data.value.username || !data.value.first_name || !data.value.email || !data.value.role
 })
 
-// Edit Data
-const editUser = async () => {
+// Edit
+const editData = async () => {
   loading.value = true
 
   try {
     await userStore.edit(data.value)
-    $q.notify({
-      message: 'Berhasil Mengedit User',
-      icon: 'check',
-      color: 'positive'
-    })
+
+    toast.success(t('dashboard.user.crud.successEditText'))
     emits('edited')
   } catch (error) {
     console.error('Error submitting form:', error)
-    $q.notify({
-      message: error.response.data.message || 'Gagal Mengedit User',
-      icon: 'warning',
-      color: 'negative'
-    })
+    toast.error(t('dashboard.user.crud.failedEditText'))
   }
 
   loading.value = false

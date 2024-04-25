@@ -57,26 +57,49 @@
           ></q-btn>
 
           <!-- Profile -->
-          <q-skeleton v-if="loading" type="QBtn" width="100px" />
-          <q-btn-dropdown v-else :label="profile.name" no-caps>
+          <q-btn-dropdown v-if="loading" :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" rounded dense flat push glossy split>
+            <template v-slot:label>
+              <q-skeleton type="QAvatar" size="26px" />
+            </template>
+          </q-btn-dropdown>
+
+          <q-btn-dropdown
+            v-else
+            :to="{ name: 'indexprofile', params: { username: profile.username } }"
+            :color="$q.dark.isActive ? 'secondary' : 'primary'"
+            class="q-mx-xs"
+            rounded
+            dense
+            flat
+            push
+            glossy
+            split
+          >
+            <template v-slot:label>
+              <q-skeleton v-if="loading" type="QAvatar" size="26px" />
+
+              <q-avatar v-else size="26px">
+                <img :src="url + '/avatars/' + profile.avatar" />
+              </q-avatar>
+            </template>
             <div class="row no-wrap q-pa-md">
               <div class="column">
-                <q-list>
-                  <q-item clickable v-close-popup @click="navigateTo('home')">
+                <q-list class="nav-profile">
+                  <q-item @click="navigateTo('home')" clickable v-close-popup>
                     <q-item-section>
-                      <q-item-label>Home</q-item-label>
+                      <q-item-label>{{ $t('dashboard.navbar.homeDrpdwn') }}</q-item-label>
                     </q-item-section>
                   </q-item>
 
-                  <q-item clickable v-close-popup @click="navigateTo('home')">
+                  <q-item @click="navigateTo('indexprofile', { username: profile.username })" clickable v-close-popup>
                     <q-item-section>
-                      <q-item-label>Edit Profile</q-item-label>
+                      <q-item-label>{{ $t('dashboard.navbar.profileDrpdwn') }}</q-item-label>
                     </q-item-section>
                   </q-item>
 
-                  <q-item clickable v-close-popup @click="navigateTo('home')">
+                  <q-item @click="navigateTo('setting')" clickable v-close-popup>
                     <q-item-section>
-                      <q-item-label>Articles</q-item-label>
+                      <q-item-label>{{ $t('dashboard.navbar.settingDrpdwn') }}</q-item-label>
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -86,13 +109,13 @@
 
               <div class="column items-center">
                 <q-avatar size="72px">
-                  <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+                  <img :src="url + '/avatars/' + profile.avatar" />
                 </q-avatar>
 
-                <div class="text-subtitle1 text-bold q-mt-sm">{{ profile.name }}</div>
-                <div class="text-subtitle2 text-grey-8 q-mb-sm" style="margin-top: -7px">{{ profile.email }}</div>
+                <div class="nav-profile text-subtitle1 text-bold q-mt-sm">{{ profile.name }}</div>
+                <div class="nav-profile text-subtitle2 text-grey-8 q-mb-sm" style="margin-top: -7px">{{ profile.email }}</div>
 
-                <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" :text-color="$q.dark.isActive ? 'primary' : 'secondary'" label="Logout" push size="sm" v-close-popup @click="logout" />
+                <q-btn color="primary" :label="$t('dashboard.navbar.logoutBtn')" push size="sm" v-close-popup @click="logout" />
               </div>
             </div>
           </q-btn-dropdown>
@@ -149,14 +172,38 @@
 import { ref, onMounted, computed, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
+import { toast } from 'vue3-toastify'
+import { url } from '/src/boot/axios'
 import { lang, languages, languageNames } from '/src/boot/lang'
 import { useAuthStore } from 'src/stores/auth-store'
 
 const $q = useQuasar()
 const router = useRouter()
+const { t } = useI18n()
 const authStore = useAuthStore()
-const role = localStorage.getItem('role')
 const darkmode = localStorage.getItem('darkmode') || 'false'
+
+// Profile
+const profile = ref([])
+const loading = ref(true)
+const getProfile = async () => {
+  try {
+    const res = await authStore.profile()
+    profile.value = res.data.data
+
+    if (res.data.response === 'Failed') {
+      router.push('/notfound')
+    }
+
+    loading.value = false
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+}
+onMounted(() => {
+  getProfile()
+})
 
 // Sidebar
 const leftDrawerOpen = ref(false)
@@ -205,57 +252,26 @@ const changeLanguage = (newLocale) => {
   window.location.reload()
 }
 
-// Profile
-const profile = ref([])
-const loading = ref(true)
-const getProfile = async () => {
-  try {
-    const res = await authStore.profile()
-    profile.value = res.data.data
-
-    if (res.data.response === 'Failed') {
-      router.push('/notfound')
-    }
-
-    loading.value = false
-  } catch (error) {
-    console.error('Error fetching data:', error)
-  }
-}
-onMounted(() => {
-  getProfile()
-})
-
 // Navigate
-const navigateTo = (routeName) => {
-  router.push({ name: routeName })
+const navigateTo = (name, params) => {
+  router.push({ name: name, params: params })
 }
 
 // Logout
 const logout = async () => {
   $q.dialog({
     title: 'Logout',
-    message: 'Apakah kamu yakin?',
+    message: t('auth.comfirmationLogoutMsg'),
     cancel: true,
     persistent: true
   }).onOk(async () => {
     try {
       await authStore.logout()
 
-      $q.notify({
-        message: 'Logout Berhasil',
-        icon: 'check',
-        color: 'positive'
-      })
-      router.push({ name: 'auth' })
-      window.location.reload()
+      toast.success(t('auth.successLogoutMsg'))
     } catch (error) {
       console.error('Error submitting form:', error)
-      $q.notify({
-        message: error.response.data.message || 'Logout Gagal',
-        icon: 'warning',
-        color: 'negative'
-      })
+      toast.error(t('auth.failedLogoutMsg'))
     }
   })
 }

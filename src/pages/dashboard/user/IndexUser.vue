@@ -18,29 +18,31 @@
       <!-- Top -->
       <template v-slot:top-right="props">
         <!-- Fullscreen -->
-        <q-btn flat round dense :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'" @click="setFs(props)">
-          <q-tooltip>{{ props.inFullscreen ? 'Exit Fullscreen' : 'Toggle Fullscreen' }}</q-tooltip>
+        <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'" @click="setFs(props)" flat round dense>
+          <q-tooltip>{{ props.inFullscreen ? $t('dashboard.exitFullScreenText') : $t('dashboard.toggleFullScreenText') }}</q-tooltip>
         </q-btn>
 
         <!-- Grid Switch -->
-        <q-btn flat round dense :icon="grid ? 'list' : 'grid_on'" @click="grid = !grid" class="q-mr-sm">
-          <q-tooltip>{{ grid ? 'List' : 'Grid' }}</q-tooltip>
+        <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" :icon="grid ? 'list' : 'grid_on'" @click="grid = !grid" class="q-mr-sm" flat round dense>
+          <q-tooltip>{{ grid ? $t('dashboard.listText') : $t('dashboard.gridText') }}</q-tooltip>
         </q-btn>
 
         <!-- Search -->
-        <q-input outlined dense debounce="300" v-model="filter" placeholder="Search">
+        <q-input outlined dense debounce="300" v-model="filter" :placeholder="$t('public.searchText')">
           <template v-slot:append>
             <q-icon name="search" />
           </template>
         </q-input>
       </template>
 
-      <!-- Add User -->
+      <!-- Create -->
       <template v-slot:top-left>
-        <div class="text-h5 q-pr-lg">User</div>
-        <q-btn dense @click="addUserDialog = true" color="black" icon="add" class="shadow-3"><q-tooltip>Add User</q-tooltip></q-btn>
-        <q-dialog v-model="addUserDialog" full-width full-height persistent transition-show="slide-up" transition-hide="slide-down">
-          <CreateUser @added="userAdded" />
+        <div class="text-h5 q-pr-lg">{{ $t('dashboard.user.userText') }}</div>
+        <q-btn color="primary" icon="add" class="shadow-3 q-my-sm" @click="addItemDialog = true" dense>
+          <q-tooltip>{{ $t('dashboard.user.createText') }}</q-tooltip>
+        </q-btn>
+        <q-dialog v-model="addItemDialog" transition-show="slide-up" transition-hide="slide-down" full-width full-height persistent>
+          <CreateItem @added="itemAdded" />
         </q-dialog>
       </template>
 
@@ -48,7 +50,7 @@
       <!-- ID -->
       <template #body-cell-id="props">
         <q-td :props="props">
-          <div text-color="white" dense square>
+          <div dense square>
             {{ props.rowIndex + 1 }}
           </div>
         </q-td>
@@ -57,9 +59,36 @@
       <!-- User -->
       <template #body-cell-user="props">
         <q-td :props="props">
-          <div text-color="white" dense square>
+          <div dense square>
             <div class="text-bold">{{ props.row.name }}</div>
             <div>{{ props.row.email }}</div>
+          </div>
+        </q-td>
+      </template>
+
+      <!-- Gender -->
+      <template #body-cell-gender="props">
+        <q-td :props="props">
+          <div dense square>
+            <div>{{ props.row.gender === 'man' ? $t('dashboard.user.manGenderText') : $t('dashboard.user.womanGenderText') }}</div>
+          </div>
+        </q-td>
+      </template>
+
+      <!-- URL -->
+      <template #body-cell-url="props">
+        <q-td :props="props">
+          <div dense square>
+            <a :href="props.row.url" target="_blank" rel="noopener noreferrer">{{ props.row.url }}</a>
+          </div>
+        </q-td>
+      </template>
+
+      <!-- Address -->
+      <template #body-cell-address="props">
+        <q-td :props="props">
+          <div dense square>
+            {{ props.row.address && props.row.address.length > 20 ? props.row.address.substring(0, 20) + '...' : props.row.address }}
           </div>
         </q-td>
       </template>
@@ -67,19 +96,19 @@
       <!-- Action -->
       <template #body-cell-action="props">
         <q-td :props="props">
-          <q-btn dense round color="blue" field="edit" icon="edit" class="q-mx-xs" @click="editUser(props.row)">
-            <q-dialog v-model="editUserDialog" full-width full-height persistent transition-show="slide-up" transition-hide="slide-down">
-              <EditUser @edited="userEdited(props.row)" :user="userData" />
+          <q-btn dense round color="blue" field="edit" icon="edit" class="q-mx-xs" @click="props.row.editItemDialog = true">
+            <q-dialog v-model="props.row.editItemDialog" transition-show="slide-up" transition-hide="slide-down" full-width full-height persistent>
+              <EditItem @edited="itemEdited(props.row)" :item="props.row" />
             </q-dialog>
           </q-btn>
-          <q-btn dense round color="red" field="delete" icon="delete" class="q-mx-xs" @click="deleteUserDialog(props.row)" />
+          <q-btn dense round color="red" field="delete" icon="delete" class="q-mx-xs" @click="deleteItemDialog(props.row)" />
         </q-td>
       </template>
 
       <!-- Grid -->
       <template v-slot:item="props">
-        <div class="q-pa-md col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition" :style="props.selected ? 'transform: scale(0.95);' : ''">
-          <q-card class="q-pa-sm">
+        <div class="q-pa-md col-xs-12 col-sm-6 col-md-6 col-lg-6 grid-style-transition" :style="props.selected ? 'transform: scale(0.95);' : ''">
+          <q-card class="q-pa-md">
             <q-list dense>
               <q-item v-for="col in props.cols" :key="col.id">
                 <q-item-section>
@@ -88,24 +117,44 @@
 
                 <q-item-section side>
                   <!-- ID -->
-                  <div v-if="col.name === 'id'" text-color="white" dense square>
+                  <div v-if="col.name === 'id'" dense square>
                     {{ props.rowIndex + 1 }}
                   </div>
 
                   <!-- User -->
-                  <div v-else-if="col.name === 'user'" text-color="white" dense square>
+                  <div v-else-if="col.name === 'user'" dense square>
                     <div class="text-bold">{{ props.row.name }}</div>
                     <div>{{ props.row.email }}</div>
                   </div>
 
+                  <!-- Gender -->
+                  <div v-else-if="col.name === 'gender'">
+                    <div>{{ props.row.gender === 'man' ? $t('dashboard.user.manGenderText') : $t('dashboard.user.womanGenderText') }}</div>
+                  </div>
+
+                  <!-- URL -->
+                  <div v-else-if="col.name === 'url'">
+                    <a :href="props.row.url" target="_blank" rel="noopener noreferrer">{{ props.row.url }}</a>
+                  </div>
+
+                  <!-- Address -->
+                  <div v-else-if="col.name === 'address'">
+                    {{ props.row.address && props.row.address.length > 20 ? props.row.address.substring(0, 20) + '...' : props.row.address }}
+                  </div>
+
+                  <!-- About -->
+                  <div v-else-if="col.name === 'about'">
+                    {{ props.row.about && props.row.about.length > 20 ? props.row.about.substring(0, 20) + '...' : props.row.about }}
+                  </div>
+
                   <!-- Action -->
                   <div v-else-if="col.name === 'action'">
-                    <q-btn dense round color="blue" field="edit" icon="edit" class="q-mx-xs" @click="editUser(props.row)">
-                      <q-dialog v-model="editUserDialog" full-width full-height persistent transition-show="slide-up" transition-hide="slide-down">
-                        <EditUser @edited="userEdited(props.row)" :user="userData" />
+                    <q-btn dense round color="blue" field="edit" icon="edit" class="q-mx-xs" @click="props.row.editItemDialog = true">
+                      <q-dialog v-model="props.row.editItemDialog" transition-show="slide-up" transition-hide="slide-down" full-width full-height persistent>
+                        <EditItem @edited="itemEdited(props.row)" :item="props.row" />
                       </q-dialog>
                     </q-btn>
-                    <q-btn dense round color="red" field="delete" icon="delete" class="q-mx-xs" @click="deleteUserDialog(props.row)" />
+                    <q-btn dense round color="red" field="delete" icon="delete" class="q-mx-xs" @click="deleteItemDialog(props.row)" />
                   </div>
 
                   <!-- DLL -->
@@ -124,22 +173,24 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { url } from 'src/boot/axios'
-import { useUserStore } from 'src/stores/user-store'
-import CreateUser from './CreateUser.vue'
-import EditUser from './EditUser.vue'
+import { useI18n } from 'vue-i18n'
+import { toast } from 'vue3-toastify'
+import { useUserStore } from '/src/stores/user-store'
+import CreateItem from './CreateUser.vue'
+import EditItem from './EditUser.vue'
 
 const $q = useQuasar()
 const router = useRouter()
-const userStore = useUserStore()
+const { t } = useI18n()
+const itemStore = useUserStore()
 
-const users = ref([])
-const getUser = async () => {
+const items = ref([])
+const getItem = async () => {
   try {
-    const res = await userStore.all()
-    users.value = res.data.data
+    const res = await itemStore.all()
+    items.value = res.data.data
 
-    if (res.data.response === 'Failed') {
+    if (res.data.status === 'failed') {
       router.push('/notfound')
     }
   } catch (error) {
@@ -147,69 +198,55 @@ const getUser = async () => {
   }
 }
 onMounted(() => {
-  getUser()
+  getItem()
 })
 
-// Create User
-const addUserDialog = ref(false)
-const userAdded = () => {
-  addUserDialog.value = false
-  getUser()
+// Create
+const addItemDialog = ref(false)
+const itemAdded = () => {
+  addItemDialog.value = false
+  getItem()
 }
 
-// Edit User
-const editUserDialog = ref(false)
-const userData = ref('')
-const editUser = (row) => {
-  editUserDialog.value = true
-  userData.value = row
-}
-const userEdited = () => {
-  editUserDialog.value = false
-  getUser()
+// Edit
+const itemEdited = (item) => {
+  item.editItemDialog = false
+  getItem()
 }
 
-// Delete User
-const deleteUserDialog = (row) => {
+// Delete
+const deleteItemDialog = (row) => {
   $q.dialog({
-    title: 'WARNING!',
-    message: 'Apakah kamu yakin ingin menghapus data ini?',
+    title: t('dashboard.deleteTitle'),
+    message: t('dashboard.deleteMsg'),
     cancel: true,
     persistent: true,
     ok: {
-      label: 'Ya',
-      color: 'primary'
+      label: t('dashboard.yesDeleteText'),
+      color: 'primary',
     },
     cancel: {
-      label: 'Tidak',
-      color: 'red-7'
+      label: t('dashboard.cancelDeleteText'),
+      color: 'secondary'
     }
   }).onOk(() => {
-    deleteUser(row)
+    deleteItem(row)
   })
 }
-const deleteUser = async (row) => {
+const deleteItem = async (row) => {
   try {
-    const res = await userStore.delete(row.id)
+    await itemStore.delete(row.id)
 
-    if (res.data.status === 'Success') {
-      $q.notify({
-        color: 'positive',
-        message: res.data.message
-      })
-      getUser()
-    }
+    toast.success(t('dashboard.user.successDeleteText'))
+    getItem()
   } catch (error) {
     console.error('Error fetching data:', error)
-    $q.notify({
-      color: 'negative',
-      message: 'Terjadi kesalahan saat menghapus item'
-    })
+    toast.error(t('dashboard.user.failedDeleteText'))
   }
 }
 
 // Table
-const currencyData = users
+const currencyData = items
 const currencyColumns = [
   {
     name: 'id',
@@ -219,28 +256,63 @@ const currencyColumns = [
   {
     name: 'user',
     field: 'name',
-    label: 'User',
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'gender',
-    field: 'gender',
-    label: 'Jenis Kelamin',
+    label: t('dashboard.user.userColumn'),
     align: 'left',
     sortable: true
   },
   {
     name: 'role',
     field: 'role',
-    label: 'Role',
+    label: t('dashboard.user.roleColumn'),
+    align: 'left',
+    sortable: true
+  },
+  {
+    name: 'pronouns',
+    field: 'pronouns',
+    label: t('dashboard.user.pronounsColumn'),
+    align: 'left',
+    sortable: true
+  },
+  {
+    name: 'birthday',
+    field: 'birthday',
+    label: t('dashboard.user.birthdayColumn'),
+    align: 'left',
+    sortable: true
+  },
+  {
+    name: 'gender',
+    field: 'gender',
+    label: t('dashboard.user.genderColumn'),
+    align: 'left',
+    sortable: true
+  },
+  {
+    name: 'phone',
+    field: 'phone',
+    label: t('dashboard.user.phoneColumn'),
+    align: 'left',
+    sortable: true
+  },
+  {
+    name: 'url',
+    field: 'url',
+    label: t('dashboard.user.urlColumn'),
     align: 'left',
     sortable: true
   },
   {
     name: 'address',
     field: 'address',
-    label: 'Alamat',
+    label: t('dashboard.user.addressColumn'),
+    align: 'left',
+    sortable: true
+  },
+  {
+    name: 'about',
+    field: 'about',
+    label: t('dashboard.user.aboutColumn'),
     align: 'left',
     sortable: true
   },
