@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { server, headers } from '/src/boot/axios'
+import { server, headers, headersImage } from '/src/boot/axios'
 
 export const useCategoryStore = defineStore('category', {
   state: () => ({
@@ -23,7 +23,7 @@ export const useCategoryStore = defineStore('category', {
     },
 
     async create(data) {
-      return await server.post('api/category', data, { headers })
+      return await server.post('api/category', data, { headers: headersImage })
     },
 
     async edit(data) {

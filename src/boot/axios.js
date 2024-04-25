@@ -7,6 +7,9 @@ const server = axios.create({ baseURL: url })
 const token = localStorage.getItem('token')
 const headers = {
   Authorization: `Bearer ${token}`,
+}
+const headersImage = {
+  Authorization: `Bearer ${token}`,
   'Content-Type': 'multipart/form-data'
 }
 
@@ -24,4 +27,4 @@ export default boot(({ app }) => {
   app.config.globalProperties.$server = server
 })
 
-export { axios, server, url, token, headers }
+export { axios, server, url, token, headers, headersImage }

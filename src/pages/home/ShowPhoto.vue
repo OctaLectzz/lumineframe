@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-center q-my-xl q-py-xl">
+  <div class="row justify-center">
     <q-card class="my-card">
       <!-- Loading -->
       <q-card-section v-if="loading">

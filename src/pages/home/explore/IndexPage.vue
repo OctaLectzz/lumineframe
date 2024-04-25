@@ -4,7 +4,7 @@
 
   <div class="header">
     <!-- Image -->
-    <q-img src="/src/assets/img/explore_header.png" style="max-height: 280px" fit="fill" />
+    <q-img src="/src/assets/img/explore_header.png" style="margin-top: -80px;" fit="fill" />
 
     <!-- Search -->
     <div class="search-container">

@@ -8,7 +8,7 @@
         </template>
       </q-btn>
     </div>
-    <div class="row justify-center q-gutter-xl" style="margin: 120px 0">
+    <div class="row justify-center q-gutter-xl" style="margin: 20px 0">
       <!-- Image -->
       <div class="col-xs-10 col-md-3">
         <div

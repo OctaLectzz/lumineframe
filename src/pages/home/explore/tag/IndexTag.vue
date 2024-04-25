@@ -15,9 +15,9 @@
         :label="$t('explore.tagSearch')"
         class="search-all"
         :style="$q.dark.isActive ? 'background-color: #2f2f2fca;' : 'background-color: #d1d1d1;'"
+        @keyup.enter="searchData"
         dense
         borderless
-        @keyup.enter="searchData"
       >
         <template v-slot:append>
           <q-icon name="search" class="search-icon" @click="searchData" />
@@ -69,7 +69,6 @@ const getTag = async () => {
     console.error('Error fetching data:', error)
   }
 }
-
 onMounted(() => {
   getTag()
 })

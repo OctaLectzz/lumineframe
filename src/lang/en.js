@@ -3,9 +3,14 @@ export default {
     requiredText: '*',
     optionalText: '(optional)',
     createText: 'Create',
+    editText: 'Edit',
     nameText: 'Name',
     descriptionText: 'Description',
-    searchText: 'Search...'
+    searchText: 'Search...',
+    searchPhotoText: 'Search Photo...',
+    collectionTitle: 'Collection',
+    categoryTitle: 'Category',
+    tagTitle: 'Tag'
   },
   navbar: {
     homeTab: 'Home',
@@ -88,6 +93,9 @@ export default {
     collectionSearch: 'Search Collection...',
     categorySearch: 'Search Category...',
     tagSearch: 'Search Tag...',
+    editCollectionTitle: 'Edit Collection',
+    successEditCollectionMsg: 'Collection edited successfully',
+    failedEditCollectionMsg: 'Collection failed to edit'
   },
   create: {
     headerText: 'Create Lumine Photo',

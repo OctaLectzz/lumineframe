@@ -299,7 +299,11 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.desktop {
+  margin-top: 85px;
+}
 .mobile {
+  margin-top: 45px;
   display: none;
 }
 

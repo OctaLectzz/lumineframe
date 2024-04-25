@@ -163,8 +163,8 @@ import { useCollectionphotoStore } from '/src/stores/collectionphoto-store'
 import PreviewPhoto from '/src/components/PreviewPhoto.vue'
 import MenuPhoto from '/src/components/MenuPhoto.vue'
 
-const { t } = useI18n()
 const router = useRouter()
+const { t } = useI18n()
 const authStore = useAuthStore()
 const likeStore = useLikeStore()
 const collectionStore = useCollectionStore()
@@ -327,8 +327,8 @@ const createCollection = async () => {
   createCollectionLoading.value = true
   try {
     await collectionStore.create(collection.value)
-    toast.success(t('photo.successCreateCollectionMsg'))
 
+    toast.success(t('photo.successCreateCollectionMsg'))
     collection.value.name = ''
     collection.value.description = ''
     createCollectionDialog.value = false

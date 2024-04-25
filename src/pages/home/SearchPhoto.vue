@@ -1,6 +1,6 @@
 <template>
   <!-- Loading -->
-  <div class="q-pa-md q-mt-xl">
+  <div class="q-pa-md">
     <MasonryWall v-if="loading" :items="load" :ssr-columns="8" :column-width="200" :gap="18">
       <template #default="{ item }">
         <div class="lumine-container">
