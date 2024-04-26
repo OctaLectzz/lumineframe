@@ -39,7 +39,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item @click="navigateTo('collectionsprofile')" clickable v-close-popup>
+          <q-item @click="navigateTo('collectionsprofile', { username: profile.username })" clickable v-close-popup>
             <q-item-section>
               <q-item-label>{{ $t('navbar.collectionsDrpdwn') }}</q-item-label>
             </q-item-section>
