@@ -197,18 +197,6 @@
                               </div>
                               <div>
                                 <span class="text-grey-7" style="font-size: 11px">{{ comment.created_at }}</span>
-                                <q-btn v-if="profile.username === comment.user.username" color="grey-7" icon="more_horiz" size="xs" class="q-mx-sm" flat round>
-                                  <q-menu transition-show="jump-down" transition-hide="jump-up">
-                                    <q-list dense>
-                                      <q-item clickable v-close-popup>
-                                        <q-item-section>{{ $t('photo.editComment') }}</q-item-section>
-                                      </q-item>
-                                      <q-item clickable v-close-popup>
-                                        <q-item-section>{{ $t('photo.deleteComment') }}</q-item-section>
-                                      </q-item>
-                                    </q-list>
-                                  </q-menu>
-                                </q-btn>
                               </div>
                             </div>
                           </div>
