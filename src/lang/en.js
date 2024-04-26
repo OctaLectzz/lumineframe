@@ -167,7 +167,7 @@ export default {
       tagTab: 'Tag',
       photoTab: 'Photo',
       collectionTab: 'Collection',
-      commentTab: 'Comment',
+      commentTab: 'Comment'
     },
     toggleFullScreenText: 'Toggle Fullscreen',
     exitFullScreenText: 'Exit Fullscreen',
@@ -177,6 +177,14 @@ export default {
     deleteMsg: 'Are you sure you want to delete this data?',
     yesDeleteText: 'Yes',
     cancelDeleteText: 'Cancel',
+    home: {
+      statisticsText: 'Monthly Photos Statistics',
+      reportText: 'Latest Photo Reports',
+      totalUsers: 'Number of Users',
+      totalPhotos: 'Number of Photos',
+      totalCategories: 'Number of Categories',
+      totalTags: 'Number of Tags'
+    },
     user: {
       userText: 'User',
       createText: 'Create User',
@@ -276,6 +284,8 @@ export default {
         failedCreateMsg: 'An error occurred while creating the Tag',
         successEditMsg: 'Tag edited successfully',
         failedEditMsg: 'An error occurred while editing Tag',
+        successDeleteMsg: 'Tag deleted successfully',
+        failedDeleteMsg: 'An error occurred while deleting Tag'
       },
       validate: {
         nameRequired: 'Name must be filled in',
@@ -312,19 +322,19 @@ export default {
       nameColumn: 'Name',
       descriptionColumn: 'Description',
       crud: {
-      successDeleteMsg: 'Collection deleted successfully',
-      failedDeleteMsg: 'An error occurred while deleting Collection'
-    }
-  },
-  comment: {
-    commentText: 'Comment',
-    userColumn: 'User',
-    photoColumn: 'Photo',
-    contentColumn: 'content',
-    crud: {
-    successDeleteMsg: 'Comment deleted successfully',
-    failedDeleteMsg: 'An error occurred while deleting Comment'
-  }
+        successDeleteMsg: 'Collection deleted successfully',
+        failedDeleteMsg: 'An error occurred while deleting Collection'
+      }
+    },
+    comment: {
+      commentText: 'Comment',
+      userColumn: 'User',
+      photoColumn: 'Photo',
+      contentColumn: 'content',
+      crud: {
+        successDeleteMsg: 'Comment deleted successfully',
+        failedDeleteMsg: 'An error occurred while deleting Comment'
+      }
     }
   }
 }

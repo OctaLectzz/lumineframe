@@ -26,6 +26,10 @@ export const usePhotoStore = defineStore('photo', {
       return await server.get('api/dashboard/photo', { headers })
     },
 
+    async chart() {
+      return await server.get('api/dashboard/photo/chart', { headers })
+    },
+
     async show(photo_number) {
       return await server.get(`api/photo/${photo_number}`)
     },

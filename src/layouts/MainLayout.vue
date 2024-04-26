@@ -240,7 +240,7 @@ const searchPhoto = () => {
     router.push({ name: 'searchphoto', params: { search: search.value || undefined } })
     setTimeout(() => {
       window.location.reload()
-    }, 100)
+    }, 1000)
   }
 }
 

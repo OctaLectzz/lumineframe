@@ -128,7 +128,7 @@
         <q-separator />
 
         <!-- Brand -->
-        <q-item class="q-py-md">
+        <q-item class="q-py-lg">
           <q-item-section avatar>
             <img src="/src/assets/img/logo.png" width="50" class="q-pa-sm" />
           </q-item-section>
