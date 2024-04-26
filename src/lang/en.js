@@ -62,7 +62,6 @@ export default {
   photo: {
     menu1: 'Preview Image',
     menu2: 'Download Image',
-    menu3: 'Report Image',
     successLikeMsg: 'Photo liked successfully',
     failedLikeMsg: 'You have already liked this Photo',
     successDislikeMsg: 'Photo disliked successfully',
@@ -180,7 +179,6 @@ export default {
     cancelDeleteText: 'Cancel',
     home: {
       statisticsText: 'Monthly Photos Statistics',
-      reportText: 'Latest Photo Reports',
       totalUsers: 'Number of Users',
       totalPhotos: 'Number of Photos',
       totalCategories: 'Number of Categories',

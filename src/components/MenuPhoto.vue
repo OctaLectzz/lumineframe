@@ -1,14 +1,11 @@
 <template>
   <q-menu transition-show="jump-down" transition-hide="jump-up">
     <q-list dense>
-      <q-item clickable v-close-popup @click="previewPhoto(item)">
+      <q-item @click="previewPhoto(item)" clickable v-close-popup>
         <q-item-section>{{ $t('photo.menu1') }}</q-item-section>
       </q-item>
-      <q-item clickable v-close-popup @click="downloadPhoto(item)">
+      <q-item @click="downloadPhoto(item)" clickable v-close-popup>
         <q-item-section>{{ $t('photo.menu2') }}</q-item-section>
-      </q-item>
-      <q-item clickable v-close-popup>
-        <q-item-section>{{ $t('photo.menu3') }}</q-item-section>
       </q-item>
     </q-list>
   </q-menu>
@@ -18,9 +15,7 @@
 import { defineProps } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
-import { url } from '/src/boot/axios'
 import { usePhotoStore } from '/src/stores/photo-store'
-import PreviewPhoto from '/src/components/PreviewPhoto.vue'
 
 const { t } = useI18n()
 const { item } = defineProps(['item'])

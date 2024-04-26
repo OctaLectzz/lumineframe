@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-sm">
     <!-- Card -->
-    <q-card class="bg-transparent no-shadow no-border" bordered>
+    <q-card class="bg-transparent no-shadow no-border q-mt-md" bordered>
       <q-card-section class="q-pa-none">
         <div v-if="loading" class="row q-col-gutter-sm">
           <div v-for="n in 4" :key="n" class="col-md-3 col-sm-12 col-xs-12">
@@ -22,7 +22,7 @@
     </q-card>
 
     <!-- Charts -->
-    <q-card class="q-mt-sm no-shadow" bordered>
+    <q-card class="q-py-lg q-mt-lg no-shadow" bordered>
       <q-card-section class="text-h6 q-pb-none">
         <q-item>
           <q-item-section avatar class="">
@@ -45,24 +45,6 @@
           <ECharts :option="photos_count" class="q-mt-md" :resizable="true" autoresize style="height: 250px" />
         </div>
       </q-card-section>
-    </q-card>
-
-    <!-- Reports -->
-    <q-card class="q-mt-sm no-shadow" bordered>
-      <q-card-section class="text-h6 q-pb-none">
-        <q-item>
-          <q-item-section avatar class="">
-            <q-icon color="blue" name="flag" size="44px" />
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label>
-              <div class="text-h6">{{ $t('dashboard.home.reportText') }}</div>
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-card-section>
-      <q-card-section class="q-pa-none q-ma-none"></q-card-section>
     </q-card>
   </q-page>
 </template>
@@ -267,5 +249,3 @@ watchEffect(() => {
   }
 })
 </script>
-
-<style scoped></style>
