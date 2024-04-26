@@ -81,7 +81,12 @@
       <template #body-cell-image="props">
         <q-td :props="props">
           <div dense square>
-            <q-img :src="url + '/images/' + props.row.image" style="border-radius: 10px" />
+            <q-img :src="url + '/images/' + props.row.image" class="preview-photo" style="border-radius: 10px" @click="previewPhoto(props.row)" />
+
+            <!-- Preview -->
+            <div v-if="props.row.previewMode" @click="previewPhoto(props.row)">
+              <PreviewPhoto :item="props.row" />
+            </div>
           </div>
         </q-td>
       </template>
@@ -186,6 +191,7 @@ import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
 import { url } from '/src/boot/axios'
 import { usePhotoStore } from '/src/stores/photo-store'
+import PreviewPhoto from '/src/components/PreviewPhoto.vue'
 import CreateItem from './CreatePhoto.vue'
 import ShowItem from './ShowPhoto.vue'
 import EditItem from './EditPhoto.vue'
@@ -211,6 +217,11 @@ const getItem = async () => {
 onMounted(() => {
   getItem()
 })
+
+// Preview Photo
+const previewPhoto = (photo) => {
+  photo.previewMode = !photo.previewMode
+}
 
 // Create
 const addItemDialog = ref(false)
@@ -313,3 +324,16 @@ const setFs = (props) => {
   props.toggleFullscreen()
 }
 </script>
+
+<style scoped>
+.preview-photo {
+  cursor: zoom-in;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+.preview-photo:hover {
+  filter: brightness(70%);
+  transform: scale(1.02);
+}
+</style>

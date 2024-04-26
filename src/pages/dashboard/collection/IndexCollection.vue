@@ -217,13 +217,6 @@ onMounted(() => {
   getItem()
 })
 
-// Create
-const addItemDialog = ref(false)
-const itemAdded = () => {
-  addItemDialog.value = false
-  getItem()
-}
-
 // Delete
 const deleteItemDialog = (row) => {
   $q.dialog({

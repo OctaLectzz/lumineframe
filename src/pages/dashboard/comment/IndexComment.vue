@@ -59,7 +59,12 @@
       <template #body-cell-photo="props">
         <q-td :props="props">
           <div dense square>
-            <q-img :src="url + '/images/' + props.row.photo" :ratio="4 / 3" style="border-radius: 10px" />
+            <q-img :src="url + '/images/' + props.row.photo.image" :ratio="4 / 3" class="preview-photo" style="border-radius: 10px" @click="previewPhoto(props.row.photo)" />
+
+            <!-- Preview -->
+            <div v-if="props.row.photo.previewMode" @click="previewPhoto(props.row.photo)">
+              <PreviewPhoto :item="props.row.photo" />
+            </div>
           </div>
         </q-td>
       </template>
@@ -93,9 +98,9 @@
                     <div>{{ props.row.user.email }}</div>
                   </div>
 
-                  <!-- Image -->
-                  <div v-else-if="col.name === 'image'">
-                    <q-img :src="url + '/images/' + props.row.photo" :ratio="4 / 3" style="border-radius: 10px" />
+                  <!-- Photo -->
+                  <div v-else-if="col.name === 'photo'">
+                    <img :src="url + '/images/' + props.row.photo.image" width="80" :ratio="4 / 3" style="border-radius: 10px" />
                   </div>
 
                   <!-- Action -->
@@ -123,6 +128,7 @@ import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
 import { url } from '/src/boot/axios'
 import { useCommentStore } from '/src/stores/comment-store'
+import PreviewPhoto from '/src/components/PreviewPhoto.vue'
 
 const $q = useQuasar()
 const router = useRouter()
@@ -146,17 +152,9 @@ onMounted(() => {
   getItem()
 })
 
-// Create
-const addItemDialog = ref(false)
-const itemAdded = () => {
-  addItemDialog.value = false
-  getItem()
-}
-
-// Edit
-const itemEdited = (item) => {
-  item.editItemDialog = false
-  getItem()
+// Preview Photo
+const previewPhoto = (photo) => {
+  photo.previewMode = !photo.previewMode
 }
 
 // Delete
@@ -233,3 +231,16 @@ const setFs = (props) => {
   props.toggleFullscreen()
 }
 </script>
+
+<style scoped>
+.preview-photo {
+  cursor: zoom-in;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+.preview-photo:hover {
+  filter: brightness(70%);
+  transform: scale(1.02);
+}
+</style>

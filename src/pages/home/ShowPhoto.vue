@@ -99,7 +99,7 @@
         <div class="row">
           <!-- Image -->
           <div class="col-xs-12 col-md-6">
-            <q-img class="lumine-photo" :src="url + '/images/' + photo.image" @click="previewPhoto(photo)" />
+            <q-img :src="url + '/images/' + photo.image" class="lumine-photo" @click="previewPhoto(photo)" />
 
             <!-- Preview -->
             <div v-if="photo.previewMode" @click="previewPhoto(photo)">
