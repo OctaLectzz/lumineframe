@@ -35,7 +35,6 @@ const routes = [
         ]
       },
       { path: 'lumine-creation-tool', meta: { requiresAuth: true, roles: ['Admin', 'Member'] }, name: 'creationtool', component: () => import('pages/home/CreationToolPage.vue') },
-      { path: 'setting', meta: { requiresAuth: true, roles: ['Admin', 'Member'] }, name: 'setting', component: () => import('pages/home/profile/SettingProfile.vue') },
       {
         path: 'profile/:username',
         component: () => import('layouts/ProfileLayout.vue'),
@@ -45,6 +44,7 @@ const routes = [
           { path: 'likes', name: 'likesprofile', component: () => import('pages/home/profile/LikesProfile.vue') }
         ]
       },
+      { path: 'setting', meta: { requiresAuth: true, roles: ['Admin', 'Member'] }, name: 'setting', component: () => import('pages/home/profile/SettingProfile.vue') },
       {
         path: '/:catchAll(.*)*',
         name: 'notfound',
@@ -55,10 +55,15 @@ const routes = [
   {
     path: '/dashboard',
     component: () => import('layouts/DashboardLayout.vue'),
-    meta: { requiresAuth: true, roles: ['Admin', 'Karyawan'] },
+    meta: { requiresAuth: true, roles: ['Admin'] },
     children: [
       { path: 'home', name: 'dashboardhome', component: () => import('pages/dashboard/IndexDashboard.vue') },
-      { path: 'user', name: 'dashboarduser', component: () => import('pages/dashboard/user/IndexUser.vue') }
+      { path: 'user', name: 'dashboarduser', component: () => import('pages/dashboard/user/IndexUser.vue') },
+      { path: 'category', name: 'dashboardcategory', component: () => import('pages/dashboard/category/IndexCategory.vue') },
+      { path: 'tag', name: 'dashboardtag', component: () => import('pages/dashboard/tag/IndexTag.vue') },
+      { path: 'photo', name: 'dashboardphoto', component: () => import('pages/dashboard/photo/IndexPhoto.vue') },
+      { path: 'collection', name: 'dashboardcollection', component: () => import('pages/dashboard/collection/IndexCollection.vue') },
+      { path: 'comment', name: 'dashboardcomment', component: () => import('pages/dashboard/comment/IndexComment.vue') },
     ]
   }
 ]

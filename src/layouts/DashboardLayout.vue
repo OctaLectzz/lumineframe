@@ -3,7 +3,7 @@
     <q-header elevated :class="$q.dark.isActive ? 'bg-dark text-white' : 'bg-white text-dark'">
       <q-toolbar>
         <q-btn flat dense round @click="toggleDrawer" icon="menu" aria-label="Menu" />
-        <q-toolbar-title>Dashboard Admin</q-toolbar-title>
+        <q-toolbar-title>{{ $t('dashboard.navbar.dashboardAdminText') }}</q-toolbar-title>
         <q-space />
         <div class="q-gutter-sm row items-center no-wrap">
           <!-- Switch Languages -->
@@ -124,8 +124,24 @@
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" :mini="miniState" :width="250" :class="$q.dark.isActive ? 'bg-dark text-white' : 'bg-white text-dark'" bordered show-if-above>
-      <div class="text-h5 text-bold q-pa-xl">Laundry</div>
       <q-list>
+        <q-separator />
+
+        <!-- Brand -->
+        <q-item class="q-py-md">
+          <q-item-section avatar>
+            <img src="/src/assets/img/logo.png" width="50" class="q-pa-sm" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label class="text-h5 text-bold">
+              <div>Lumine</div>
+              <div class="q-ml-xl">Frame</div>
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-separator />
+
         <!-- Home -->
         <q-item
           :to="{ name: 'dashboardhome' }"
@@ -136,7 +152,7 @@
             <q-icon name="dashboard" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Home</q-item-label>
+            <q-item-label>{{ $t('dashboard.sidebar.homeTab') }}</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -150,7 +166,77 @@
             <q-icon name="account_circle" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>User</q-item-label>
+            <q-item-label>{{ $t('dashboard.sidebar.userTab') }}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <!-- Category -->
+        <q-item
+          :to="{ name: 'dashboardcategory' }"
+          :active-class="$q.dark.isActive ? 'q-item-no-link-highlighting menu-active-dark' : 'q-item-no-link-highlighting menu-active'"
+          :class="$q.dark.isActive ? 'menu-click-dark' : 'menu-click'"
+        >
+          <q-item-section avatar>
+            <q-icon name="category" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ $t('dashboard.sidebar.categoryTab') }}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <!-- Tag -->
+        <q-item
+          :to="{ name: 'dashboardtag' }"
+          :active-class="$q.dark.isActive ? 'q-item-no-link-highlighting menu-active-dark' : 'q-item-no-link-highlighting menu-active'"
+          :class="$q.dark.isActive ? 'menu-click-dark' : 'menu-click'"
+        >
+          <q-item-section avatar>
+            <q-icon name="tag" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ $t('dashboard.sidebar.tagTab') }}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <!-- Photo -->
+        <q-item
+          :to="{ name: 'dashboardphoto' }"
+          :active-class="$q.dark.isActive ? 'q-item-no-link-highlighting menu-active-dark' : 'q-item-no-link-highlighting menu-active'"
+          :class="$q.dark.isActive ? 'menu-click-dark' : 'menu-click'"
+        >
+          <q-item-section avatar>
+            <q-icon name="photo" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ $t('dashboard.sidebar.photoTab') }}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <!-- Collection -->
+        <q-item
+          :to="{ name: 'dashboardcollection' }"
+          :active-class="$q.dark.isActive ? 'q-item-no-link-highlighting menu-active-dark' : 'q-item-no-link-highlighting menu-active'"
+          :class="$q.dark.isActive ? 'menu-click-dark' : 'menu-click'"
+        >
+          <q-item-section avatar>
+            <q-icon name="perm_media" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ $t('dashboard.sidebar.collectionTab') }}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <!-- Comment -->
+        <q-item
+          :to="{ name: 'dashboardcomment' }"
+          :active-class="$q.dark.isActive ? 'q-item-no-link-highlighting menu-active-dark' : 'q-item-no-link-highlighting menu-active'"
+          :class="$q.dark.isActive ? 'menu-click-dark' : 'menu-click'"
+        >
+          <q-item-section avatar>
+            <q-icon name="comment" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ $t('dashboard.sidebar.commentTab') }}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>

@@ -153,11 +153,21 @@ export default {
   },
   dashboard: {
     navbar: {
+      dashboardAdminText: 'Dashboard Admin',
       logoutBtn: 'Logout',
       homeDrpdwn: 'Home',
       profileDrpdwn: 'Profile',
       collectionsDrpdwn: 'Your Collections',
       settingDrpdwn: 'Setting'
+    },
+    sidebar: {
+      homeTab: 'Home',
+      userTab: 'User',
+      categoryTab: 'Category',
+      tagTab: 'Tag',
+      photoTab: 'Photo',
+      collectionTab: 'Collection',
+      commentTab: 'Comment',
     },
     toggleFullScreenText: 'Toggle Fullscreen',
     exitFullScreenText: 'Exit Fullscreen',
@@ -182,8 +192,6 @@ export default {
       urlColumn: 'URL',
       addressColumn: 'Address',
       aboutColumn: 'About',
-      successDeleteText: 'User deleted successfully',
-      failedDeleteText: 'An error occurred while deleting User',
       crud: {
         usernameForm: 'Username',
         firstNameForm: 'First Name',
@@ -202,10 +210,12 @@ export default {
         addressForm: 'Address',
         aboutForm: 'About',
         statusForm: 'Status',
-        successCreateText: 'User created successfully',
-        failedCreateText: 'An error occurred while creating the User',
-        successEditText: 'User edited successfully',
-        failedEditText: 'An error occurred while editing User'
+        successCreateMsg: 'User created successfully',
+        failedCreateMsg: 'An error occurred while creating the User',
+        successEditMsg: 'User edited successfully',
+        failedEditMsg: 'An error occurred while editing User',
+        successDeleteMsg: 'User deleted successfully',
+        failedDeleteMsg: 'An error occurred while deleting User'
       },
       validate: {
         usernameRequired: 'Username must be filled in',
@@ -225,6 +235,96 @@ export default {
         addressMaxLength: 'Address must be a maximum of 255 characters',
         aboutMaxLength: 'About must be a maximum of 100 characters'
       }
+    },
+    category: {
+      categoryText: 'Category',
+      createText: 'Create Category',
+      editText: 'Edit Category',
+      categoryCodeColumn: 'Category Code',
+      imageColumn: 'Image',
+      nameColumn: 'Name',
+      descriptionColumn: 'Description',
+      crud: {
+        imageForm: 'Image',
+        uploadImageText: 'Upload Image',
+        nameForm: 'Name',
+        descriptionForm: 'Description',
+        successCreateMsg: 'Category created successfully',
+        failedCreateMsg: 'An error occurred while creating the Category',
+        successEditMsg: 'Category edited successfully',
+        failedEditMsg: 'An error occurred while editing Category',
+        successDeleteMsg: 'Category deleted successfully',
+        failedDeleteMsg: 'An error occurred while deleting Category'
+      },
+      validate: {
+        imageRequired: 'Image must be filled in',
+        nameRequired: 'Name must be filled in',
+        nameMaxLength: 'Name must be a maximum of 50 characters',
+        descriptionMaxLength: 'Description must be a maximum of 255 characters'
+      }
+    },
+    tag: {
+      tagText: 'Tag',
+      createText: 'Create Tag',
+      editText: 'Edit Tag',
+      nameColumn: 'Name',
+      descriptionColumn: 'Description',
+      crud: {
+        nameForm: 'Name',
+        descriptionForm: 'Description',
+        successCreateMsg: 'Tag created successfully',
+        failedCreateMsg: 'An error occurred while creating the Tag',
+        successEditMsg: 'Tag edited successfully',
+        failedEditMsg: 'An error occurred while editing Tag',
+      },
+      validate: {
+        nameRequired: 'Name must be filled in',
+        nameMaxLength: 'Name must be a maximum of 20 characters',
+        nameUnique: 'Name already exists',
+        descriptionMaxLength: 'Description must be a maximum of 255 characters'
+      }
+    },
+    photo: {
+      photoText: 'Photo',
+      createText: 'Create Photo',
+      showText: 'Show Photo',
+      editText: 'Edit Photo',
+      photoNumberColumn: 'Photo Number',
+      userColumn: 'User',
+      imageColumn: 'Image',
+      titleColumn: 'Title',
+      descriptionColumn: 'Description',
+      crud: {
+        successCreateMsg: 'Photo created successfully',
+        failedCreateMsg: 'An error occurred while creating the Photo',
+        successEditMsg: 'Photo edited successfully',
+        failedEditMsg: 'An error occurred while editing Photo',
+        successDeleteMsg: 'Photo deleted successfully',
+        failedDeleteMsg: 'An error occurred while deleting Photo'
+      }
+    },
+    collection: {
+      collectionText: 'Collection',
+      showText: 'Show Collection',
+      collectionCodeColumn: 'Collection Code',
+      userColumn: 'User',
+      photosColumn: 'Photos',
+      nameColumn: 'Name',
+      descriptionColumn: 'Description',
+      crud: {
+      successDeleteMsg: 'Collection deleted successfully',
+      failedDeleteMsg: 'An error occurred while deleting Collection'
+    }
+  },
+  comment: {
+    commentText: 'Comment',
+    userColumn: 'User',
+    photoColumn: 'Photo',
+    contentColumn: 'content',
+    crud: {
+    successDeleteMsg: 'Comment deleted successfully',
+    failedDeleteMsg: 'An error occurred while deleting Comment'
+  }
     }
   }
 }

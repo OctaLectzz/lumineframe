@@ -155,16 +155,7 @@
             <!-- Last Name -->
             <div class="col-sm-5 col-xs-10 q-mx-sm">
               <div class="text-bold">{{ $t('dashboard.user.crud.urlForm') }} :</div>
-              <q-input
-                v-model="data.url"
-                :color="$q.dark.isActive ? 'secondary' : 'primary'"
-                :label="$t('dashboard.user.crud.urlForm')"
-                class="q-mb-sm"
-                :rules="rules.url"
-                dense
-                outlined
-                required
-              />
+              <q-input v-model="data.url" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('dashboard.user.crud.urlForm')" class="q-mb-sm" :rules="rules.url" dense outlined required />
             </div>
 
             <!-- Birthday -->
@@ -252,11 +243,11 @@
 import { ref, onMounted, computed, defineEmits } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
-import { useUserStore } from '/src/stores/user-store.js'
+import { useUserStore } from '/src/stores/user-store'
 
 const { t } = useI18n()
 const emits = defineEmits(['added'])
-const userStore = useUserStore()
+const itemStore = useUserStore()
 const data = ref({
   username: '',
   first_name: '',
@@ -278,7 +269,7 @@ const data = ref({
 const users = ref([])
 const getUser = async () => {
   try {
-    const res = await userStore.all()
+    const res = await itemStore.all()
 
     users.value = res.data.data
   } catch (error) {
@@ -325,13 +316,13 @@ const createData = async () => {
   loading.value = true
 
   try {
-    await userStore.create(data.value)
+    await itemStore.create(data.value)
 
-    toast.success(t('dashboard.user.crud.successCreateText'))
+    toast.success(t('dashboard.user.crud.successCreateMsg'))
     emits('added')
   } catch (error) {
     console.error('Error submitting form:', error)
-    toast.error(t('dashboard.user.crud.failedCreateText'))
+    toast.error(t('dashboard.user.crud.failedCreateMsg'))
   }
 
   loading.value = false

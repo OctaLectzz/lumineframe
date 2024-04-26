@@ -217,12 +217,12 @@
 import { ref, onMounted, computed, defineProps, defineEmits } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
-import { useUserStore } from '/src/stores/user-store.js'
+import { useUserStore } from '/src/stores/user-store'
 
 const { t } = useI18n()
 const emits = defineEmits(['edited'])
 const { item } = defineProps(['item'])
-const userStore = useUserStore()
+const itemStore = useUserStore()
 const data = ref({
   id: item.id,
   username: item.username,
@@ -244,7 +244,7 @@ const data = ref({
 const users = ref([])
 const getUser = async () => {
   try {
-    const res = await userStore.all()
+    const res = await itemStore.all()
 
     users.value = res.data.data
   } catch (error) {
@@ -290,13 +290,13 @@ const editData = async () => {
   loading.value = true
 
   try {
-    await userStore.edit(data.value)
+    await itemStore.edit(data.value)
 
-    toast.success(t('dashboard.user.crud.successEditText'))
+    toast.success(t('dashboard.user.crud.successEditMsg'))
     emits('edited')
   } catch (error) {
     console.error('Error submitting form:', error)
-    toast.error(t('dashboard.user.crud.failedEditText'))
+    toast.error(t('dashboard.user.crud.failedEditMsg'))
   }
 
   loading.value = false

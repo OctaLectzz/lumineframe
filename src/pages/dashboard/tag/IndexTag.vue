@@ -4,7 +4,7 @@
       flat
       bordered
       class="statement-table"
-      title="User"
+      title="Tag"
       :rows="currencyData"
       :hide-header="grid"
       :columns="currencyColumns"
@@ -37,11 +37,11 @@
 
       <!-- Create -->
       <template v-slot:top-left>
-        <div class="text-h5 q-pr-lg">{{ $t('dashboard.user.userText') }}</div>
+        <div class="text-h5 q-pr-lg">{{ $t('dashboard.tag.tagText') }}</div>
         <q-btn color="primary" icon="add" class="shadow-3 q-my-sm" @click="addItemDialog = true" dense>
-          <q-tooltip>{{ $t('dashboard.user.createText') }}</q-tooltip>
+          <q-tooltip>{{ $t('dashboard.tag.createText') }}</q-tooltip>
         </q-btn>
-        <q-dialog v-model="addItemDialog" transition-show="slide-up" transition-hide="slide-down" full-width full-height persistent>
+        <q-dialog v-model="addItemDialog" transition-show="slide-up" transition-hide="slide-down" persistent>
           <CreateItem @added="itemAdded" />
         </q-dialog>
       </template>
@@ -56,48 +56,11 @@
         </q-td>
       </template>
 
-      <!-- User -->
-      <template #body-cell-user="props">
+      <!-- Description -->
+      <template #body-cell-description="props">
         <q-td :props="props">
           <div dense square>
-            <div class="text-bold">{{ props.row.name }}</div>
-            <div>{{ props.row.email }}</div>
-          </div>
-        </q-td>
-      </template>
-
-      <!-- Gender -->
-      <template #body-cell-gender="props">
-        <q-td :props="props">
-          <div dense square>
-            <div>{{ props.row.gender === 'man' ? $t('dashboard.user.manGenderText') : $t('dashboard.user.womanGenderText') }}</div>
-          </div>
-        </q-td>
-      </template>
-
-      <!-- URL -->
-      <template #body-cell-url="props">
-        <q-td :props="props">
-          <div dense square>
-            <a :href="props.row.url" target="_blank" rel="noopener noreferrer">{{ props.row.url }}</a>
-          </div>
-        </q-td>
-      </template>
-
-      <!-- Address -->
-      <template #body-cell-address="props">
-        <q-td :props="props">
-          <div dense square>
-            {{ props.row.address && props.row.address.length > 20 ? props.row.address.substring(0, 20) + '...' : props.row.address }}
-          </div>
-        </q-td>
-      </template>
-
-      <!-- About -->
-      <template #body-cell-about="props">
-        <q-td :props="props">
-          <div dense square>
-            {{ props.row.about && props.row.about.length > 20 ? props.row.about.substring(0, 20) + '...' : props.row.about }}
+            {{ props.row.description && props.row.description.length > 20 ? props.row.description.substring(0, 20) + '...' : props.row.description }}
           </div>
         </q-td>
       </template>
@@ -106,7 +69,7 @@
       <template #body-cell-action="props">
         <q-td :props="props">
           <q-btn color="warning" field="edit" icon="edit" class="q-mx-xs" @click="props.row.editItemDialog = true" dense round>
-            <q-dialog v-model="props.row.editItemDialog" transition-show="slide-up" transition-hide="slide-down" full-width full-height persistent>
+            <q-dialog v-model="props.row.editItemDialog" transition-show="slide-up" transition-hide="slide-down" persistent>
               <EditItem @edited="itemEdited(props.row)" :item="props.row" />
             </q-dialog>
           </q-btn>
@@ -130,36 +93,15 @@
                     {{ props.rowIndex + 1 }}
                   </div>
 
-                  <!-- User -->
-                  <div v-else-if="col.name === 'user'" dense square>
-                    <div class="text-bold">{{ props.row.name }}</div>
-                    <div>{{ props.row.email }}</div>
-                  </div>
-
-                  <!-- Gender -->
-                  <div v-else-if="col.name === 'gender'">
-                    <div>{{ props.row.gender === 'man' ? $t('dashboard.user.manGenderText') : $t('dashboard.user.womanGenderText') }}</div>
-                  </div>
-
-                  <!-- URL -->
-                  <div v-else-if="col.name === 'url'">
-                    <a :href="props.row.url" target="_blank" rel="noopener noreferrer">{{ props.row.url }}</a>
-                  </div>
-
-                  <!-- Address -->
-                  <div v-else-if="col.name === 'address'">
-                    {{ props.row.address && props.row.address.length > 20 ? props.row.address.substring(0, 20) + '...' : props.row.address }}
-                  </div>
-
-                  <!-- About -->
-                  <div v-else-if="col.name === 'about'">
-                    {{ props.row.about && props.row.about.length > 20 ? props.row.about.substring(0, 20) + '...' : props.row.about }}
+                  <!-- Description -->
+                  <div v-else-if="col.name === 'description'">
+                    {{ props.row.description && props.row.description.length > 20 ? props.row.description.substring(0, 20) + '...' : props.row.description }}
                   </div>
 
                   <!-- Action -->
                   <div v-else-if="col.name === 'action'">
                     <q-btn color="warning" field="edit" icon="edit" class="q-mx-xs" @click="props.row.editItemDialog = true" dense round>
-                      <q-dialog v-model="props.row.editItemDialog" transition-show="slide-up" transition-hide="slide-down" full-width full-height persistent>
+                      <q-dialog v-model="props.row.editItemDialog" transition-show="slide-up" transition-hide="slide-down" persistent>
                         <EditItem @edited="itemEdited(props.row)" :item="props.row" />
                       </q-dialog>
                     </q-btn>
@@ -184,14 +126,15 @@ import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
-import { useUserStore } from '/src/stores/user-store'
-import CreateItem from './CreateUser.vue'
-import EditItem from './EditUser.vue'
+import { url } from '/src/boot/axios'
+import { useTagStore } from '/src/stores/tag-store'
+import CreateItem from './CreateTag.vue'
+import EditItem from './EditTag.vue'
 
 const $q = useQuasar()
 const router = useRouter()
 const { t } = useI18n()
-const itemStore = useUserStore()
+const itemStore = useTagStore()
 
 const items = ref([])
 const getItem = async () => {
@@ -246,11 +189,11 @@ const deleteItem = async (row) => {
   try {
     await itemStore.delete(row.id)
 
-    toast.success(t('dashboard.user.crud.successDeleteMsg'))
+    toast.success(t('dashboard.tag.crud.successDeleteMsg'))
     getItem()
   } catch (error) {
     console.error('Error fetching data:', error)
-    toast.error(t('dashboard.user.crud.failedDeleteMsg'))
+    toast.error(t('dashboard.tag.crud.failedDeleteMsg'))
   }
 }
 
@@ -263,65 +206,16 @@ const currencyColumns = [
     label: 'ID'
   },
   {
-    name: 'user',
+    name: 'name',
     field: 'name',
-    label: t('dashboard.user.userColumn'),
+    label: t('dashboard.tag.nameColumn'),
     align: 'left',
     sortable: true
   },
   {
-    name: 'role',
-    field: 'role',
-    label: t('dashboard.user.roleColumn'),
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'pronouns',
-    field: 'pronouns',
-    label: t('dashboard.user.pronounsColumn'),
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'birthday',
-    field: 'birthday',
-    label: t('dashboard.user.birthdayColumn'),
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'gender',
-    field: 'gender',
-    label: t('dashboard.user.genderColumn'),
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'phone',
-    field: 'phone',
-    label: t('dashboard.user.phoneColumn'),
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'url',
-    field: 'url',
-    label: t('dashboard.user.urlColumn'),
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'address',
-    field: 'address',
-    label: t('dashboard.user.addressColumn'),
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'about',
-    field: 'about',
-    label: t('dashboard.user.aboutColumn'),
+    name: 'description',
+    field: 'description',
+    label: t('dashboard.tag.descriptionColumn'),
     align: 'left',
     sortable: true
   },

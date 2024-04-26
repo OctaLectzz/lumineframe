@@ -4,7 +4,7 @@
       flat
       bordered
       class="statement-table"
-      title="User"
+      title="Photo"
       :rows="currencyData"
       :hide-header="grid"
       :columns="currencyColumns"
@@ -37,9 +37,9 @@
 
       <!-- Create -->
       <template v-slot:top-left>
-        <div class="text-h5 q-pr-lg">{{ $t('dashboard.user.userText') }}</div>
+        <div class="text-h5 q-pr-lg">{{ $t('dashboard.photo.photoText') }}</div>
         <q-btn color="primary" icon="add" class="shadow-3 q-my-sm" @click="addItemDialog = true" dense>
-          <q-tooltip>{{ $t('dashboard.user.createText') }}</q-tooltip>
+          <q-tooltip>{{ $t('dashboard.photo.createText') }}</q-tooltip>
         </q-btn>
         <q-dialog v-model="addItemDialog" transition-show="slide-up" transition-hide="slide-down" full-width full-height persistent>
           <CreateItem @added="itemAdded" />
@@ -56,48 +56,41 @@
         </q-td>
       </template>
 
+      <!-- Photo Number -->
+      <template #body-cell-photo_number="props">
+        <q-td :props="props">
+          <div dense square>
+            <div class="bg-blue-2 q-pa-sm" style="border-radius: 10px">
+              <div class="text-blue-9 text-center">{{ props.row.photo_number }}</div>
+            </div>
+          </div>
+        </q-td>
+      </template>
+
       <!-- User -->
       <template #body-cell-user="props">
         <q-td :props="props">
           <div dense square>
-            <div class="text-bold">{{ props.row.name }}</div>
-            <div>{{ props.row.email }}</div>
+            <div class="text-bold">{{ props.row.user.name }}</div>
+            <div>{{ props.row.user.email }}</div>
           </div>
         </q-td>
       </template>
 
-      <!-- Gender -->
-      <template #body-cell-gender="props">
+      <!-- Image -->
+      <template #body-cell-image="props">
         <q-td :props="props">
           <div dense square>
-            <div>{{ props.row.gender === 'man' ? $t('dashboard.user.manGenderText') : $t('dashboard.user.womanGenderText') }}</div>
+            <q-img :src="url + '/images/' + props.row.image" style="border-radius: 10px" />
           </div>
         </q-td>
       </template>
 
-      <!-- URL -->
-      <template #body-cell-url="props">
+      <!-- Description -->
+      <template #body-cell-description="props">
         <q-td :props="props">
           <div dense square>
-            <a :href="props.row.url" target="_blank" rel="noopener noreferrer">{{ props.row.url }}</a>
-          </div>
-        </q-td>
-      </template>
-
-      <!-- Address -->
-      <template #body-cell-address="props">
-        <q-td :props="props">
-          <div dense square>
-            {{ props.row.address && props.row.address.length > 20 ? props.row.address.substring(0, 20) + '...' : props.row.address }}
-          </div>
-        </q-td>
-      </template>
-
-      <!-- About -->
-      <template #body-cell-about="props">
-        <q-td :props="props">
-          <div dense square>
-            {{ props.row.about && props.row.about.length > 20 ? props.row.about.substring(0, 20) + '...' : props.row.about }}
+            {{ props.row.description && props.row.description.length > 20 ? props.row.description.substring(0, 20) + '...' : props.row.description }}
           </div>
         </q-td>
       </template>
@@ -105,6 +98,11 @@
       <!-- Action -->
       <template #body-cell-action="props">
         <q-td :props="props">
+          <q-btn color="blue" field="show" icon="visibility" class="q-mx-xs" @click="props.row.showItemDialog = true" dense round>
+            <q-dialog v-model="props.row.showItemDialog" transition-show="slide-up" transition-hide="slide-down" full-width full-height persistent>
+              <ShowItem :item="props.row" />
+            </q-dialog>
+          </q-btn>
           <q-btn color="warning" field="edit" icon="edit" class="q-mx-xs" @click="props.row.editItemDialog = true" dense round>
             <q-dialog v-model="props.row.editItemDialog" transition-show="slide-up" transition-hide="slide-down" full-width full-height persistent>
               <EditItem @edited="itemEdited(props.row)" :item="props.row" />
@@ -130,34 +128,36 @@
                     {{ props.rowIndex + 1 }}
                   </div>
 
+                  <!-- Photo Number -->
+                  <div v-else-if="col.name === 'photo_number'">
+                    <div class="bg-blue-2 q-pa-sm" style="border-radius: 10px">
+                      <div class="text-blue-9 text-center">{{ props.row.photo_number }}</div>
+                    </div>
+                  </div>
+
                   <!-- User -->
                   <div v-else-if="col.name === 'user'" dense square>
-                    <div class="text-bold">{{ props.row.name }}</div>
-                    <div>{{ props.row.email }}</div>
+                    <div class="text-bold">{{ props.row.user.name }}</div>
+                    <div>{{ props.row.user.email }}</div>
                   </div>
 
-                  <!-- Gender -->
-                  <div v-else-if="col.name === 'gender'">
-                    <div>{{ props.row.gender === 'man' ? $t('dashboard.user.manGenderText') : $t('dashboard.user.womanGenderText') }}</div>
+                  <!-- Image -->
+                  <div v-else-if="col.name === 'image'">
+                    <img :src="url + '/images/' + props.row.image" width="80" style="border-radius: 10px" />
                   </div>
 
-                  <!-- URL -->
-                  <div v-else-if="col.name === 'url'">
-                    <a :href="props.row.url" target="_blank" rel="noopener noreferrer">{{ props.row.url }}</a>
-                  </div>
-
-                  <!-- Address -->
-                  <div v-else-if="col.name === 'address'">
-                    {{ props.row.address && props.row.address.length > 20 ? props.row.address.substring(0, 20) + '...' : props.row.address }}
-                  </div>
-
-                  <!-- About -->
-                  <div v-else-if="col.name === 'about'">
-                    {{ props.row.about && props.row.about.length > 20 ? props.row.about.substring(0, 20) + '...' : props.row.about }}
+                  <!-- Description -->
+                  <div v-else-if="col.name === 'description'">
+                    {{ props.row.description && props.row.description.length > 20 ? props.row.description.substring(0, 20) + '...' : props.row.description }}
                   </div>
 
                   <!-- Action -->
                   <div v-else-if="col.name === 'action'">
+                    <q-btn color="blue" field="show" icon="visibility" class="q-mx-xs" @click="props.row.showItemDialog = true" dense round>
+                      <q-dialog v-model="props.row.showItemDialog" transition-show="slide-up" transition-hide="slide-down" full-width full-height persistent>
+                        <ShowItem :item="props.row" />
+                      </q-dialog>
+                    </q-btn>
                     <q-btn color="warning" field="edit" icon="edit" class="q-mx-xs" @click="props.row.editItemDialog = true" dense round>
                       <q-dialog v-model="props.row.editItemDialog" transition-show="slide-up" transition-hide="slide-down" full-width full-height persistent>
                         <EditItem @edited="itemEdited(props.row)" :item="props.row" />
@@ -184,14 +184,16 @@ import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
-import { useUserStore } from '/src/stores/user-store'
-import CreateItem from './CreateUser.vue'
-import EditItem from './EditUser.vue'
+import { url } from '/src/boot/axios'
+import { usePhotoStore } from '/src/stores/photo-store'
+import CreateItem from './CreatePhoto.vue'
+import ShowItem from './ShowPhoto.vue'
+import EditItem from './EditPhoto.vue'
 
 const $q = useQuasar()
 const router = useRouter()
 const { t } = useI18n()
-const itemStore = useUserStore()
+const itemStore = usePhotoStore()
 
 const items = ref([])
 const getItem = async () => {
@@ -246,11 +248,11 @@ const deleteItem = async (row) => {
   try {
     await itemStore.delete(row.id)
 
-    toast.success(t('dashboard.user.crud.successDeleteMsg'))
+    toast.success(t('dashboard.photo.crud.successDeleteMsg'))
     getItem()
   } catch (error) {
     console.error('Error fetching data:', error)
-    toast.error(t('dashboard.user.crud.failedDeleteMsg'))
+    toast.error(t('dashboard.photo.crud.failedDeleteMsg'))
   }
 }
 
@@ -263,65 +265,37 @@ const currencyColumns = [
     label: 'ID'
   },
   {
+    name: 'photo_number',
+    field: 'photo_number',
+    label: t('dashboard.photo.photoNumberColumn'),
+    align: 'left',
+    sortable: true
+  },
+  {
     name: 'user',
-    field: 'name',
-    label: t('dashboard.user.userColumn'),
+    field: 'user',
+    label: t('dashboard.photo.userColumn'),
     align: 'left',
     sortable: true
   },
   {
-    name: 'role',
-    field: 'role',
-    label: t('dashboard.user.roleColumn'),
+    name: 'image',
+    field: 'image',
+    label: t('dashboard.photo.imageColumn'),
     align: 'left',
     sortable: true
   },
   {
-    name: 'pronouns',
-    field: 'pronouns',
-    label: t('dashboard.user.pronounsColumn'),
+    name: 'title',
+    field: 'title',
+    label: t('dashboard.photo.titleColumn'),
     align: 'left',
     sortable: true
   },
   {
-    name: 'birthday',
-    field: 'birthday',
-    label: t('dashboard.user.birthdayColumn'),
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'gender',
-    field: 'gender',
-    label: t('dashboard.user.genderColumn'),
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'phone',
-    field: 'phone',
-    label: t('dashboard.user.phoneColumn'),
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'url',
-    field: 'url',
-    label: t('dashboard.user.urlColumn'),
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'address',
-    field: 'address',
-    label: t('dashboard.user.addressColumn'),
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'about',
-    field: 'about',
-    label: t('dashboard.user.aboutColumn'),
+    name: 'description',
+    field: 'description',
+    label: t('dashboard.photo.descriptionColumn'),
     align: 'left',
     sortable: true
   },
