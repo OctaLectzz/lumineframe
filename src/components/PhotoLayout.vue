@@ -57,7 +57,7 @@
             <!-- Action Button -->
             <div v-if="token" class="action-button q-ma-sm">
               <q-btn
-                :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                color="primary"
                 :text-color="item.liked ? 'red' : ''"
                 :size="buttonSize"
                 :icon="item.liked ? 'favorite' : 'favorite_border'"
@@ -67,7 +67,7 @@
                 dense
               />
               <q-btn
-                :color="$q.dark.isActive ? 'secondary' : 'primary'"
+                color="primary"
                 :text-color="item.saved ? 'yellow' : ''"
                 :size="buttonSize"
                 :icon="item.saved ? 'bookmark' : 'bookmark_border'"

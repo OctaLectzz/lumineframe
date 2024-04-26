@@ -4,10 +4,12 @@
       <q-toolbar>
         <q-btn flat dense round @click="toggleDrawer" icon="menu" aria-label="Menu" />
         <q-toolbar-title>{{ $t('dashboard.navbar.dashboardAdminText') }}</q-toolbar-title>
+
         <q-space />
+
         <div class="q-gutter-sm row items-center no-wrap">
           <!-- Switch Languages -->
-          <q-btn-dropdown :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" dense flat>
+          <q-btn-dropdown :color="$q.dark.isActive ? 'secondary' : 'primary'" dense flat>
             <template v-slot:label>
               <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
             </template>
@@ -43,38 +45,29 @@
           </q-btn-dropdown>
 
           <!-- Switch Mode -->
-          <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" :icon="$q.dark.isActive ? 'brightness_7' : 'brightness_4'" class="q-mx-xs" @click="toggleSwitchMode" flat round dense />
+          <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" :icon="$q.dark.isActive ? 'brightness_7' : 'brightness_4'" @click="toggleSwitchMode" flat round dense />
+
+          <!-- Refresh -->
+          <q-btn :color="$q.dark.isActive ? 'secondary' : 'primary'" icon="refresh" @click="$router.go()" round dense flat />
 
           <!-- FullScreen -->
           <q-btn
-            round
-            dense
-            flat
+            v-if="$q.screen.gt.sm"
             :color="$q.dark.isActive ? 'secondary' : 'primary'"
             :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
             @click="$q.fullscreen.toggle()"
-            v-if="$q.screen.gt.sm"
-          ></q-btn>
+            round
+            dense
+            flat
+          />
 
           <!-- Profile -->
-          <q-btn-dropdown v-if="loading" :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" rounded dense flat push glossy split>
+          <q-btn-dropdown v-if="loading" :color="$q.dark.isActive ? 'secondary' : 'primary'" rounded dense flat push>
             <template v-slot:label>
               <q-skeleton type="QAvatar" size="26px" />
             </template>
           </q-btn-dropdown>
-
-          <q-btn-dropdown
-            v-else
-            :to="{ name: 'indexprofile', params: { username: profile.username } }"
-            :color="$q.dark.isActive ? 'secondary' : 'primary'"
-            class="q-mx-xs"
-            rounded
-            dense
-            flat
-            push
-            glossy
-            split
-          >
+          <q-btn-dropdown v-else :color="$q.dark.isActive ? 'secondary' : 'primary'" rounded dense flat push>
             <template v-slot:label>
               <q-skeleton v-if="loading" type="QAvatar" size="26px" />
 
