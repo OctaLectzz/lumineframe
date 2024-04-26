@@ -11,7 +11,9 @@ export default {
     searchPhotoText: '写真を検索...',
     collectionTitle: 'コレクション',
     categoryTitle: 'カテゴリー',
-    tagTitle: 'タグ'
+    tagTitle: 'タグ',
+    photoNotFound: '写真がありません',
+    collectionNotFound: 'コレクションが見つかりません'
   },
   navbar: {
     homeTab: 'ホーム',

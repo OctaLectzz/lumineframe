@@ -11,7 +11,9 @@ export default {
     searchPhotoText: 'Поиск фото...',
     collectionTitle: 'Коллекция',
     categoryTitle: 'Категория',
-    tagTitle: 'Тег'
+    tagTitle: 'Ter',
+    photoNotFound: 'Фотография недоступна',
+    collectionNotFound: 'Коллекция недоступна'
   },
   navbar: {
     homeTab: 'Главная',

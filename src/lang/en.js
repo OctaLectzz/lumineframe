@@ -11,7 +11,9 @@ export default {
     searchPhotoText: 'Search Photo...',
     collectionTitle: 'Collection',
     categoryTitle: 'Category',
-    tagTitle: 'Tag'
+    tagTitle: 'Tag',
+    photoNotFound: 'Photo not available',
+    collectionNotFound: 'Collection not available'
   },
   navbar: {
     homeTab: 'Home',

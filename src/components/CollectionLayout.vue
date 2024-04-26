@@ -7,7 +7,7 @@
       </div>
     </div>
 
-    <div v-else class="row justify-center q-gutter-lg">
+    <div v-else-if="collections && collections.length > 0" class="row justify-center q-gutter-lg">
       <div v-for="collection in collections" :key="collection.id" class="col-sm-3 col-xs-4 collections" @click="showCollection(collection)">
         <!-- User -->
         <div class="text-subtitle2 q-pa-sm">
@@ -47,6 +47,8 @@
         <div class="text-body1 text-center text-bold">{{ collection.name }}</div>
       </div>
     </div>
+
+    <div v-else class="text-subtitle1 text-center q-pa-xl">{{ $t('public.collectionNotFound') }}</div>
   </div>
 </template>
 

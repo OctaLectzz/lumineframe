@@ -11,7 +11,9 @@ export default {
     searchPhotoText: '搜索照片...',
     collectionTitle: '收藏',
     categoryTitle: '分类',
-    tagTitle: '标签'
+    tagTitle: '标签',
+    photoNotFound: '照片不可用',
+    collectionNotFound: '无法找到集合'
   },
   navbar: {
     homeTab: '主页',

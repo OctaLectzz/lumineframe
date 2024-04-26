@@ -9,7 +9,7 @@
       </template>
     </MasonryWall>
 
-    <MasonryWall v-else :items="photos" :ssr-columns="8" :column-width="columnWidth" :gap="gap">
+    <MasonryWall v-else-if="photos && photos.length > 0" :items="photos" :ssr-columns="8" :column-width="columnWidth" :gap="gap">
       <template #default="{ item }">
         <div class="lumine-container" @click="singlePhoto(item)" @mouseover="showButtons(item)" @mouseleave="hideButtons(item)">
           <!-- Image -->
@@ -91,6 +91,8 @@
         </q-dialog>
       </template>
     </MasonryWall>
+
+    <div v-else class="text-subtitle1 text-center q-pa-xl">{{ $t('public.photoNotFound') }}</div>
   </div>
 </template>
 

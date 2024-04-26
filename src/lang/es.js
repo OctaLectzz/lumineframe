@@ -11,7 +11,9 @@ export default {
     searchPhotoText: 'Buscar Foto...',
     collectionTitle: 'Colección',
     categoryTitle: 'Categoría',
-    tagTitle: 'Etiqueta'
+    tagTitle: 'Etiqueta',
+    photoNotFound: 'Foto no disponible',
+    collectionNotFound: 'Colección no disponible'
   },
   navbar: {
     homeTab: 'Inicio',

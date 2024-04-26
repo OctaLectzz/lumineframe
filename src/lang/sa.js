@@ -11,7 +11,9 @@ export default {
     searchPhotoText: 'البحث عن الصورة...',
     collectionTitle: 'المجموعة',
     categoryTitle: 'الفئة',
-    tagTitle: 'العلامة'
+    tagTitle: 'العلامة',
+    photoNotNotFound: 'الصورة غير متوفرة',
+    collectionNotFound: 'المجموعة غير متوفرة'
   },
   navbar: {
     homeTab: 'الرئيسية',

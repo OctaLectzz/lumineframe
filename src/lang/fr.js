@@ -11,14 +11,16 @@ export default {
     searchPhotoText: 'Rechercher une photo...',
     collectionTitle: 'Collection',
     categoryTitle: 'Catégorie',
-    tagTitle: 'Tag'
+    tagTitle: 'Tag',
+    photoNotFound: 'Photo non disponible',
+    collectionNotFound: 'Collection non disponible'
   },
   navbar: {
     homeTab: 'Accueil',
     exploreTab: 'Explorer',
     createTab: 'Créer',
     loginBtn: 'Se connecter',
-    signupBtn: "S'inscrire",
+    signupBtn: 'S\'inscrire',
     logoutBtn: 'Se déconnecter',
     dashboardDrpdwn: 'Tableau de bord',
     profileDrpdwn: 'Profil',
@@ -29,14 +31,14 @@ export default {
     welcomeMsg: 'Bienvenue sur LumineFrame',
     firstNameForm: 'Prénom',
     lastNameForm: 'Nom',
-    usernameForm: "Nom d'utilisateur",
+    usernameForm: 'Nom d\'utilisateur',
     emailForm: 'E-mail',
     passwordForm: 'Mot de passe',
     passwordConfirmationForm: 'Confirmation du mot de passe',
-    permissionText1: 'En continuant, vous acceptez les',
-    permissionText2: 'et reconnaissez avoir lu nos',
+    permissionText1: "En continuant, vous acceptez les",
+    permissionText2: "et reconnaissez avoir lu nos",
     loginRedirect: 'Déjà membre ? Se connecter',
-    registerRedirect: "Pas encore sur LumineFrame ? S'inscrire",
+    registerRedirect: 'Pas encore sur LumineFrame ? S\'inscrire',
     successRegisterMsg: 'Inscription réussie',
     failedRegisterMsg: 'Le format est toujours incorrect, veuillez réessayer',
     successLoginMsg: 'Connexion réussie',
@@ -46,11 +48,11 @@ export default {
     failedLogoutMsg: 'Échec de la déconnexion',
     validate: {
       firstNameRequired: 'Le prénom doit être renseigné',
-      firstNameMaxLength: "Le prénom peut comporter jusqu'à 50 caractères",
-      usernameRequired: "Le nom d'utilisateur doit être renseigné",
-      usernameMinLength: "Le nom d'utilisateur doit comporter au moins 3 caractères",
-      usernameMaxLength: "Le nom d'utilisateur peut comporter jusqu'à 15 caractères",
-      emailRequired: "L'e-mail doit être renseigné",
+      firstNameMaxLength: 'Le prénom peut comporter jusqu\'à 50 caractères',
+      usernameRequired: 'Le nom d\'utilisateur doit être renseigné',
+      usernameMinLength: 'Le nom d\'utilisateur doit comporter au moins 3 caractères',
+      usernameMaxLength: 'Le nom d\'utilisateur peut comporter jusqu\'à 15 caractères',
+      emailRequired: 'L\'e-mail doit être renseigné',
       emailFormat: 'E-mail invalide',
       passwordRequired: 'Le mot de passe doit être renseigné',
       passwordMinLength: 'Le mot de passe doit comporter au moins 6 caractères',
@@ -60,16 +62,16 @@ export default {
     }
   },
   photo: {
-    menu1: "Aperçu de l'image",
-    menu2: "Télécharger l'image",
+    menu1: 'Aperçu de l\'image',
+    menu2: 'Télécharger l\'image',
     successLikeMsg: 'Photo aimée avec succès',
     failedLikeMsg: 'Vous avez déjà aimé cette photo',
     successDislikeMsg: 'Photo désaimée avec succès',
     failedDislikeMsg: 'Échec de la désactivation de la photo',
     collectionTitle: 'Ajouter à la collection',
     createCollectionTitle: 'Créer une collection',
-    nameMaxLength: "Le nom peut comporter jusqu'à 20 caractères",
-    descriptionMaxLength: "La description peut comporter jusqu'à 255 caractères",
+    nameMaxLength: 'Le nom peut comporter jusqu\'à 20 caractères',
+    descriptionMaxLength: 'La description peut comporter jusqu\'à 255 caractères',
     successCreateCollectionMsg: 'Collection créée avec succès',
     failedCreateCollectionMsg: 'Échec de la création de la collection',
     successSaveMsg: 'Photo enregistrée avec succès',
@@ -77,11 +79,11 @@ export default {
     successDownloadMsg: 'Photo téléchargée avec succès',
     failedDownloadMsg: 'Échec du téléchargement de la photo',
     commentTitle: 'Commentaires',
-    commentNotAuth: "Vous devez d'abord vous connecter pour pouvoir commenter",
+    commentNotAuth: 'Vous devez d\'abord vous connecter pour pouvoir commenter',
     commentForm: 'Ajouter un commentaire',
     commentRules: 'Maximum 255 caractères autorisés',
     successCommentMsg: 'Commentaire ajouté avec succès',
-    errorCommentMsg: "Échec de l'ajout du commentaire",
+    errorCommentMsg: 'Échec de l\'ajout du commentaire',
     editComment: 'Modifier',
     deleteComment: 'Supprimer'
   },
@@ -101,7 +103,7 @@ export default {
     headerText: 'Créer une photo Lumine',
     handleButton: 'Publier',
     chooseFile: 'Choisissez un fichier ou faites glisser-déposer ici',
-    recomendedFile: "Nous vous recommandons d'utiliser des fichiers .jpg de haute qualité de moins de 20 Mo",
+    recomendedFile: 'Nous vous recommandons d\'utiliser des fichiers .jpg de haute qualité de moins de 20 Mo',
     titleForm: 'Titre',
     descriptionForm: 'Description',
     tagForm: 'Tag',
@@ -119,7 +121,7 @@ export default {
     editProfileText: 'Modifier le profil',
     completeEditProfileText: 'Complétez votre profil',
     changePhotoText: 'Changer de photo',
-    usernameForm: "Nom d'utilisateur",
+    usernameForm: 'Nom d\'utilisateur',
     firstNameForm: 'Prénom',
     lastNameForm: 'Nom',
     emailForm: 'E-mail',
@@ -137,17 +139,17 @@ export default {
     successEditProfileMsg: 'Profil édité avec succès',
     failedEditProfileMsg: 'Données invalides. Veuillez vérifier les champs et réessayer',
     validate: {
-      usernameRequired: "Le nom d'utilisateur doit être renseigné",
-      usernameMaxLength: "Le nom d'utilisateur doit comporter au maximum 15 caractères",
-      usernameUnique: "Le nom d'utilisateur existe déjà",
+      usernameRequired: 'Le nom d\'utilisateur doit être renseigné',
+      usernameMaxLength: 'Le nom d\'utilisateur doit comporter au maximum 15 caractères',
+      usernameUnique: 'Le nom d\'utilisateur existe déjà',
       firstNameRequired: 'Le prénom doit être renseigné',
       firstNameMaxLength: 'Le prénom doit comporter au maximum 15 caractères',
       lastNameMaxLength: 'Le nom de famille doit comporter au maximum 15 caractères',
-      emailRequired: "L'e-mail doit être renseigné",
+      emailRequired: 'L\'e-mail doit être renseigné',
       emailFormat: 'E-mail invalide',
       phoneMaxLength: 'Le numéro de téléphone doit comporter au maximum 15 caractères',
-      urlMaxLength: "L'URL doit comporter au maximum 255 caractères",
-      addressMaxLength: "L'adresse doit comporter au maximum 255 caractères",
+      urlMaxLength: 'L\'URL doit comporter au maximum 255 caractères',
+      addressMaxLength: 'L\'adresse doit comporter au maximum 255 caractères',
       aboutMaxLength: 'À propos doit comporter au maximum 100 caractères'
     }
   },
@@ -179,7 +181,7 @@ export default {
     cancelDeleteText: 'Annuler',
     home: {
       statisticsText: 'Statistiques mensuelles des photos',
-      totalUsers: "Nombre d'utilisateurs",
+      totalUsers: 'Nombre d\'utilisateurs',
       totalPhotos: 'Nombre de photos',
       totalCategories: 'Nombre de catégories',
       totalTags: 'Nombre de tags'
@@ -200,7 +202,7 @@ export default {
       addressColumn: 'Adresse',
       aboutColumn: 'À propos',
       crud: {
-        usernameForm: "Nom d'utilisateur",
+        usernameForm: 'Nom d\'utilisateur',
         firstNameForm: 'Prénom',
         lastNameForm: 'Nom',
         emailForm: 'E-mail',
@@ -218,28 +220,28 @@ export default {
         aboutForm: 'À propos',
         statusForm: 'Statut',
         successCreateMsg: 'Utilisateur créé avec succès',
-        failedCreateMsg: "Une erreur s'est produite lors de la création de l'utilisateur",
+        failedCreateMsg: 'Une erreur s\'est produite lors de la création de l\'utilisateur',
         successEditMsg: 'Utilisateur modifié avec succès',
-        failedEditMsg: "Une erreur s'est produite lors de la modification de l'utilisateur",
+        failedEditMsg: 'Une erreur s\'est produite lors de la modification de l\'utilisateur',
         successDeleteMsg: 'Utilisateur supprimé avec succès',
-        failedDeleteMsg: "Une erreur s'est produite lors de la suppression de l'utilisateur"
+        failedDeleteMsg: 'Une erreur s\'est produite lors de la suppression de l\'utilisateur'
       },
       validate: {
-        usernameRequired: "Le nom d'utilisateur doit être renseigné",
-        usernameMaxLength: "Le nom d'utilisateur doit comporter au maximum 15 caractères",
-        usernameUnique: "Le nom d'utilisateur existe déjà",
+        usernameRequired: 'Le nom d\'utilisateur doit être renseigné',
+        usernameMaxLength: 'Le nom d\'utilisateur doit comporter au maximum 15 caractères',
+        usernameUnique: 'Le nom d\'utilisateur existe déjà',
         firstNameRequired: 'Le prénom doit être renseigné',
         firstNameMaxLength: 'Le prénom doit comporter au maximum 15 caractères',
         lastNameMaxLength: 'Le nom de famille doit comporter au maximum 15 caractères',
-        emailRequired: "L'e-mail doit être renseigné",
+        emailRequired: 'L\'e-mail doit être renseigné',
         emailFormat: 'E-mail invalide',
         phoneMaxLength: 'Le numéro de téléphone doit comporter au maximum 15 caractères',
         passwordRequired: 'Le mot de passe doit être renseigné',
         passwordMinLength: 'Le mot de passe doit comporter au moins 8 caractères',
         passwordConfirmationRequired: 'La confirmation du mot de passe doit être renseignée',
         passwordConfirmationSame: 'La confirmation du mot de passe doit être identique au mot de passe',
-        urlMaxLength: "L'URL doit comporter au maximum 255 caractères",
-        addressMaxLength: "L'adresse doit comporter au maximum 255 caractères",
+        urlMaxLength: 'L\'URL doit comporter au maximum 255 caractères',
+        addressMaxLength: 'L\'adresse doit comporter au maximum 255 caractères',
         aboutMaxLength: 'À propos doit comporter au maximum 100 caractères'
       }
     },
@@ -254,18 +256,18 @@ export default {
       crud: {
         imageForm: 'Image',
         uploadImageText: 'Télécharger une image',
-        changeImageText: "Changer l'image",
+        changeImageText: 'Changer l\'image',
         nameForm: 'Nom',
         descriptionForm: 'Description',
         successCreateMsg: 'Catégorie créée avec succès',
-        failedCreateMsg: "Une erreur s'est produite lors de la création de la catégorie",
+        failedCreateMsg: 'Une erreur s\'est produite lors de la création de la catégorie',
         successEditMsg: 'Catégorie modifiée avec succès',
-        failedEditMsg: "Une erreur s'est produite lors de la modification de la catégorie",
+        failedEditMsg: 'Une erreur s\'est produite lors de la modification de la catégorie',
         successDeleteMsg: 'Catégorie supprimée avec succès',
-        failedDeleteMsg: "Une erreur s'est produite lors de la suppression de la catégorie"
+        failedDeleteMsg: 'Une erreur s\'est produite lors de la suppression de la catégorie'
       },
       validate: {
-        imageRequired: "L'image doit être renseignée",
+        imageRequired: 'L\'image doit être renseignée',
         nameRequired: 'Le nom doit être renseigné',
         nameMaxLength: 'Le nom doit comporter au maximum 50 caractères',
         descriptionMaxLength: 'La description doit comporter au maximum 255 caractères'
@@ -281,11 +283,11 @@ export default {
         nameForm: 'Nom',
         descriptionForm: 'Description',
         successCreateMsg: 'Tag créé avec succès',
-        failedCreateMsg: "Une erreur s'est produite lors de la création du tag",
+        failedCreateMsg: 'Une erreur s\'est produite lors de la création du tag',
         successEditMsg: 'Tag modifié avec succès',
-        failedEditMsg: "Une erreur s'est produite lors de la modification du tag",
+        failedEditMsg: 'Une erreur s\'est produite lors de la modification du tag',
         successDeleteMsg: 'Tag supprimé avec succès',
-        failedDeleteMsg: "Une erreur s'est produite lors de la suppression du tag"
+        failedDeleteMsg: 'Une erreur s\'est produite lors de la suppression du tag'
       },
       validate: {
         nameRequired: 'Le nom doit être renseigné',
@@ -306,11 +308,11 @@ export default {
       descriptionColumn: 'Description',
       crud: {
         successCreateMsg: 'Photo créée avec succès',
-        failedCreateMsg: "Une erreur s'est produite lors de la création de la photo",
+        failedCreateMsg: 'Une erreur s\'est produite lors de la création de la photo',
         successEditMsg: 'Photo modifiée avec succès',
-        failedEditMsg: "Une erreur s'est produite lors de la modification de la photo",
+        failedEditMsg: 'Une erreur s\'est produite lors de la modification de la photo',
         successDeleteMsg: 'Photo supprimée avec succès',
-        failedDeleteMsg: "Une erreur s'est produite lors de la suppression de la photo"
+        failedDeleteMsg: 'Une erreur s\'est produite lors de la suppression de la photo'
       }
     },
     collection: {
@@ -323,7 +325,7 @@ export default {
       descriptionColumn: 'Description',
       crud: {
         successDeleteMsg: 'Collection supprimée avec succès',
-        failedDeleteMsg: "Une erreur s'est produite lors de la suppression de la collection"
+        failedDeleteMsg: 'Une erreur s\'est produite lors de la suppression de la collection'
       }
     },
     comment: {
@@ -333,7 +335,7 @@ export default {
       contentColumn: 'Contenu',
       crud: {
         successDeleteMsg: 'Commentaire supprimé avec succès',
-        failedDeleteMsg: "Une erreur s'est produite lors de la suppression du commentaire"
+        failedDeleteMsg: 'Une erreur s\'est produite lors de la suppression du commentaire'
       }
     }
   }

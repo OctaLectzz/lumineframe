@@ -11,7 +11,9 @@ export default {
     searchPhotoText: 'ค้นหารูปภาพ...',
     collectionTitle: 'คอลเลกชัน',
     categoryTitle: 'หมวดหมู่',
-    tagTitle: 'แท็ก'
+    tagTitle: 'แท็ก',
+    photoNotFound: 'ภาพไม่พร้อมใช้งาน',
+    collectionNotFound: 'คอลเลกชันไม่พร้อมใช้งาน'
   },
   navbar: {
     homeTab: 'หน้าแรก',

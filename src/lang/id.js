@@ -11,7 +11,9 @@ export default {
     searchPhotoText: 'Cari Foto...',
     collectionTitle: 'Koleksi',
     categoryTitle: 'Kategori',
-    tagTitle: 'Tag'
+    tagTitle: 'Tag',
+    photoNotFound: 'Foto tidak tersedia',
+    collectionNotFound: 'Koleksi tidak tersedia'
   },
   navbar: {
     homeTab: 'Beranda',
