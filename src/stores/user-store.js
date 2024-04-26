@@ -43,7 +43,12 @@ export const useUserStore = defineStore('user', {
     },
 
     async editavatar(data) {
-      return await server.patch(`api/user/avatar/${data.id}`, data, { headers: headersImage })
+      const formData = new FormData()
+      formData.append('id', data.id)
+      formData.append('username', data.username)
+      formData.append('avatar', data.avatar)
+
+      return await server.post(`api/user/avatar/${data.id}`, data, { headers: headersImage })
     },
 
     async delete(data) {

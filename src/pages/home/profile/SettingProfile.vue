@@ -283,9 +283,11 @@ const handleFileChange = async (e) => {
       avatar.value.src = reader.result
     }
     reader.readAsDataURL(file)
-
     data.value.avatar = file
+
     await userStore.editavatar(data.value)
+
+    toast.success(t('profile.successEditAvatarMsg'))
   }
 }
 

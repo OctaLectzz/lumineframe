@@ -134,6 +134,7 @@ export default {
     addressForm: 'Address',
     aboutForm: 'About',
     editProfileBtn: 'Update User Info',
+    successEditAvatarMsg: 'Profile photo changed successfully',
     successEditProfileMsg: 'Collection edited successfully',
     failedEditProfileMsg: 'Invalid data. Please check the fields and try again',
     validate: {
@@ -255,6 +256,7 @@ export default {
       crud: {
         imageForm: 'Image',
         uploadImageText: 'Upload Image',
+        changeImageText: 'Change Image',
         nameForm: 'Name',
         descriptionForm: 'Description',
         successCreateMsg: 'Category created successfully',

@@ -27,7 +27,7 @@ export const useCategoryStore = defineStore('category', {
     },
 
     async edit(data) {
-      return await server.put(`api/category/${data.id}`, data, { headers: headersImage })
+      return await server.post(`api/category/${data.id}`, data, { headers: headersImage })
     },
 
     async delete(data) {

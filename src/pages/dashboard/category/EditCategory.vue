@@ -18,11 +18,11 @@
               <div>
                 <img ref="imagepreview" :src="url + '/categories/' + data.image" :ratio="4 / 3" style="width: 300px; border-radius: 20px" />
               </div>
-              <!-- <div>
+              <div>
                 <q-btn
                   :color="$q.dark.isActive ? 'secondary' : 'primary'"
                   :text-color="$q.dark.isActive ? 'primary' : 'secondary'"
-                  :label="$t('dashboard.category.crud.uploadImageText')"
+                  :label="$t('dashboard.category.crud.changeImageText')"
                   class="text-capitalize q-my-sm"
                   style="max-width: 150px"
                   @click="openFileInput"
@@ -31,7 +31,7 @@
                 <form enctype="multipart/form-data">
                   <input type="file" id="categoryimage" style="display: none" @change="categoryImageChange" />
                 </form>
-              </div> -->
+              </div>
             </div>
 
             <!-- Name -->
