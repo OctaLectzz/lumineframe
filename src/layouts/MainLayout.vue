@@ -5,7 +5,7 @@
       <q-header :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-white'">
         <q-toolbar class="text-primary q-my-md">
           <!-- Logo -->
-          <img src="/src/assets/img/logo.png" width="50" class="q-pa-sm" />
+          <img src="/src/assets/img/logo.png" width="50" class="q-pa-xs" />
 
           <!-- Tab -->
           <q-toolbar-title v-if="!$q.dark.isActive" class="q-py-sm" style="font-size: 16px">

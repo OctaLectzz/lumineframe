@@ -63,7 +63,7 @@ const routes = [
       { path: 'tag', name: 'dashboardtag', component: () => import('pages/dashboard/tag/IndexTag.vue') },
       { path: 'photo', name: 'dashboardphoto', component: () => import('pages/dashboard/photo/IndexPhoto.vue') },
       { path: 'collection', name: 'dashboardcollection', component: () => import('pages/dashboard/collection/IndexCollection.vue') },
-      { path: 'comment', name: 'dashboardcomment', component: () => import('pages/dashboard/comment/IndexComment.vue') },
+      { path: 'comment', name: 'dashboardcomment', component: () => import('pages/dashboard/comment/IndexComment.vue') }
     ]
   }
 ]

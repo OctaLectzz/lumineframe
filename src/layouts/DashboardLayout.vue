@@ -123,7 +123,7 @@
         <!-- Brand -->
         <q-item class="q-py-lg">
           <q-item-section avatar>
-            <img src="/src/assets/img/logo.png" width="50" class="q-pa-sm" />
+            <img src="/src/assets/img/logo_transparent.png" width="50" class="q-pa-xs" />
           </q-item-section>
           <q-item-section>
             <q-item-label class="text-h5 text-bold">

@@ -106,16 +106,16 @@ module.exports = configure(function (/* ctx */) {
     animations: [],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#property-sourcefiles
-    // sourceFiles: {
-    //   rootComponent: 'src/App.vue',
-    //   router: 'src/router/index',
-    //   store: 'src/store/index',
-    //   registerServiceWorker: 'src-pwa/register-service-worker',
-    //   serviceWorker: 'src-pwa/custom-service-worker',
-    //   pwaManifestFile: 'src-pwa/manifest.json',
-    //   electronMain: 'src-electron/electron-main',
-    //   electronPreload: 'src-electron/electron-preload'
-    // },
+    sourceFiles: {
+      rootComponent: 'src/App.vue',
+      router: 'src/router/index',
+      store: 'src/stores/index',
+      registerServiceWorker: 'src-pwa/register-service-worker',
+      serviceWorker: 'src-pwa/custom-service-worker',
+      pwaManifestFile: 'src-pwa/manifest.json'
+      // electronMain: 'src-electron/electron-main',
+      // electronPreload: 'src-electron/electron-preload'
+    },
 
     // https://v2.quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {
@@ -125,7 +125,7 @@ module.exports = configure(function (/* ctx */) {
       // extendSSRWebserverConf (esbuildConf) {},
       // extendPackageJson (json) {},
 
-      pwa: false,
+      pwa: true,
 
       // manualStoreHydration: true,
       // manualPostHydrationTrigger: true,
@@ -144,12 +144,12 @@ module.exports = configure(function (/* ctx */) {
       injectPwaMetaTags: true,
       swFilename: 'sw.js',
       manifestFilename: 'manifest.json',
-      useCredentialsForManifestTag: false
-      // useFilenameHashes: true,
-      // extendGenerateSWOptions (cfg) {}
-      // extendInjectManifestOptions (cfg) {},
-      // extendManifestJson (json) {}
-      // extendPWACustomSWConf (esbuildConf) {}
+      useCredentialsForManifestTag: false,
+      useFilenameHashes: true,
+      extendGenerateSWOptions(cfg) {},
+      extendInjectManifestOptions(cfg) {},
+      extendManifestJson(json) {},
+      extendPWACustomSWConf(esbuildConf) {}
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
