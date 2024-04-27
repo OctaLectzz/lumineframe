@@ -85,7 +85,7 @@
         <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <q-item-section side>
             <q-avatar size="100px">
-              <img ref="avatar" :src="url + '/avatars/' + data.avatar" />
+              <img ref="avatar" :src="url + '/public/avatars/' + data.avatar" />
             </q-avatar>
           </q-item-section>
           <q-item-section>

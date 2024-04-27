@@ -13,7 +13,7 @@
       <template #default="{ item }">
         <div class="lumine-container" @click="singlePhoto(item)" @mouseover="showButtons(item)" @mouseleave="hideButtons(item)">
           <!-- Image -->
-          <q-img :src="url + '/images/' + item.image" :alt="item.image || 'Lumine Photo'" class="lumine-photo" />
+          <q-img :src="url + '/public/images/' + item.image" :alt="item.image || 'Lumine Photo'" class="lumine-photo" />
 
           <!-- Desktop -->
           <div v-if="desktop" class="lumine-text" @click.stop="userPhoto(item.user.username)">
@@ -22,7 +22,7 @@
             <div v-if="item.user.role != 'Admin'" class="text-subtitle2 q-pa-sm float-right">
               {{ item.user.name }}
               <q-avatar class="lumine-avatar">
-                <img :src="url + '/avatars/' + item.user.avatar" />
+                <img :src="url + '/public/avatars/' + item.user.avatar" />
               </q-avatar>
             </div>
           </div>
@@ -40,7 +40,7 @@
             <div class="text-subtitle2 text-bold q-px-sm">{{ item.title }}</div>
             <div v-if="item.user.role != 'Admin'" class="text-subtitle2 q-px-sm" @click.stop="userPhoto(item.user.username)">
               <q-avatar class="lumine-avatar">
-                <img :src="url + '/avatars/' + item.user.avatar" />
+                <img :src="url + '/public/avatars/' + item.user.avatar" />
               </q-avatar>
               {{ item.user.name }}
             </div>

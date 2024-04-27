@@ -270,6 +270,7 @@ export default {
         imageRequired: 'Gambar harus diisi',
         nameRequired: 'Nama harus diisi',
         nameMaxLength: 'Nama maksimal 50 karakter',
+        nameUnique: 'Nama sudah ada',
         descriptionMaxLength: 'Deskripsi maksimal 255 karakter'
       }
     },

@@ -270,6 +270,7 @@ export default {
         imageRequired: 'يجب ملء الصورة',
         nameRequired: 'يجب ملء الاسم',
         nameMaxLength: 'يجب ألا يتجاوز الاسم 50 حرفًا كحد أقصى',
+        nameUnique: 'الاسم موجود بالفعل',
         descriptionMaxLength: 'يجب ألا يتجاوز الوصف 255 حرفًا كحد أقصى'
       }
     },

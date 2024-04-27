@@ -21,7 +21,7 @@
             <div v-if="collection.photos && collection.photos.length > 0">
               <div class="row">
                 <div v-for="photo in collection.photos.slice(0, 3)" :key="photo.id" class="col-2">
-                  <img :src="url + '/images/' + photo.image" class="collection-image" />
+                  <img :src="url + '/public/images/' + photo.image" class="collection-image" />
                 </div>
               </div>
             </div>

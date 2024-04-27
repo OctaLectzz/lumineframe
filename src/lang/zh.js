@@ -270,6 +270,7 @@ export default {
         imageRequired: '图片必须填写',
         nameRequired: '名称必须填写',
         nameMaxLength: '名称最多50个字符',
+        nameUnique: '名称已存在',
         descriptionMaxLength: '描述最多255个字符'
       }
     },

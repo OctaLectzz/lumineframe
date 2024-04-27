@@ -1,7 +1,7 @@
 <template>
   <div class="preview-photo-overlay">
     <div class="preview-photo-container">
-      <img :src="url + '/images/' + item.image" :alt="item.image || 'Lumine Photo'" class="preview-photo" />
+      <img :src="url + '/public/images/' + item.image" :alt="item.image || 'Lumine Photo'" class="preview-photo" />
     </div>
   </div>
 </template>

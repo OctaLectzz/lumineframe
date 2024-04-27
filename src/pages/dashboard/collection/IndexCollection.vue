@@ -74,7 +74,7 @@
               <div class="row">
                 <template v-for="photo in props.row.photos.slice(0, 4)" :key="photo.id">
                   <div class="col-2">
-                    <img v-if="photo.image" :src="url + '/images/' + photo.image" class="collection-image" />
+                    <img v-if="photo.image" :src="url + '/public/images/' + photo.image" class="collection-image" />
                     <img v-else src="/src/assets/img/no_image_available.jpg" class="collection-image" />
                   </div>
                 </template>
@@ -145,7 +145,7 @@
                       <div class="row">
                         <template v-for="photo in props.row.photos.slice(0, 4)" :key="photo.id">
                           <div class="col-2">
-                            <img v-if="photo.image" :src="url + '/images/' + photo.image" class="collection-image" />
+                            <img v-if="photo.image" :src="url + '/public/images/' + photo.image" class="collection-image" />
                             <img v-else src="/src/assets/img/no_image_available.jpg" class="collection-image" />
                           </div>
                         </template>

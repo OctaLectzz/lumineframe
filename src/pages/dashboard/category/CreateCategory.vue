@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineEmits } from 'vue'
+import { ref, onMounted, computed, defineEmits } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
 import { useCategoryStore } from '/src/stores/category-store'
@@ -104,10 +104,36 @@ const data = ref({
   description: ''
 })
 
+// Category
+const categories = ref([])
+const getCategory = async () => {
+  try {
+    const res = await itemStore.all()
+
+    categories.value = res.data.data
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+}
+onMounted(() => {
+  getCategory()
+})
+
 // Validate
 const rules = ref({
   image: [(v) => !!v || t('dashboard.category.validate.imageRequired')],
-  name: [(v) => !!v || t('dashboard.category.validate.nameRequired'), (v) => v.length <= 15 || t('dashboard.category.validate.nameMaxLength')],
+  name: [
+    (v) => !!v || t('dashboard.category.validate.nameRequired'),
+    (v) => v.length <= 15 || t('dashboard.category.validate.nameMaxLength'),
+    (v) => {
+      if (typeof v === 'string') {
+        if (categories.value) {
+          return !categories.value.some((category) => category.name.toLowerCase() === v.toLowerCase()) || t('dashboard.category.validate.nameUnique')
+        }
+      }
+      return true
+    }
+  ],
   description: [(v) => v.length <= 255 || t('dashboard.category.validate.descriptionMaxLength')]
 })
 

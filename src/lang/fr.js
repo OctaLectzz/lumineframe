@@ -270,6 +270,7 @@ export default {
         imageRequired: 'L\'image doit être renseignée',
         nameRequired: 'Le nom doit être renseigné',
         nameMaxLength: 'Le nom doit comporter au maximum 50 caractères',
+        nameUnique: 'Le nom existe déjà',
         descriptionMaxLength: 'La description doit comporter au maximum 255 caractères'
       }
     },

@@ -16,7 +16,7 @@
             <div class="col-10 q-ma-sm">
               <div class="text-bold">{{ $t('dashboard.category.crud.imageForm') }} :</div>
               <div>
-                <img ref="imagepreview" :src="url + '/categories/' + data.image" :ratio="4 / 3" style="width: 300px; border-radius: 20px" />
+                <img ref="imagepreview" :src="url + '/public/categories/' + data.image" :ratio="4 / 3" style="width: 300px; border-radius: 20px" />
               </div>
               <div>
                 <q-btn
@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, defineEmits } from 'vue'
+import { ref, onMounted, computed, defineProps, defineEmits } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
 import { url } from '/src/boot/axios'
@@ -107,10 +107,37 @@ const data = ref({
   description: item.description
 })
 
+// Category
+const categories = ref([])
+const getCategory = async () => {
+  try {
+    const res = await itemStore.all()
+
+    categories.value = res.data.data
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+}
+onMounted(() => {
+  getCategory()
+})
+
 // Validate
 const rules = ref({
   image: [(v) => !!v || t('dashboard.category.validate.imageRequired')],
-  name: [(v) => !!v || t('dashboard.category.validate.nameRequired'), (v) => v.length <= 15 || t('dashboard.category.validate.nameMaxLength')],
+  name: [
+    (v) => !!v || t('dashboard.category.validate.nameRequired'),
+    (v) => v.length <= 15 || t('dashboard.category.validate.nameMaxLength'),
+    (v) => {
+      if (typeof v === 'string') {
+        if (categories.value) {
+          const categoryName = item.name.toLowerCase()
+          return !categories.value.some((category) => category.name.toLowerCase() === v.toLowerCase() && category.name.toLowerCase() !== categoryName) || t('dashboard.category.validate.nameUnique')
+        }
+      }
+      return true
+    }
+  ],
   description: [(v) => v.length <= 255 || t('dashboard.category.validate.descriptionMaxLength')]
 })
 

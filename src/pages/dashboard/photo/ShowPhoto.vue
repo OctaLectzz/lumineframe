@@ -110,7 +110,7 @@
               <div class="row">
                 <!-- Image -->
                 <div class="col-xs-12 col-md-6">
-                  <q-img class="lumine-photo" :src="url + '/images/' + photo.image" @click="previewPhoto(photo)" />
+                  <q-img class="lumine-photo" :src="url + '/public/images/' + photo.image" @click="previewPhoto(photo)" />
 
                   <!-- Preview -->
                   <div v-if="photo.previewMode" @click="previewPhoto(photo)">
@@ -150,7 +150,7 @@
                       <!-- User -->
                       <div v-if="user.role != 'Admin'" class="cursor-pointer q-pa-md" @click="userPhoto(user.username)">
                         <q-avatar class="lumine-avatar float-left">
-                          <img :src="url + '/avatars/' + user.avatar" />
+                          <img :src="url + '/public/avatars/' + user.avatar" />
                         </q-avatar>
                         <span class="q-mx-sm">
                           <span class="text-subtitle2 text-bold">{{ user.name }}</span>
@@ -185,7 +185,7 @@
                             <!-- Avatar -->
                             <div class="col-md-1 col-sm-1 col-xs-2">
                               <q-avatar size="25px" class="float-left q-pt-xs">
-                                <img :src="url + '/avatars/' + comment.user.avatar" />
+                                <img :src="url + '/public/avatars/' + comment.user.avatar" />
                               </q-avatar>
                             </div>
 

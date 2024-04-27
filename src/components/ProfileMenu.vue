@@ -21,7 +21,7 @@
       <q-skeleton v-if="loading" type="QAvatar" size="26px" />
 
       <q-avatar v-else size="26px">
-        <img :src="url + '/avatars/' + profile.avatar" />
+        <img :src="url + '/public/avatars/' + profile.avatar" />
       </q-avatar>
     </template>
     <div class="row no-wrap q-pa-md">
@@ -57,7 +57,7 @@
 
       <div class="column items-center">
         <q-avatar size="72px">
-          <img :src="url + '/avatars/' + profile.avatar" />
+          <img :src="url + '/public/avatars/' + profile.avatar" />
         </q-avatar>
 
         <div class="nav-profile text-subtitle1 text-bold q-mt-sm">{{ profile.name }}</div>

@@ -270,6 +270,7 @@ export default {
         imageRequired: 'Gambar mesti diisi',
         nameRequired: 'Nama mesti diisi',
         nameMaxLength: 'Nama mesti maksimum 50 aksara',
+        nameUnique: 'Nama sudah wujud',
         descriptionMaxLength: 'Penerangan mesti maksimum 255 aksara'
       }
     },

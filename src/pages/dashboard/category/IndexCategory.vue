@@ -71,7 +71,7 @@
       <template #body-cell-image="props">
         <q-td :props="props">
           <div dense square>
-            <q-img :src="url + '/categories/' + props.row.image" :ratio="4 / 3" style="border-radius: 10px" />
+            <q-img :src="url + '/public/categories/' + props.row.image" :ratio="4 / 3" style="border-radius: 10px" />
           </div>
         </q-td>
       </template>
@@ -122,7 +122,7 @@
 
                   <!-- Image -->
                   <div v-else-if="col.name === 'image'">
-                    <img :src="url + '/categories/' + props.row.image" width="80" :ratio="4 / 3" style="border-radius: 10px" />
+                    <img :src="url + '/public/categories/' + props.row.image" width="80" :ratio="4 / 3" style="border-radius: 10px" />
                   </div>
 
                   <!-- Description -->

@@ -270,6 +270,7 @@ export default {
         imageRequired: 'La imagen debe estar llena',
         nameRequired: 'El nombre debe estar lleno',
         nameMaxLength: 'El nombre debe tener como máximo 50 caracteres',
+        nameUnique: 'El nombre ya existe',
         descriptionMaxLength: 'La descripción debe tener como máximo 255 caracteres'
       }
     },

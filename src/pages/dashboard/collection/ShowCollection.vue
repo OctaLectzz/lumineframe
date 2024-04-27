@@ -33,7 +33,7 @@
           <!-- User -->
           <div v-if="user.role != 'Admin'" class="cursor-pointer q-pa-md q-ml-xl">
             <q-avatar class="lumine-avatar float-left">
-              <img :src="url + '/avatars/' + user.avatar" />
+              <img :src="url + '/public/avatars/' + user.avatar" />
             </q-avatar>
             <span class="q-mx-sm">
               <span class="text-subtitle2 text-bold">{{ user.name }}</span>

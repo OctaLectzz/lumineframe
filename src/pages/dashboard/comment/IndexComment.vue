@@ -59,7 +59,7 @@
       <template #body-cell-photo="props">
         <q-td :props="props">
           <div dense square>
-            <q-img :src="url + '/images/' + props.row.photo.image" :ratio="4 / 3" class="preview-photo" style="border-radius: 10px" @click="previewPhoto(props.row.photo)" />
+            <q-img :src="url + '/public/images/' + props.row.photo.image" :ratio="4 / 3" class="preview-photo" style="border-radius: 10px" @click="previewPhoto(props.row.photo)" />
 
             <!-- Preview -->
             <div v-if="props.row.photo.previewMode" @click="previewPhoto(props.row.photo)">
@@ -100,7 +100,7 @@
 
                   <!-- Photo -->
                   <div v-else-if="col.name === 'photo'">
-                    <img :src="url + '/images/' + props.row.photo.image" width="80" :ratio="4 / 3" style="border-radius: 10px" />
+                    <img :src="url + '/public/images/' + props.row.photo.image" width="80" :ratio="4 / 3" style="border-radius: 10px" />
                   </div>
 
                   <!-- Action -->

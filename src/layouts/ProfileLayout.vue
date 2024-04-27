@@ -24,7 +24,7 @@
     <div v-else class="row justify-center">
       <!-- Avatar -->
       <q-avatar size="110px" class="q-my-md">
-        <img :src="url + '/avatars/' + user.avatar" />
+        <img :src="url + '/public/avatars/' + user.avatar" />
       </q-avatar>
       <div class="col-12 text-center">
         <!-- Name -->

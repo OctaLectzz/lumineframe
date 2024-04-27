@@ -9,7 +9,7 @@
 
     <div v-else class="row q-gutter-lg justify-center">
       <div v-for="category in categories" :key="category.id" class="col-sm-3 col-xs-8 categories" @click="showCategory(category)">
-        <q-img :src="url + '/categories/' + category.image" :ratio="4 / 3" class="category-image">
+        <q-img :src="url + '/public/categories/' + category.image" :ratio="4 / 3" class="category-image">
           <div class="absolute-bottom text-subtitle1 text-center">{{ category.name }}</div>
         </q-img>
       </div>

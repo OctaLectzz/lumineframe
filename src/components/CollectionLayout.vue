@@ -12,7 +12,7 @@
         <!-- User -->
         <div class="text-subtitle2 q-pa-sm">
           <q-avatar class="lumine-avatar">
-            <img :src="url + '/avatars/' + collection.user.avatar" />
+            <img :src="url + '/public/avatars/' + collection.user.avatar" />
           </q-avatar>
           <span class="q-mx-xs" style="font-size: 10px">{{ collection.user.name.length > 10 ? collection.user.name.substring(0, 10) + '...' : collection.user.name }}</span>
         </div>
@@ -23,7 +23,7 @@
             <div class="row">
               <template v-for="photo in collection.photos.slice(0, 4)" :key="photo.id">
                 <div class="col-2">
-                  <img v-if="photo.image" :src="url + '/images/' + photo.image" class="collection-image" />
+                  <img v-if="photo.image" :src="url + '/public/images/' + photo.image" class="collection-image" />
                   <img v-else src="/src/assets/img/no_image_available.jpg" class="collection-image" />
                 </div>
               </template>

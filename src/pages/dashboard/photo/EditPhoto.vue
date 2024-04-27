@@ -14,7 +14,7 @@
           <div class="row justify-center q-gutter-xl" style="margin: 20px 0">
             <!-- Image -->
             <div class="col-xs-10 col-md-3">
-              <img :src="url + '/images/' + item.image" alt="Preview" class="preview-image" width="100%" />
+              <img :src="url + '/public/images/' + item.image" alt="Preview" class="preview-image" width="100%" />
             </div>
 
             <div class="col-xs-10 col-md-6">

@@ -270,6 +270,7 @@ export default {
         imageRequired: '画像は必須です',
         nameRequired: '名前は必須です',
         nameMaxLength: '名前は最大50文字です',
+        nameUnique: '名前はすでに存在します',
         descriptionMaxLength: '説明は最大255文字です'
       }
     },

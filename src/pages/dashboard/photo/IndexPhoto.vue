@@ -81,7 +81,7 @@
       <template #body-cell-image="props">
         <q-td :props="props">
           <div dense square>
-            <q-img :src="url + '/images/' + props.row.image" class="preview-photo" style="border-radius: 10px" @click="previewPhoto(props.row)" />
+            <q-img :src="url + '/public/images/' + props.row.image" class="preview-photo" style="border-radius: 10px" @click="previewPhoto(props.row)" />
 
             <!-- Preview -->
             <div v-if="props.row.previewMode" @click="previewPhoto(props.row)">
@@ -148,7 +148,7 @@
 
                   <!-- Image -->
                   <div v-else-if="col.name === 'image'">
-                    <img :src="url + '/images/' + props.row.image" width="80" style="border-radius: 10px" />
+                    <img :src="url + '/public/images/' + props.row.image" width="80" style="border-radius: 10px" />
                   </div>
 
                   <!-- Description -->
