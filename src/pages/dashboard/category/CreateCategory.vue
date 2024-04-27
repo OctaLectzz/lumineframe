@@ -16,7 +16,7 @@
             <div class="col-10 q-ma-sm">
               <div class="text-bold">{{ $t('dashboard.category.crud.imageForm') }} :</div>
               <div>
-                <img ref="imagepreview" src="/src/assets/img/no_image_available.jpg" :ratio="4 / 3" style="width: 300px; border-radius: 20px" />
+                <img ref="imagepreview" src="/img/no_image_available.jpg" :ratio="4 / 3" style="width: 300px; border-radius: 20px" />
               </div>
               <div>
                 <q-btn

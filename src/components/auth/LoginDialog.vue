@@ -7,7 +7,7 @@
 
     <q-card-section class="q-px-lg q-pb-xl">
       <div class="row justify-center">
-        <q-img src="/src/assets/img/logo.png" style="width: 50px" />
+        <q-img src="/img/logo.png" style="width: 50px" />
       </div>
 
       <div class="text-h5 text-bold text-center q-mb-lg">{{ $t('auth.welcomeMsg') }}</div>

@@ -5,7 +5,7 @@
       <q-header :class="$q.dark.isActive ? 'bg-grey-10' : 'bg-white'">
         <q-toolbar class="text-primary q-my-md">
           <!-- Logo -->
-          <img src="/src/assets/img/logo.png" width="50" class="q-pa-xs" />
+          <img src="/img/logo.png" width="50" class="q-pa-xs" />
 
           <!-- Tab -->
           <q-toolbar-title v-if="!$q.dark.isActive" class="q-py-sm" style="font-size: 16px">
@@ -41,7 +41,7 @@
           <!-- Switch Languages -->
           <q-btn-dropdown :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" dense flat>
             <template v-slot:label>
-              <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
+              <img :src="'/img/lang/' + lang + '.png'" width="20" />
             </template>
             <div class="row no-wrap q-pa-md">
               <div class="column items-center">
@@ -49,7 +49,7 @@
                   <q-item v-for="lang in languages.left" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
                     <q-item-section>
                       <q-item-label>
-                        <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
+                        <img :src="'/img/lang/' + lang + '.png'" width="20" />
                         {{ languageNames[lang] }}
                       </q-item-label>
                     </q-item-section>
@@ -64,7 +64,7 @@
                   <q-item v-for="lang in languages.right" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
                     <q-item-section>
                       <q-item-label>
-                        <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
+                        <img :src="'/img/lang/' + lang + '.png'" width="20" />
                         {{ languageNames[lang] }}
                       </q-item-label>
                     </q-item-section>
@@ -107,13 +107,13 @@
         <q-toolbar class="text-primary">
           <!-- Logo -->
           <q-toolbar-title>
-            <img src="/src/assets/img/logo.png" width="50" class="q-pa-sm" />
+            <img src="/img/logo.png" width="50" class="q-pa-sm" />
           </q-toolbar-title>
 
           <!-- Switch Languages -->
           <q-btn-dropdown :color="$q.dark.isActive ? 'secondary' : 'primary'" class="q-mx-xs" dense flat>
             <template v-slot:label>
-              <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
+              <img :src="'/img/lang/' + lang + '.png'" width="20" />
             </template>
             <div class="row no-wrap q-pa-md">
               <div class="column items-center">
@@ -121,7 +121,7 @@
                   <q-item v-for="lang in languages.left" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
                     <q-item-section>
                       <q-item-label>
-                        <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
+                        <img :src="'/img/lang/' + lang + '.png'" width="20" />
                         {{ languageNames[lang] }}
                       </q-item-label>
                     </q-item-section>
@@ -136,7 +136,7 @@
                   <q-item v-for="lang in languages.right" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
                     <q-item-section>
                       <q-item-label>
-                        <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
+                        <img :src="'/img/lang/' + lang + '.png'" width="20" />
                         {{ languageNames[lang] }}
                       </q-item-label>
                     </q-item-section>
@@ -173,7 +173,7 @@
 
       <!-- Footer -->
       <q-footer elevated>
-        <q-tabs :class="$q.dark.isActive ? 'bg-primary text-light' : 'bg-secondary text-dark'" align="justify" dense>
+        <q-tabs :class="$q.dark.isActive ? 'bg-primary text-light' : 'bg-secondary text-dark'" align="justify">
           <!-- Home -->
           <q-route-tab name="home" icon="home" :to="{ name: 'home' }" />
 

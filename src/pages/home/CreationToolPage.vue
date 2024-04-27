@@ -17,9 +17,9 @@
         </template>
       </q-btn>
     </div>
-    <div class="row justify-center q-gutter-xl" style="margin: 20px 0">
+    <div class="row justify-center" style="margin: 20px 0">
       <!-- Image -->
-      <div class="col-xs-10 col-md-3">
+      <div class="col-xs-10 col-md-3 q-mx-md">
         <div
           class="dropzone cursor-pointer"
           :class="{ 'active-dropzone': active, 'dropzone-image': image }"
@@ -46,7 +46,7 @@
         </div>
       </div>
 
-      <div class="col-xs-10 col-md-6">
+      <div class="col-xs-10 col-md-6 q-mx-md">
         <q-form>
           <!-- Title -->
           <div class="q-my-lg">

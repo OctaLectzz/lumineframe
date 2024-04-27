@@ -75,12 +75,12 @@
                 <template v-for="photo in props.row.photos.slice(0, 4)" :key="photo.id">
                   <div class="col-2">
                     <img v-if="photo.image" :src="url + '/public/images/' + photo.image" class="collection-image" />
-                    <img v-else src="/src/assets/img/no_image_available.jpg" class="collection-image" />
+                    <img v-else src="/img/no_image_available.jpg" class="collection-image" />
                   </div>
                 </template>
                 <template v-if="props.row.photos.length < 4">
                   <div v-for="n in 4 - props.row.photos.length" :key="n" class="col-2">
-                    <img src="/src/assets/img/no_image_available.jpg" class="collection-image" />
+                    <img src="/img/no_image_available.jpg" class="collection-image" />
                   </div>
                 </template>
               </div>
@@ -146,12 +146,12 @@
                         <template v-for="photo in props.row.photos.slice(0, 4)" :key="photo.id">
                           <div class="col-2">
                             <img v-if="photo.image" :src="url + '/public/images/' + photo.image" class="collection-image" />
-                            <img v-else src="/src/assets/img/no_image_available.jpg" class="collection-image" />
+                            <img v-else src="/img/no_image_available.jpg" class="collection-image" />
                           </div>
                         </template>
                         <template v-if="props.row.photos.length < 4">
                           <div v-for="n in 4 - props.row.photos.length" :key="n" class="col-2">
-                            <img src="/src/assets/img/no_image_available.jpg" class="collection-image" />
+                            <img src="/img/no_image_available.jpg" class="collection-image" />
                           </div>
                         </template>
                       </div>

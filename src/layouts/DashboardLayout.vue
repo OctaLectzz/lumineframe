@@ -11,7 +11,7 @@
           <!-- Switch Languages -->
           <q-btn-dropdown :color="$q.dark.isActive ? 'secondary' : 'primary'" dense flat>
             <template v-slot:label>
-              <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
+              <img :src="'/img/lang/' + lang + '.png'" width="20" />
             </template>
             <div class="row no-wrap q-pa-md">
               <div class="column items-center">
@@ -19,7 +19,7 @@
                   <q-item v-for="lang in languages.left" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
                     <q-item-section>
                       <q-item-label>
-                        <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
+                        <img :src="'/img/lang/' + lang + '.png'" width="20" />
                         {{ languageNames[lang] }}
                       </q-item-label>
                     </q-item-section>
@@ -34,7 +34,7 @@
                   <q-item v-for="lang in languages.right" :key="lang" @click="changeLanguage(lang)" clickable v-close-popup>
                     <q-item-section>
                       <q-item-label>
-                        <img :src="'/src/assets/img/lang/' + lang + '.png'" width="20" />
+                        <img :src="'/img/lang/' + lang + '.png'" width="20" />
                         {{ languageNames[lang] }}
                       </q-item-label>
                     </q-item-section>
@@ -123,7 +123,7 @@
         <!-- Brand -->
         <q-item class="q-py-lg">
           <q-item-section avatar>
-            <img src="/src/assets/img/logo_transparent.png" width="50" class="q-pa-xs" />
+            <img src="/img/logo_transparent.png" width="50" class="q-pa-xs" />
           </q-item-section>
           <q-item-section>
             <q-item-label class="text-h5 text-bold">

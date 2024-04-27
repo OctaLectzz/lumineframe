@@ -122,7 +122,7 @@ const detectDesktop = () => {
   desktop.value = window.innerWidth >= 691
 }
 const columnWidth = computed(() => {
-  return desktop.value ? 280 : 120
+  return desktop.value ? 280 : 150
 })
 const gap = computed(() => {
   return desktop.value ? 20 : 12
@@ -169,8 +169,8 @@ const getPhoto = () => {
   if (token) {
     photos.value = items.map((photo) => ({
       ...photo,
-      liked: profile.value.likes.some((userlike) => userlike.photo_id === photo.id),
-      saved: profile.value.collectionphoto.some((usersave) => usersave.photo_id === photo.id)
+      liked: profile.value.likes.some((userlike) => userlike.photo_id == photo.id),
+      saved: profile.value.collectionphoto.some((usersave) => usersave.photo_id == photo.id)
     }))
   } else {
     photos.value = items
