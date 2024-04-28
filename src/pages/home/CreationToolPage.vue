@@ -19,7 +19,7 @@
     </div>
     <div class="row justify-center" style="margin: 20px 0">
       <!-- Image -->
-      <div class="col-xs-10 col-md-3 q-mx-md">
+      <div class="col-xs-10 col-md-3 q-mx-md q-mt-sm-xl q-mt-xs-md">
         <div
           class="dropzone cursor-pointer"
           :class="{ 'active-dropzone': active, 'dropzone-image': image }"
@@ -46,7 +46,7 @@
         </div>
       </div>
 
-      <div class="col-xs-10 col-md-6 q-mx-md">
+      <div class="col-xs-10 col-md-6 q-mx-md q-mt-sm-xl q-mt-xs-md">
         <q-form>
           <!-- Title -->
           <div class="q-my-lg">
