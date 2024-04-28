@@ -68,37 +68,43 @@
       </div>
     </div>
 
-    <!-- Edit -->
-    <q-btn v-if="!profileLoading || profile.username === user.username" color="primary" icon="edit" class="absolute absolute-top-right q-ma-md" @click="editDialog = true" round dense />
-    <q-dialog v-model="editDialog" backdrop-filter="blur(4px) saturate(150%)">
-      <q-card style="width: 350px">
-        <q-form @submit="editCollection">
-          <q-card-section>
-            <div class="text-h6">{{ $t('explore.editCollectionTitle') }}</div>
-          </q-card-section>
+    <div v-if="!profileLoading || !loading || user.username === profile.username" class="absolute absolute-top-right q-ma-md">
+      <!-- Edit -->
+      <q-btn color="primary" icon="edit" class="q-mx-xs" @click="editDialog = true" round dense />
+      <q-dialog v-model="editDialog" backdrop-filter="blur(4px) saturate(150%)">
+        <q-card style="width: 350px">
+          <q-form @submit="editCollection">
+            <q-card-section>
+              <div class="text-h6">{{ $t('explore.editCollectionTitle') }}</div>
+            </q-card-section>
 
-          <q-card-section>
-            <q-input v-model="data.name" :label="$t('public.nameText')" class="q-mt-sm" :rules="[(v) => (v && v.length <= 20) || $t('photo.nameMaxLength')]" outlined dense required autofocus />
-            <q-input type="textarea" v-model="data.description" :label="$t('public.descriptionText')" class="q-mt-sm" outlined dense />
-          </q-card-section>
+            <q-card-section>
+              <q-input v-model="data.name" :label="$t('public.nameText')" class="q-mt-sm" :rules="[(v) => (v && v.length <= 20) || $t('photo.nameMaxLength')]" outlined dense required autofocus />
+              <q-input type="textarea" v-model="data.description" :label="$t('public.descriptionText')" class="q-mt-sm" outlined dense />
+            </q-card-section>
 
-          <q-card-actions align="right" class="text-primary">
-            <q-btn color="primary" label="Cancel" flat v-close-popup />
-            <q-btn type="submit" color="primary" :label="$t('public.editText')" :loading="editLoading" :disable="editLoading">
-              <template v-slot:loading>
-                <q-spinner-hourglass class="on-center" />
-              </template>
-            </q-btn>
-          </q-card-actions>
-        </q-form>
-      </q-card>
-    </q-dialog>
+            <q-card-actions align="right" class="text-primary">
+              <q-btn color="primary" label="Cancel" flat v-close-popup />
+              <q-btn type="submit" color="primary" :label="$t('public.editText')" :loading="editLoading" :disable="editLoading">
+                <template v-slot:loading>
+                  <q-spinner-hourglass class="on-center" />
+                </template>
+              </q-btn>
+            </q-card-actions>
+          </q-form>
+        </q-card>
+      </q-dialog>
+
+      <!-- Delete -->
+      <q-btn color="red" icon="delete" class="q-mx-xs" @click="deleteItemDialog(collection)" round dense />
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
 import { url, token } from '/src/boot/axios'
@@ -106,6 +112,7 @@ import { useCollectionStore } from '/src/stores/collection-store'
 import { useAuthStore } from '/src/stores/auth-store'
 import PhotoLayout from '/src/components/PhotoLayout.vue'
 
+const $q = useQuasar()
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
@@ -216,6 +223,37 @@ const editCollection = async () => {
     toast.error(t('explore.failedEditCollectionMsg'))
   }
   editLoading.value = false
+}
+
+// Delete
+const deleteItemDialog = (collecttion) => {
+  $q.dialog({
+    title: t('dashboard.deleteTitle'),
+    message: t('dashboard.deleteMsg'),
+    cancel: true,
+    persistent: true,
+    ok: {
+      label: t('dashboard.yesDeleteText'),
+      color: 'primary'
+    },
+    cancel: {
+      label: t('dashboard.cancelDeleteText'),
+      color: 'secondary'
+    }
+  }).onOk(() => {
+    deleteCollection(collecttion)
+  })
+}
+const deleteCollection = async (collecttion) => {
+  try {
+    await collectionStore.delete(collecttion.id)
+
+    toast.success(t('dashboard.collection.crud.successDeleteMsg'))
+    router.push({ name: 'collectionsprofile', params: { username: profile.value.username } })
+  } catch (error) {
+    console.error('Error fetching data:', error)
+    toast.error(t('dashboard.collection.crud.failedDeleteMsg'))
+  }
 }
 </script>
 
