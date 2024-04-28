@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps, defineEmits } from 'vue'
+import { ref, onMounted, defineProps } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
 import { url, token } from '/src/boot/axios'
@@ -73,7 +73,6 @@ import { useCollectionStore } from '/src/stores/collection-store'
 import { useCollectionphotoStore } from '/src/stores/collectionphoto-store'
 
 const { t } = useI18n()
-const emits = defineEmits(['saved'])
 const { item } = defineProps(['item'])
 const authStore = useAuthStore()
 const collectionStore = useCollectionStore()

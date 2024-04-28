@@ -271,13 +271,12 @@ const getProfile = async () => {
     const res = await authStore.profile()
     profile.value = res.data.data
 
-    if (res.data.response === 'Failed') {
-      router.push('/notfound')
-    }
-
     loading.value = false
   } catch (error) {
     console.error('Error fetching data:', error)
+    localStorage.removeItem('token')
+    localStorage.removeItem('role')
+    window.location.reload()
   }
 }
 onMounted(() => {

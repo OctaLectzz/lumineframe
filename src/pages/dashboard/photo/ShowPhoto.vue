@@ -289,8 +289,8 @@ const showPhoto = () => {
     user.value = item.user
     likes.value = item.likes.length
     if (profile.value && profile.value.likes && profile.value.collectionphoto) {
-      liked.value = profile.value.likes.some((userlike) => userlike.photo_id === photo.value.id)
-      saved.value = profile.value.collectionphoto.some((usersave) => usersave.photo_id === photo.value.id)
+      liked.value = profile.value.likes.some((userlike) => userlike.photo_id == photo.value.id)
+      saved.value = profile.value.collectionphoto.some((usersave) => usersave.photo_id == photo.value.id)
     }
     loading.value = false
   } catch (error) {

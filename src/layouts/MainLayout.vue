@@ -293,6 +293,9 @@ const getProfile = async () => {
     loading.value = false
   } catch (error) {
     console.error('Error fetching data:', error)
+    localStorage.removeItem('token')
+    localStorage.removeItem('role')
+    window.location.reload()
   }
 }
 onMounted(() => {

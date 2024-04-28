@@ -274,8 +274,8 @@ const showPhoto = async (photonumber) => {
     user.value = res.data.data.user
     likes.value = res.data.data.likes.length
     if (profile.value && profile.value.likes && profile.value.collectionphoto) {
-      liked.value = profile.value.likes.some((userlike) => userlike.photo_id === photo.value.id)
-      saved.value = profile.value.collectionphoto.some((usersave) => usersave.photo_id === photo.value.id)
+      liked.value = profile.value.likes.some((userlike) => userlike.photo_id == photo.value.id)
+      saved.value = profile.value.collectionphoto.some((usersave) => usersave.photo_id == photo.value.id)
     }
   } catch (error) {
     console.error('Error fetching data:', error)
