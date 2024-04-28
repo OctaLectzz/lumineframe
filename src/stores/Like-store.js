@@ -35,8 +35,8 @@ export const useLikeStore = defineStore('like', {
       return await server.delete(`api/like/${data}`, { headers })
     },
 
-    async userlike(id) {
-      return await server.get(`api/like/user/${id}`, { headers })
+    async userlike(username) {
+      return await server.get(`api/like/user/${username}`)
     },
 
     async like(id) {
