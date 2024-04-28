@@ -192,6 +192,7 @@ export default {
       editText: 'Edit User',
       manGenderText: 'Man',
       womanGenderText: 'Woman',
+      avatarColumn: 'Profile Picture',
       userColumn: 'User',
       roleColumn: 'Role',
       pronounsColumn: 'Pronouns',

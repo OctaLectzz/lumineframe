@@ -192,6 +192,7 @@ export default {
       editText: 'Редактировать пользователя',
       manGenderText: 'Мужчина',
       womanGenderText: 'Женщина',
+      avatarColumn: 'Изображение профиля',
       userColumn: 'Пользователь',
       roleColumn: 'Роль',
       pronounsColumn: 'Местоимения',

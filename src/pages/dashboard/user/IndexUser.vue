@@ -56,6 +56,17 @@
         </q-td>
       </template>
 
+      <!-- Avatar -->
+      <template #body-cell-avatar="props">
+        <q-td :props="props">
+          <div dense square>
+            <q-avatar size="60px">
+              <img :src="url + '/public/avatars/' + props.row.avatar" />
+            </q-avatar>
+          </div>
+        </q-td>
+      </template>
+
       <!-- User -->
       <template #body-cell-user="props">
         <q-td :props="props">
@@ -130,6 +141,13 @@
                     {{ props.rowIndex + 1 }}
                   </div>
 
+                  <!-- Avatar -->
+                  <div v-else-if="col.name === 'avatar'" dense square>
+                    <q-avatar size="60px">
+                      <img :src="url + '/public/avatars/' + props.row.avatar" />
+                    </q-avatar>
+                  </div>
+
                   <!-- User -->
                   <div v-else-if="col.name === 'user'" dense square>
                     <div class="text-bold">{{ props.row.name }}</div>
@@ -184,6 +202,7 @@ import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { toast } from 'vue3-toastify'
+import { url } from '/src/boot/axios'
 import { useUserStore } from '/src/stores/user-store'
 import CreateItem from './CreateUser.vue'
 import EditItem from './EditUser.vue'
@@ -261,6 +280,13 @@ const currencyColumns = [
     name: 'id',
     field: 'id',
     label: 'ID'
+  },
+  {
+    name: 'avatar',
+    field: 'avatar',
+    label: t('dashboard.user.avatarColumn'),
+    align: 'left',
+    sortable: true
   },
   {
     name: 'user',

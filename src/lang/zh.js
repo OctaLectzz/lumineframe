@@ -192,6 +192,7 @@ export default {
       editText: '编辑用户',
       manGenderText: '男',
       womanGenderText: '女',
+      avatarColumn: '个人资料图片',
       userColumn: '用户',
       roleColumn: '角色',
       pronounsColumn: '代词',

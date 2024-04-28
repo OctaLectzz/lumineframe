@@ -1,7 +1,7 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 
-const url = 'https://be.lumineframe.winecoders.com'
+const url = 'https://api.lumineframe.winecoders.com'
 const server = axios.create({ baseURL: url })
 
 const token = localStorage.getItem('token')

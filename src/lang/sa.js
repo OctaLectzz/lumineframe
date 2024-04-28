@@ -192,6 +192,7 @@ export default {
       editText: 'تحرير مستخدم',
       manGenderText: 'ذكر',
       womanGenderText: 'أنثى',
+      avatarColumn: 'الصوره الشخصيه',
       userColumn: 'المستخدم',
       roleColumn: 'الدور',
       pronounsColumn: 'الضمائر',

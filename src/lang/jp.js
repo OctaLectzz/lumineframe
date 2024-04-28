@@ -192,6 +192,7 @@ export default {
       editText: 'ユーザーを編集',
       manGenderText: '男性',
       womanGenderText: '女性',
+      avatarColumn: 'プロフィールの写真',
       userColumn: 'ユーザー',
       roleColumn: '役割',
       pronounsColumn: '代名詞',

@@ -192,6 +192,7 @@ export default {
       editText: 'แก้ไขผู้ใช้',
       manGenderText: 'ชาย',
       womanGenderText: 'หญิง',
+      avatarColumn: 'รูปประวัติ',
       userColumn: 'ผู้ใช้',
       roleColumn: 'บทบาท',
       pronounsColumn: 'เรียกตัว',

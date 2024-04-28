@@ -192,6 +192,7 @@ export default {
       editText: 'Edit Pengguna',
       manGenderText: 'Lelaki',
       womanGenderText: 'Perempuan',
+      avatarColumn: 'Gambar profil',
       userColumn: 'Pengguna',
       roleColumn: 'Peranan',
       pronounsColumn: 'Kata Ganti',
