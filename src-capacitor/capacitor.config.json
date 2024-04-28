@@ -1,0 +1,8 @@
+{
+  "appId": "com.lumineframe.app",
+  "appName": "lumineframe",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}

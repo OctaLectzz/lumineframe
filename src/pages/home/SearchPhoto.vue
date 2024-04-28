@@ -61,9 +61,10 @@ const filterPhotos = () => {
     const titleMatches = photo.title && photo.title.toLowerCase().includes(search.value.toLowerCase())
     const descriptionMatches = photo.description && photo.description.toLowerCase().includes(search.value.toLowerCase())
     const tagMatches = photo.tags.some((tag) => tag.name.toLowerCase().includes(search.value.toLowerCase()))
+    const categoryMatches = photo.category.toLowerCase().includes(search.value.toLowerCase())
     const usernameMatches = photo.user.username.toLowerCase().includes(search.value.toLowerCase())
 
-    return titleMatches || descriptionMatches || tagMatches || usernameMatches
+    return titleMatches || descriptionMatches || tagMatches || categoryMatches || usernameMatches
   })
 
   photos.value = [...filteredData]
