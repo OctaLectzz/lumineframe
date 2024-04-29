@@ -194,6 +194,7 @@ export default {
       womanGenderText: 'หญิง',
       avatarColumn: 'รูปประวัติ',
       userColumn: 'ผู้ใช้',
+      emailColumn: 'อีเมล',
       roleColumn: 'บทบาท',
       pronounsColumn: 'เรียกตัว',
       birthdayColumn: 'วันเกิด',

@@ -54,7 +54,6 @@
                 :rules="rules.last_name"
                 dense
                 outlined
-                required
               />
             </div>
 
@@ -86,7 +85,6 @@
                 :rules="rules.phone"
                 dense
                 outlined
-                required
               />
             </div>
 
@@ -152,10 +150,10 @@
               />
             </div>
 
-            <!-- Last Name -->
+            <!-- URL -->
             <div class="col-sm-5 col-xs-10 q-mx-sm">
               <div class="text-bold">{{ $t('dashboard.user.crud.urlForm') }} :</div>
-              <q-input v-model="data.url" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('dashboard.user.crud.urlForm')" class="q-mb-sm" :rules="rules.url" dense outlined required />
+              <q-input v-model="data.url" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('dashboard.user.crud.urlForm')" class="q-mb-sm" :rules="rules.url" dense outlined />
             </div>
 
             <!-- Birthday -->

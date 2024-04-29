@@ -194,6 +194,7 @@ export default {
       womanGenderText: 'أنثى',
       avatarColumn: 'الصوره الشخصيه',
       userColumn: 'المستخدم',
+      emailColumn: 'البريد الإلكتروني',
       roleColumn: 'الدور',
       pronounsColumn: 'الضمائر',
       birthdayColumn: 'تاريخ الميلاد',

@@ -194,6 +194,7 @@ export default {
       womanGenderText: 'Perempuan',
       avatarColumn: 'Gambar profil',
       userColumn: 'Pengguna',
+      emailColumn: 'Emel',
       roleColumn: 'Peranan',
       pronounsColumn: 'Kata Ganti',
       birthdayColumn: 'Tarikh Lahir',

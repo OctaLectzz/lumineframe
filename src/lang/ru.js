@@ -194,6 +194,7 @@ export default {
       womanGenderText: 'Женщина',
       avatarColumn: 'Изображение профиля',
       userColumn: 'Пользователь',
+      emailColumn: 'Электронная почта',
       roleColumn: 'Роль',
       pronounsColumn: 'Местоимения',
       birthdayColumn: 'Дата рождения',

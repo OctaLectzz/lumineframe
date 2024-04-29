@@ -194,6 +194,7 @@ export default {
       womanGenderText: '女',
       avatarColumn: '个人资料图片',
       userColumn: '用户',
+      emailColumn: '邮箱',
       roleColumn: '角色',
       pronounsColumn: '代词',
       birthdayColumn: '出生日期',

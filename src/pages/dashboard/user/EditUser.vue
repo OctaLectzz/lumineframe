@@ -46,16 +46,7 @@
             <!-- Last Name -->
             <div class="col-sm-5 col-xs-10 q-mx-sm">
               <div class="text-bold">{{ $t('dashboard.user.crud.lastNameForm') }} :</div>
-              <q-input
-                v-model="data.last_name"
-                :color="$q.dark.isActive ? 'secondary' : 'primary'"
-                :label="$t('dashboard.user.crud.lastNameForm')"
-                class="q-mb-sm"
-                :rules="rules.last_name"
-                dense
-                outlined
-                required
-              />
+              <q-input v-model="data.last_name" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('dashboard.user.crud.lastNameForm')" class="q-mb-sm" dense outlined />
             </div>
 
             <!-- Email -->
@@ -77,17 +68,7 @@
             <!-- phone -->
             <div class="col-sm-5 col-xs-10 q-mx-sm">
               <div class="text-bold">{{ $t('dashboard.user.crud.phoneForm') }} :</div>
-              <q-input
-                type="number"
-                v-model="data.phone"
-                :color="$q.dark.isActive ? 'secondary' : 'primary'"
-                :label="$t('dashboard.user.crud.phoneForm')"
-                class="q-mb-sm"
-                :rules="rules.phone"
-                dense
-                outlined
-                required
-              />
+              <q-input type="number" v-model="data.phone" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('dashboard.user.crud.phoneForm')" class="q-mb-sm" dense outlined />
             </div>
 
             <!-- Role -->
@@ -120,10 +101,10 @@
               />
             </div>
 
-            <!-- Last Name -->
+            <!-- URL -->
             <div class="col-sm-5 col-xs-10 q-mx-sm">
               <div class="text-bold">{{ $t('dashboard.user.crud.urlForm') }} :</div>
-              <q-input v-model="data.url" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('dashboard.user.crud.urlForm')" class="q-mb-sm" :rules="rules.url" dense outlined required />
+              <q-input v-model="data.url" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('dashboard.user.crud.urlForm')" class="q-mb-sm" dense outlined />
             </div>
 
             <!-- Birthday -->
@@ -156,31 +137,13 @@
             <!-- Address -->
             <div class="col-sm-5 col-xs-10 q-mx-sm">
               <div class="text-bold">{{ $t('dashboard.user.crud.addressForm') }} :</div>
-              <q-input
-                v-model="data.address"
-                type="textarea"
-                :color="$q.dark.isActive ? 'secondary' : 'primary'"
-                :label="$t('dashboard.user.crud.addressForm')"
-                class="q-mb-sm"
-                :rules="rules.address"
-                dense
-                outlined
-              />
+              <q-input v-model="data.address" type="textarea" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('dashboard.user.crud.addressForm')" class="q-mb-sm" dense outlined />
             </div>
 
             <!-- About -->
             <div class="col-sm-5 col-xs-10 q-mx-sm">
               <div class="text-bold">{{ $t('dashboard.user.crud.aboutForm') }} :</div>
-              <q-input
-                v-model="data.about"
-                type="textarea"
-                :color="$q.dark.isActive ? 'secondary' : 'primary'"
-                :label="$t('dashboard.user.crud.aboutForm')"
-                class="q-mb-sm"
-                :rules="rules.about"
-                dense
-                outlined
-              />
+              <q-input v-model="data.about" type="textarea" :color="$q.dark.isActive ? 'secondary' : 'primary'" :label="$t('dashboard.user.crud.aboutForm')" class="q-mb-sm" dense outlined />
             </div>
 
             <!-- status -->
@@ -271,12 +234,12 @@ const rules = ref({
     }
   ],
   first_name: [(v) => !!v || t('dashboard.user.validate.firstNameRequired'), (v) => v.length <= 15 || t('dashboard.user.validate.firstNameMaxLength')],
-  last_name: [(v) => v.length <= 15 || t('dashboard.user.validate.lastNameMaxLength')],
+  last_name: [(v) => (v && v.length <= 15) || t('dashboard.user.validate.lastNameMaxLength')],
   email: [(v) => !!v || t('dashboard.user.validate.emailRequired'), (v) => /.+@.+/.test(v) || t('dashboard.user.validate.emailFormat')],
-  phone: [(v) => v.length <= 15 || t('dashboard.user.validate.phoneMaxLength')],
-  url: [(v) => v.length <= 255 || t('dashboard.user.validate.urlMaxLength')],
-  address: [(v) => v.length <= 255 || t('dashboard.user.validate.addressMaxLength')],
-  about: [(v) => v.length <= 100 || t('dashboard.user.validate.aboutMaxLength')]
+  phone: [(v) => (v && v.length <= 15) || t('dashboard.user.validate.phoneMaxLength')],
+  url: [(v) => (v && v.length <= 255) || t('dashboard.user.validate.urlMaxLength')],
+  address: [(v) => (v && v.length <= 255) || t('dashboard.user.validate.addressMaxLength')],
+  about: [(v) => (v && v.length <= 100) || t('dashboard.user.validate.aboutMaxLength')]
 })
 
 // Disabled Button

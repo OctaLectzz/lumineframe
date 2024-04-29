@@ -72,7 +72,7 @@
         <q-td :props="props">
           <div dense square>
             <div class="text-bold">{{ props.row.name }}</div>
-            <div>{{ props.row.email }}</div>
+            <div>{{ props.row.username }}</div>
           </div>
         </q-td>
       </template>
@@ -151,7 +151,7 @@
                   <!-- User -->
                   <div v-else-if="col.name === 'user'" dense square>
                     <div class="text-bold">{{ props.row.name }}</div>
-                    <div>{{ props.row.email }}</div>
+                    <div>{{ props.row.username }}</div>
                   </div>
 
                   <!-- Gender -->
@@ -292,6 +292,13 @@ const currencyColumns = [
     name: 'user',
     field: 'name',
     label: t('dashboard.user.userColumn'),
+    align: 'left',
+    sortable: true
+  },
+  {
+    name: 'email',
+    field: 'email',
+    label: t('dashboard.user.emailColumn'),
     align: 'left',
     sortable: true
   },
